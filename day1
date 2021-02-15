@@ -173,3 +173,36 @@ public class VariableTest4 {
 
 }
 
+//5번쨰
+package com.kosta.day01;
+
+public class VariableTest5 {
+	//test1 함수 정의
+	public static void test1() {
+		System.out.println("test1 시작");
+		System.out.println("-----자동형변환------");
+		int i;
+		byte b=127;
+		i=b;
+		System.out.println("i = " +i);
+	}
+	//test2 함수 정의
+	public static void test2() {
+		System.out.println("test2 시작");
+		System.out.println("-----강제형변환------");
+		int i=2147483647;
+		byte b;
+		b=(byte)i;
+		System.out.println("b= "+b);
+	}
+	//main 함수 정의.. main은 자바가상머신이 자동호출한다.
+	//나머지 함수는 호출안함
+	//개발자가 main에서 호출해야한다.
+	public static void main(String[] args) {
+		System.out.println("main 시작");
+		test1(); //test1()호출
+		test2(); //test2()호출
+		System.out.println("main END");
+	}
+
+}
