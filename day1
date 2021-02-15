@@ -195,6 +195,19 @@ public class VariableTest5 {
 		b=(byte)i;
 		System.out.println("b= "+b);
 	}
+		public static void test3() {
+		//2진수 8진수 10진수 16진수!!
+		int a = 10;
+		//Wrapper Class
+		//기본형 (값저장, 연산, 비교)
+		//int + 기능추가 ->Integer
+		System.out.println("int의 최대값 = " +Integer.MAX_VALUE); //최대값!!
+		System.out.println(Integer.toBinaryString(a));//2진수!!
+		System.out.println(Integer.toOctalString(a));//8진수!!
+		System.out.println(Integer.toHexString(a));//16진수!!
+		
+		
+	}
 	//main 함수 정의.. main은 자바가상머신이 자동호출한다.
 	//나머지 함수는 호출안함
 	//개발자가 main에서 호출해야한다.
@@ -202,6 +215,7 @@ public class VariableTest5 {
 		System.out.println("main 시작");
 		test1(); //test1()호출
 		test2(); //test2()호출
+		test3();//test3()호출!!
 		System.out.println("main END");
 	}
 
