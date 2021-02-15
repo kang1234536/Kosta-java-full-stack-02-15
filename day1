@@ -251,3 +251,101 @@ public class VariableTest5 {
 	}
 
 }
+//6번쨰 연산자 !!
+package com.kosta.day01;
+
+public class OperatorTest {
+
+	public static void main(String[] args) {
+		method1(); //method1(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+		method2(); //method2(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+		method3(); //method3(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+		method4(); //method4(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+		method5(); //method5(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+		method6(); //method6(); 만들고 마우스클릭후 밑에 메서드 만들기!!
+	}
+		
+	private static void method6() {
+		//논리 연산자!
+				int a =10;
+				int b = 20;
+				
+				//|| 하나라도 참이면 참  앞의결과가 true이면 뒷문장은 수행안한다.
+				//| 하나라도 참이면 참이다. 무조건 모든문장 수행한다.
+				//boolean result = a>=10|| ++b >=20;
+				boolean result = a>=10| ++b >=20;
+				System.out.println("result = " +result);
+				System.out.println("b = " +b);
+	}
+
+	private static void method5() {
+		//논리 연산자!
+		int a =10;
+		int b = 20;
+		
+		//&& 모두 참이면 참  앞의결과가 false이면 뒷문장은 수행안한다. || 하나만 참이여도 참 ^둘다 거짓이여야 참
+		//& 모두 참이면 참이다. 무조건 모든문장 수행한다.
+		boolean result = a>=10 && b>=20;
+		boolean result1 = a>=10 ^ b>=20;
+		boolean result2 = a>=10 || b>=20;
+		boolean result3 = a<10 && ++b>=20;
+		boolean result4 = a<10 & ++b>=20;
+		
+		System.out.println("result = " +result);
+		System.out.println("result1 = " +result1);
+		System.out.println("result2 = " +result2);
+		System.out.println("result3 = " +result3);
+		System.out.println(b);
+		System.out.println("result4 = " +result4);
+	}
+
+	private static void method4() {
+		//비교 연산자
+		int a =10;
+		int b = 20;
+		System.out.println(a==b);
+		System.out.println(a!=b);
+		System.out.println(a>=b);
+		System.out.println(a<=b);
+		System.out.println(a>b);
+		System.out.println(a<b);
+		System.out.println("자바" instanceof String); //자바라는 문자가 String클래스로 만들어진 객체(실체)인가요? 라는 instanceof 용법!!
+	
+		
+	}
+
+	private static void method3() {
+		//선치/후치연산자 사용!
+		int a =10;
+		int b =20;
+		int result = a++ + ++b;
+		System.out.println(result); //후치 연산자가 있으므로 나중에 a값이 증가하므로 값은 31이다.
+		System.out.println(a);
+		System.out.println(b);
+		
+		
+	}
+
+	private static void method2() {
+		// 증감연산자!!
+		int a= 10;
+		a++; ++a;
+		System.out.println(++a); //먼저더해라 선치연산자
+		System.out.println(a++);//나중에 더해라 후치연산자
+		System.out.println(a);
+		
+		
+		
+	}
+
+	private static void method1() {
+		//산술연산자 : +,-,*,/
+		int a=10;
+		int b=3;
+		System.out.println("몫은 "+a/b);
+		System.out.println("나머지는 "+a%b);
+		System.out.println("실수형 몫은? "+(double)a/b );
+		System.out.println("실수형 몫은? "+1.0*a/b );
+	}
+
+}
