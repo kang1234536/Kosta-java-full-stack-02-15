@@ -349,3 +349,50 @@ public class OperatorTest {
 	}
 
 }
+//개념들 모음
+package com.kosta.day01;
+
+
+/*
+ *  document 주석!!
+ * 
+ */
+/*
+ 1. MyClass.java 생성한다.
+ 2. javac.exe로 컴파일한다.(JDK/bin안에 있다.)
+  > javac MyClass.java
+ 3. MyClass.class파일이 생성된다.
+ 4.JVM(자바가상머신.. OS마다 다르다.)이 java.exe가 MyClass.class를 실행한다.
+ 5.java MyClass ==>main이 시작된다.
+ */
+
+
+
+
+//MyClass.java에는 반드시 MyClass가 있다.
+//하나의 .java에는 여러 class가능하다.
+//public class 반드시 하나만 가능하다
+//main method가 없으면 자체 실행불가
+public class MyClass {
+	public static void test() {
+		System.out.println("MyClass test");
+	}
+public static void main(String[] args) {
+	
+	ATest aa = new ATest();
+	aa.method1();
+	test();
+	
+}	
+}
+
+ class ATest{
+	
+
+	public void method1() {
+		System.out.println("ATest에 method1");		
+	}
+}
+class BClass{
+	
+}
