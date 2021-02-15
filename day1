@@ -1,0 +1,108 @@
+package com.kosta.day01;
+//변수 공부
+public class VariableTest {
+	
+	static int speed; //지역변수가 아니므로 자동으로 초기화됨
+	static double speed2;
+	//main이 없으면 직접 실행이 불가능!!
+	public static void main(String[] args) {
+		//지역변수가 아니므로 자동으로 초기화 되는 값 0을 가짐
+		System.out.println("speed = " + speed);
+		System.out.println("speed2 = " + speed2);
+		System.out.println("변수는?");
+		System.out.println("기억장소이름이다.");
+		//10을 저장한다.
+		//1.변수선언 //타입 변수이름
+		int a;
+		//2.변수의 값을 할당한다.
+		a=10;
+		//3.값을 읽어서 출력한다.
+		System.out.println(a);
+		System.out.println(a + 20);
+		System.out.println(a + 30);
+		
+		//선언 + 할당
+		int score = 100; // =는 대입연산자
+		//score = score+10;
+		score+=10; // +=는 복합대입연산자
+		//문자 + 숫자 =>문자가 우선시!!(연결연산자)
+		System.out.println("점수는 = " +score);
+		//초기화하고 사용한다.
+		//지역변수(local variable)는 반드시 초기화해야 한다.
+		//지역변수 : 함수안에 있는 변수!!
+		int value;
+		value = 30;
+		int result = value+30;
+		System.out.println(result);
+		
+		
+		
+	}
+
+}
+//2번쨰
+package com.kosta.day01;
+
+public class VariableTest2 {
+
+	//1.멤버변수 사용가능!!  자동으로 초기화 가능!!
+	static int speed;
+	//2.메서드 사용가능!!
+	/*public static void main(String[] args) {
+	}*/
+	//3.static block 사용가능!!
+	//4.instance block 사용가능!!
+	//5.inner class 사용가능!!
+	
+	
+	
+	
+	
+	
+	//main쓰고 ctrl + space바 누르면됨!
+	public static void main(String[] args) {
+	//지역변수는 반드시 초기화해야한다.
+	int speed2;
+	
+	 
+	 
+	 
+	 System.out.println("aaaaaa");	
+	 speed++; //1증가한다.
+	 //speed = speed+1;
+	 //speed+=1;
+	 speed2 =100;
+	 System.out.println(speed);	
+	 System.out.println(speed2);	
+	 
+	 
+	 int a =100;
+	 {
+		 //int a=10;
+		 System.out.println("a="+a);
+	 }
+	 //	System.out.println("a="+a); 블록밖에서는 사용불가능!!
+	
+	
+	}
+
+}
+//3번쨰
+package com.kosta.day01;
+
+public class VariableTest3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		byte a =127; //128은못들어감 byte -128<=byte<=127
+		System.out.println("byte : -128~127가능 :" +a);
+		short b =32767; //32768불가능  short는 2byte
+		System.out.println("short : -32768~32767가능 :" +b);
+		char c= 'A';//0~65535
+		System.out.println(c);
+		int d =2147483647; //int -2147483648~2147483647 까지 4byte
+		d++;// 이떄는 문제가 생겨서  맨뒤로 돌아간다!!
+		System.out.println(d);
+	}
+
+}
