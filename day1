@@ -106,3 +106,70 @@ public class VariableTest3 {
 	}
 
 }
+//4번쨰
+package com.kosta.day01;
+
+public class VariableTest4 {
+
+	public static void main(String[] args) {
+		//자바의 기본타입 8가지
+		//데이터타입(데이터성격)
+		//1.정수 (byte(1)<short(2)<int(4)<long(8))
+		//               char(2)  char은 양수만 음수는없음!!
+		//2.실수 (float(4)<double(8))
+		//3.논리(boolean)
+		//int 와 float는 범위가 다름 float가 범위가 더크다!!
+		
+		byte b =127;
+		short s =32767;
+		char c = 65535;
+		int i =2147483647; //4기가
+		long lo =2147483648L; //끝에 L을붙여야함!!
+		float f = 3.14f; //끝에 f를 붙여야함!!
+		double d = 3.14; //default는 double
+		boolean bo =true; //true or false 가능!
+		boolean bo1= 10>20;// true or false 대신에 이렇게 사용해도 가능!
+		System.out.println(bo1);
+		i++;
+		System.out.println(i); //범위를 벗어나면 왼쪽끝으로간다!
+		//데이터의 형변환 : 자동(묵시적), 강제(명시적)
+		//1.자동(큰방 = 작은값)
+		byte aa=127;
+		short ss =100;
+		int ii=aa;
+		int iii=ss;
+		double dd =ii;
+		System.out.println(ii);
+		System.out.println(iii);
+		System.out.println(dd);
+		/* 불가능!
+		 * char cc='A';
+		ss=cc;
+		System.out.println(ss);*/
+	    char cc='A'; 
+	    ii = cc;
+	    cc='a';
+	    System.out.println(ii);
+	    System.out.println(cc);
+	    //강제(명시적) Casting
+	    System.out.println((int)cc);
+	    //크기순  byte<char,short<int<long<float<double
+	    //char!=short
+	    //2.강제형변환!!!!Casting
+	    //범위를 벗어나면 값이 손실된다.
+	    byte b2=100; //-128~127
+	    int i2=100;
+	    //i2=b2; 자동
+	    b2=(byte)i2;//강제
+	    System.out.println(b2);
+	    
+	    char c2=(char)i2;
+	    System.out.println(c2);
+	    System.out.println((int)'A');
+	    
+	
+	
+	}
+
+}
+
