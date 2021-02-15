@@ -194,7 +194,7 @@ public class VariableTest5 {
 		byte b;
 		b=(byte)i;
 		System.out.println("b= "+b);
-	}
+	}//test3
 		public static void test3() {
 		//2진수 8진수 10진수 16진수!!
 		int a = 10;
@@ -207,6 +207,36 @@ public class VariableTest5 {
 		System.out.println(Integer.toHexString(a));//16진수!!
 		
 		
+	} //test4함수
+		public static void test4() {
+		//여러타입 연산 ==> 결과는 어떤 타입?  -->작은타입-> 큰타입 자동형변환
+		int a =10;
+		double b =3.14;
+		double result=a+b;  // int 타입을 double타입으로 자동 변환후 계산!!
+		System.out.println(result); //결과는 double
+		
+	    int result2=(int)(a+b);  //작은 타입은 큰타입으로 바뀌기도한다.!!
+		System.out.println(result2); //결과는 int
+		
+		char c ='가';
+		String s1 ="자바문자열"; //String은 클래스이다!!
+		System.out.println(s1+10+20); //문자+숫자 ==> 문자이다.!!
+		System.out.println(s1+(10+20)); //()를 잘사용하면 값이 달라진다!!
+		
+		int su1=10,su2=20;
+		
+		
+		System.out.println(su1+su2);
+		System.out.println(su1-su2);
+		System.out.println(su1*su2);
+		System.out.println(su1/su2);
+		System.out.println(su1%su2);
+		System.out.println("더하기는 "+ (su1+su2));
+		System.out.println("빼기는 "+ (su1-su2));
+		System.out.println("곱하기는 "+ su1*su2);
+		System.out.println("더하기는 "+ su1/su2);
+		System.out.println("나머지는 "+ su1%su2);
+		
 	}
 	//main 함수 정의.. main은 자바가상머신이 자동호출한다.
 	//나머지 함수는 호출안함
@@ -216,6 +246,7 @@ public class VariableTest5 {
 		test1(); //test1()호출
 		test2(); //test2()호출
 		test3();//test3()호출!!
+		test4();//test4()호출!!
 		System.out.println("main END");
 	}
 
