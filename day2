@@ -68,7 +68,48 @@ public class 조건문 {
 		System.out.println("main시작");
 		ifTest();
 		ifElseTest();
+		ifElseIfTest();
+		
 		System.out.println("main끝");
+	}
+
+	private static void ifElseIfTest() {
+		// else if 조건문!!
+		int score = 100;
+		char grade = 'F'; // ELSE 초기값을 선언을하면 ELSE를 쓸필요가없당
+		// 90~: A
+		// 80~: B
+		// 70~: C
+		// 60~: D
+		// 0~: F
+		if (score >= 90) {
+			// System.out.println("A학점");
+			grade = 'A';
+			System.out.print("참잘했다.....A");
+			if (score >= 95) {//if안에 if를 중첩할수있다!! 
+				grade ='+'; 
+			} else {
+				grade='-';
+			}
+			// System.out.println(grade);
+		} else if (score >= 80) {
+			// System.out.println("B학점");
+			grade = 'B';
+			// System.out.println(grade);
+		} else if (score >= 70) {
+			// System.out.println("C학점");
+			grade = 'C';
+			// System.out.println(grade);
+		} else if (score >= 60) {
+			// System.out.println("D학점");
+			grade = 'D';
+			// System.out.println(grade);
+		}
+		/* else를 꼭 쓸필요는 없다.
+		 * else { //System.out.println("F학점"); grade ='F'; //System.out.println(grade);
+		 * }
+		 */ // 주석은 ctrl /
+		System.out.println(grade);
 	}
 
 	private static void ifElseTest() {
@@ -105,6 +146,7 @@ public class 조건문 {
 
 }
 
+//조건문 2번쨰 예제
 
 
 
