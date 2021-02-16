@@ -58,7 +58,7 @@ public class Review {
 	}
 
 }
-//2월16일 조건문 처음예제
+//2월16일 조건문 처음예제  배운내용: 조건문  if/switch 반복문 for/while/do while
 package com.kosta.day02;
 
 public class 조건문 {
