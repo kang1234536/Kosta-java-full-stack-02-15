@@ -147,6 +147,51 @@ public class 조건문 {
 }
 
 //조건문 2번쨰 예제
+package com.kosta.day02;
+
+public class IfTest {
+
+	public static void main(String[] args) {
+		// Random 함수!!
+		randomTest();
+		randomTest2();
+	}
+
+	private static void randomTest2() {
+		// 무작위수 만들기
+		int dice = (int)(Math.random()*6)+1;
+		System.out.println(dice);
+		String result;
+		//짝수인지 홀수인지 판단
+		if(dice%2==0) {
+			//System.out.println("짝수");
+			result="짝수";
+		}
+		else {
+			//System.out.println("홀수");
+			result="홀수";
+
+		}
+		System.out.println(result);
+		System.out.println(dice%2==0?"짝수":"홀수");//삼항연산자
+	}
+
+	private static void randomTest() {
+		// Math: 수학공식에서 필요한 기능들을 모아놓은 클래스 (자바가 제공함!!)
+		System.out.println(Math.PI); // pi값 구하는 변수
+		System.out.println(Math.random()); //0<=random<1
+		System.out.println((int)Math.random()*10); //0<=random<10
+		int a=(int) ((Math.random()*10)+1); //1<=random<11
+		System.out.println(a);
+		//로또번호 구하기
+		int b = (int)(Math.random()*45)+1;
+		System.out.println(b);
+		//주사위 번호 구하기
+		int c= (int)(Math.random()*6)+1;
+		System.out.println(c);
+	}
+
+}
 
 
 
