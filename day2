@@ -227,8 +227,137 @@ public class SwitchTest {
 		System.out.println(score + " ====> " + grade);
 	}
 }
-//반복문 예제
+//반복문 예제 입출력도 
+//for문
+package com.kosta.day02;
 
+import java.util.Scanner;
+//java.util 패키지에 있는 Scanner 클래스를 반복문이라는 class에서 사용허락을 받는것
+public class 반복문 {
+
+	public static void main(String[] args) {
+		//반복문 예제 
+		forTest();
+		whileTest();
+		dowhileTest();
+		sum();//1부터 10까지 더하여라 함수!!
+		//사용자가 키보드로 값을 입력하고 입력된 값으로 합계!!!
+		//System.out : 표준출력(모니터)
+		//System.in :표준입력(키보드)
+		//Scanner class: 표준입출력을 쉽게하도록 도와준다. utility!!
+		String s ="자바"; //java.lang 패키지에 들어있는 class는 아무대서나 무조건 사용이가능
+		Integer i=100; //java.lang 패키지에 들어있는 class는 아무대서나 무조건 사용이가능
+		//다른 패키지에 들어있는 class들은 import하고 사용한다.
+		
+		Scanner sc = new Scanner(System.in); //여는것
+		for(int a =0;a<5;a++) {  //입출력반복!!
+		System.out.print("숫자입력 >> ");
+		int num =sc.nextInt();
+		if(num==0)   //조건식!! 0일떄 그만해라!!
+		{	System.out.println("오류가 발생되어 종료되었습니다.");
+			break;}
+		sum1(num); //100까지더하자
+		}
+		sc.close();// 닫아야한다!!
+		
+		// int keyCode=System.in.read(); 이것은 키보드관련 입력키
+	}
+//함수: 기능, 동작
+//파라메타(argument), 인자
+	private static void sum1(int limit) {  //limit에 100을 넣어라!!
+		// 함수적용 매개변수!!
+		int i;
+		int sum=0;
+		for(i=1;i<=limit;i++) {
+			sum+=i;
+		}
+		System.out.println(limit +" 합계는 " +sum);
+	}
+
+	
+
+	private static void sum() {
+		//for문
+		// 1부터10까지 더해라
+		int sum=0;
+		for(int i =1;i<11;i++) {
+			sum+=i;
+			
+		}
+		System.out.println("for문의결과 : "+sum);
+		//while문
+		int j=1;
+		int sum1=0;
+		while(j<11) {
+			sum1+=j;
+			j++;
+		}
+		System.out.println("while문의 결과: "+sum1);
+		int z=1;
+		int sum2=0;
+		do {
+			sum2+=z;
+			z++;
+		}while(z<11);
+		System.out.println("do-while문의 결과는: " +sum2);
+	}
+
+	private static void dowhileTest() {
+		// do-while문
+		System.out.println("do-while start");
+		int i =0;
+		do {
+			System.out.println(i+" Hello3");
+			i++;
+		}while(i<5);
+		System.out.println("do-while end");
+	}
+
+	private static void whileTest() {
+		// for문 ==> while문!!
+		for(int i =0;i<5;i++) {
+			System.out.println("hello1");
+		}
+		//while문
+		System.out.println("while start");
+		int j=0;
+		while(j<5) {
+			System.out.println(j+" hello2");
+			j++;
+		}
+		System.out.println("while end");
+	}
+
+	private static void forTest() {
+		// for문 for(초기값;조건문;증감){}
+		System.out.println("for start-------");
+		//1.초기값설정..(1번 반드시 수행된
+		//2.조건문체크해서 조건에 맞으면 계속 looping, 조건에 맞지 않으면 빠지기
+		//3.for안에 있는 문장들을 수행한다.
+		//4.증감을 수행한다.
+		//5. 2번으로 돌아간다.
+		for(int i =1;i<=5;i++) {  //초기값 i는 for문안에서도 밖에서도 선언할수 있다.!!
+			System.out.println(i+" :hello");
+		}
+		System.out.println("for end-------");
+		
+		  int i;
+		  i=1;
+		 // for문안에 초기값과 증감값은 다른곳에 선언해도된다 ;;만 2개 있으면된다
+		 // 조건문을 생략한경우 if문으로 제어한다.
+		for(;;) {  //초기값 i는 for문안에서도 밖에서도 선언할수 있다.!!
+			if(i>5){
+			System.out.println("for문장을 빠집니다.");
+			break;
+			}
+			System.out.println(i+" :hello");
+			i++;
+		}
+		System.out.println("for end-------");
+		
+	}
+
+}
 
 
 
