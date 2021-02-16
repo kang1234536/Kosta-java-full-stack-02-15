@@ -359,6 +359,49 @@ public class 반복문 {
 
 }
 
+//키보드값 예제
+package com.kosta.day02;
 
+import java.io.IOException;
+import java.util.Scanner;
+
+public class WhileKeyControlExample {
+
+	public static void main(String[] args)  {
+		// 127p예제
+		boolean run = true; // 논리
+		int speed = 0; // 조정할 변수
+		int keyCode = 0; // 비교할 변수
+		Scanner sc = new Scanner(System.in);
+		
+		while (run) { // run이 true일떄 반복 false일때 중지
+			//if (keyCode != 13 && keyCode != 10) { // 13과 10은 엔터키이다.
+				System.out.println("--------");
+				System.out.println("1.증속");
+				System.out.println("2.감속");
+				System.out.println("3.중지");
+				System.out.println("--------");
+				System.out.print("선택 >>>");
+			//}
+			//keyCode = System.in.read(); // 에러날때 마우스로 대고 나서 throws 를 눌러준다
+				keyCode=sc.nextInt();
+				if (keyCode == 1) // 숫자1이 49이다.
+			{
+				speed++;
+
+			} else if (keyCode == 2) {// 숫자2이 50이다
+				speed--;
+
+			} else if (keyCode == 3) {// 숫자3이 51이다
+				run = false;
+
+			}
+			System.out.println("현재속도 :" + speed);
+
+		}
+		System.out.println("프로그램 종료");
+	}
+
+}
 
 
