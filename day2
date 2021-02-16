@@ -1,1 +1,61 @@
+//2월 15일 복습
+package com.kosta.day02;
+//ctrl shift f 누르면 들여쓰기!!
+
+/*
+ * 2021.2.16 강희원  2.15 복습용
+ * 복습
+ * 1.Review.java 소스작성
+ * 2.컴파일(byte code변경, binary 아님!!!, 중간언어,Assembly언어 비슷)
+ * >javac Review.java
+ * c = a+b ->add a,b
+ * 3. JVM이 실행 >java Review
+ * -> 011110000110
+ * 4.
+ */
+
+public class Review {
+	// main은 자바가상머신이 자동시작
+	public static void main(String[] args) {
+		System.out.println("main시작");
+		dataTypeTest();
+		castTest();
+		System.out.println("main끝");
+
+	}
+
+	private static void castTest() {
+		// cast 형변환
+		int i;
+		char c ='A';
+		i=c;
+		System.out.println("i의값은 :" +i);
+		c=(char)i;
+		c++;
+		System.out.println("c의값은 :"+c);
+		
+	}
+
+	private static void dataTypeTest() {
+		//기본형: byte(1),short(2),char(2),int(4),long(8)
+		//실수형: float(4),double(8)
+		//논리형: boolean(1)
+		//Wrapper class: 기본형 + 기능 ==>class
+		//목적: data저장, 연산, 비교
+		//1.변수선언
+		int javaScore;
+		long aa =Integer.MAX_VALUE+1L;
+		double pi=3.141592;
+		float pi2 =3.141592f;
+		//2.값할당(대입)
+		javaScore=100;
+		//3.사용
+		javaScore +=10;
+		System.out.println("javaScore의 점수는 : "+javaScore);
+		System.out.println(aa);
+		System.out.println(pi);
+		System.out.println(pi2);
+	}
+
+}
 
