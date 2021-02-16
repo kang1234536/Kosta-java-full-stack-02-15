@@ -58,4 +58,54 @@ public class Review {
 	}
 
 }
+//2월16일 조건문 처음예제
+package com.kosta.day02;
+
+public class 조건문 {
+
+	public static void main(String[] args) {
+		// 2월 16일 조건문 처음 실습예제
+		System.out.println("main시작");
+		ifTest();
+		ifElseTest();
+		System.out.println("main끝");
+	}
+
+	private static void ifElseTest() {
+		// TODO if/else문 !!!!
+		int score = 100;
+		if (score >= 90) {
+			// 조건의 결과가 참인경우만 실행!
+			System.out.println("합격");
+		} else {
+			// 조건의 결과가 거짓인경우만 실행!
+			System.out.println("불합격");
+		}
+		System.out.println(score >= 90 ? "합격" : "불합격"); // 삼항연산자
+		System.out.println("if/else end");
+	}
+
+	private static void ifTest() {
+		// 조건문!!
+		int score = 50;
+		// 조건문에 실행문이 여러문장이면 반드시 블럭을 해야한다.
+		if (score >= 90) {
+			System.out.println("합격");
+			System.out.println("축하합니다");
+
+		}
+		if (score >= 90) // if는 중괄호가 없다면 한문장만 받아들인다. !!
+			System.out.println("합격");
+		// System.out.println("축하합니다");
+
+		System.out.println(score >= 90 ? "합격" : ""); // 삼항연산자
+
+		System.out.println("if끝");
+	}
+
+}
+
+
+
+
 
