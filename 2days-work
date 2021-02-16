@@ -1,0 +1,216 @@
+package 과제;
+
+public class Max {
+//최대공약수 문제 쉽게풀이
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		gcd(2,5);
+		gcd(5,15);
+		gcd(250,30);
+		
+	}
+
+	private static void gcd(int i, int j) {
+		// TODO Auto-generated method stub
+		//2,5 ->1
+		//5,15 ->5
+		//250,30 ->10
+		int a=0;
+		
+		if(i<j) {
+			a=j%i;
+			if(a==0) {
+				a=i;
+			}
+		}
+		else if(i>j) {
+			a=i%j;
+		}
+		else {
+			a=i;
+		}
+		System.out.println(a);
+		
+		
+	}
+
+}
+//헷갈렸던문제들
+package 과제;
+
+import java.util.Scanner;
+
+public class Lab1 {
+
+	public static void main(String[] args) {
+		//Test1(); //문제1
+		//Test2(); //문제2
+		Test3(); //문제3
+		
+		
+		
+		
+		
+
+	}
+
+	private static void Test3() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("직각 역삼각형을 출력할 줄 수 : ");
+		int row = scan.nextInt();
+		for(int i =1; i<=row;i++) {
+			for(int j=row-i+1;j>0;j--) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+		
+	}
+
+	private static void hokeyGraphics(char cell, int size, boolean isRect) {
+		// TODO Auto-generated method stub
+		if(isRect) {
+			for(int i=0;i<size;i++) {
+				for(int j=0;j<size;j++) {
+					System.out.print(cell);
+				}
+			
+			System.out.println();	
+			}
+		}
+		else {
+			for(int i=0;i<size;i++) {
+				for(int j=0;j<=i;j++) {
+					System.out.print(cell);
+				}
+				System.out.println();
+			}
+		}
+	
+	}
+
+	private static void Test2() {
+		// TODO Auto-generated method stub
+		hokeyGraphics('*', 3, true);
+		hokeyGraphics('&', 3, false);
+		
+	}
+
+	private static void Test1() {
+		// TODO Auto-generated method stub
+		Scanner scan = new Scanner(System.in);
+		System.out.print("숫자를 입력하세요 : ");
+		int n= scan.nextInt();
+		int sum=0;
+		if(n%2==0) {
+			for(int i =0;i<=n;i+=2) {
+				sum+=i;
+			}
+			
+		}
+		else {
+			for(int i=1;i<=n;i+=2) {
+				sum+=i;
+			}
+			
+		}
+		
+		System.out.println("결과값 : "+sum);
+	}
+
+} 
+//초기값 문제들
+package 과제;
+
+import java.util.Scanner;
+
+public class Fisrtvalue {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scan = new Scanner(System.in);
+		System.out.print("초기값을 정수로 입력하세요. : ");
+		int a= scan.nextInt();
+		System.out.print("마지막 값을 정수로 입력하세요. : ");
+		int b= scan.nextInt();
+		System.out.print("증가분을 정수로 입력하세요. :");
+		int c =scan.nextInt();
+
+	
+		int sum=0;
+		
+		for(int i =a; i<=b;i+=c) {
+			sum+=i;
+		
+		}
+		if(sum>1000)
+		{
+			sum+=2000;
+			
+		}
+		
+		System.out.println("총합은 "+sum+ " 입니다.");
+		
+	}
+
+}
+//평균값 문제
+package 과제;
+
+import java.util.Scanner;
+
+public class Average {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int count =0; //입력된 점수들의 수
+		int sum=0;  // 합계
+		double avg=0; //평균
+		System.out.print("[더 입력할 점수가 없으면 -1을 입력] ");
+		Scanner scan = new Scanner(System.in);
+		for (int i = 0;i<=1000000 ; i++) {
+			
+			System.out.print("점수를 입력하십시오: ");
+			int grade = scan.nextInt();
+			if (grade == -1) {
+				System.out.println("프로그램이 종료됩니다.");
+				break;
+			}
+			else {
+				count++;
+				sum+=grade;
+				avg=sum/count;
+			}
+			
+		}
+		System.out.println("입력된 점수들의 수: "+count);
+		System.out.println("점수들의 평균 : " +(float)avg);
+		System.out.println("점수들의 평균 : " +(int)avg);
+	}
+
+} //배열문제
+package 과제;
+
+import java.util.Scanner;
+
+public class Array {
+
+	public static void main(String[] args) {
+		int a=1;
+		Scanner scan = new Scanner(System.in);
+		int n =scan.nextInt();
+		int sum=1;
+		int total=0;
+		for(int i=0;i<=n-1;i+=1) {
+			sum+=i;
+			total+=sum;
+			
+		}
+		
+		System.out.println(total);
+		
+	}
+
+}
+
+
