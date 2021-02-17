@@ -514,5 +514,136 @@ public class Lab {
 }
 
 //// 열거형
+package com.kosta.day03;
+
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class EnumTest {
+//열거체!!
+//	public static final String SUCCESS = "OK"; // 상수 상수는 대문자로 쓰기!!!
+//	public static final String FAIL = "NO"; // 상수
+//	public static final String LOGIN = "OK"; // 상수
+//상수의 문제점 상수값이 같으면 차이점을 만들수 없다!! 
+// 그래서 제약을 걸어야한다. -> 열거를 써야한다
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//method1();
+//		method2();
+//		method3();
+//		System.out.println("*************");
+//		Week week1=Week.WEDNESDAY;
+//		call(week1);
+		method4();
+	}
+
+	private static void method4() {
+	// TODO Auto-generated method stub
+	Date d= new Date();
+	System.out.println(d);
+	System.out.println(1900+d.getYear());
+	
+	Calendar cal = Calendar.getInstance();
+	System.out.println(cal.get(Calendar.YEAR));
+	System.out.println(cal.get(Calendar.MONTH)+1+" 월");
+	System.out.println(cal.get(Calendar.DAY_OF_MONTH)+1+" 일");
+	System.out.println(cal.get(Calendar.DAY_OF_WEEK)+1+" 요일");
+	//1(일),2(월),3(화),4(수),5(목),6(금),7(토)
+	call2(cal.get(Calendar.DAY_OF_WEEK));
+	
+	}
+	private static void call2(int i) {
+		// TODO Auto-generated method stub
+		Week w=null;
+		switch(i) {
+		case 1:
+			w=Week.SUNDAY;break;
+		case 2:
+			w=Week.MONDAY;break;
+		case 3:
+			w=Week.TUESDAY;break;
+		case 4:
+			w=Week.WEDNESDAY;break;
+		case 5:
+			w=Week.THURSDAY;break;
+		case 6:
+			w=Week.FRIDAY;break;
+		case 7:
+			w=Week.SATURDAY;break;
+			
+		default:
+			break;
+		}
+		call(w);
+	}
+
+	private static void call(Week week1) {
+		// TODO Auto-generated method stub
+		switch(week1) {
+		case MONDAY:
+			System.out.println("월요일");
+			break;
+		case TUESDAY:
+			System.out.println("화요일");
+			break;
+		case WEDNESDAY:
+			System.out.println("수요일");
+			break;
+		case THURSDAY:
+			System.out.println("목요일");
+			break;
+		case FRIDAY:
+			System.out.println("금요일");
+			break;
+		case SATURDAY:
+			System.out.println("토요일");
+			break;
+		case SUNDAY:
+			System.out.println("일요일");
+			break;
+			default:
+				break;
+		}
+	}
+
+	private static void method3() {
+	// 열거 배열 만들기 예시!! 
+	Week week;
+	Week[] week1=Week.values();
+	for(Week aab:week1) {
+		System.out.println(aab);
+	}
+}
+
+	private static void method2() {
+	// 열거 사용
+		LoginResult result;  //열거체이름 변수; 
+		//result=LoginResult.LOGIN_SUCCESS;
+		result=LoginResult.LOGIN_FAIL;
+	if(result ==LoginResult.LOGIN_FAIL) {
+		System.out.println("로그인실패");
+	}
+	LoginResult[] arr=	LoginResult.values(); //배열로 들어온다.
+	for(LoginResult aa:arr) {
+		System.out.println(aa);
+	}
+}
+
+	private static void method1() {
+		// TODO Auto-generated method stub
+//		String result = "OK";
+//		if (result == SUCCESS) {
+//			System.out.println("로그인성공");
+//		} else if (result == FAIL) {
+//			System.out.println("로그인실패");
+//		}
+//		else {
+//			System.out.println("에러가 발생하였습니다.");
+//		}
+	}
+
+}
 
 
