@@ -1,1 +1,64 @@
-//2월 17일 내용들!
+//2월 17일 내용들! 참조타입!!
+package com.kosta.day03;
+
+public class 참조연습 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//sample();
+		//sample2();
+		sample3();
+
+	}
+
+private static void sample3() {
+		// 참조형은 일반적으로 null로 초기화
+		// null: 정의된바가 없다. 참조된값이 없다.
+		String s=null;
+		System.out.println(s);
+		System.out.println(s==null);
+		s="이것이 자바다";
+		System.out.println(s.length());
+		
+	}
+
+private static void sample2() {
+		//지역변수는 반드시 초기화하고 사용한다 
+	int a=0;
+	double d=0.0;
+	boolean b=false;
+	char c=' ';
+	System.out.println(a+d);
+	System.out.println(b);
+	System.out.println(c);
+		
+	}
+  //
+
+	//equals 비교
+// System.identityHashcode() 주소값 구하는것!!
+	private static void sample() {
+		// TODO Auto-generated method stub
+		String s1 = "홍길동";
+		String s2 = "홍길동";
+		String s3 = new String("홍길동님");
+		String s4 = new String("홍길동님");
+		System.out.println(s1 == s2); // true 주소비교!!
+		System.out.println(System.identityHashCode(s1));
+		System.out.println(System.identityHashCode(s2));
+		s1 = s1 + "님";// 문자열은 변경불가 ....님을 붙이면 주소값이 달라진다
+		s2 = s2 + "님";// 문자열은 변경불가
+		System.out.println(s1 == s2); // false 주소비교
+
+		System.out.println(s3 == s4); // false 주소비교
+
+		System.out.println(System.identityHashCode(s1));
+		System.out.println(System.identityHashCode(s2));
+		System.out.println(s1 == s2);
+		System.out.println(s1.equals(s4) ? "내용이같다" : "내용이 다르다");
+		System.out.println(System.identityHashCode(s3));
+		System.out.println(System.identityHashCode(s4));
+
+	}
+
+}
