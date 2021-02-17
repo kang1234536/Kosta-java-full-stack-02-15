@@ -645,5 +645,50 @@ public class EnumTest {
 	}
 
 }
+//ENUM 따로만들어야 하는것
+package com.kosta.day03;
+// 패키지 마우스 오른쪽 new->enum 이름 적고 만든다
+public enum LoginResult {
+	LOGIN_SUCCESS, LOGIN_FAIL
+}
+//ENUM 따로만들어야 하는것2
+package com.kosta.day03;
+//열거형:한정적인 값을 상수로 정의
+public enum Week {
+MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY
+}
+//열거형 22
 
+package com.kosta.day03;
 
+public class EnumTest2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Week w;
+		w = Week.SUNDAY;
+		System.out.println(w);
+		System.out.println(w == Week.SUNDAY);
+		System.out.println(w.ordinal());
+		System.out.println(w.name());
+		System.out.println(w.name().equals("SUNDAY")); // .equls()문자열비교
+		String s=w.name();
+		Week ww=Week.valueOf("SUNDAY");
+		Week ww2=Week.valueOf("WEDNESDAY");
+		System.out.println("차이 : " +ww.compareTo(ww2));//차이 comparTo()함수
+		System.out.println(Week.valueOf("SUNDAY"));  //valueOf는 데이터타입으로 써야한다.
+		System.out.println("----------SUNDAY절끝");
+
+		// 열거형 안에 들어있는걸 다알고 싶을 때
+		Week[] arr = Week.values();
+		for (Week aa : arr) {
+			System.out.println(aa); // 모든 항목이나온다.
+			System.out.println(aa.ordinal()); // 순서가 나온다!!
+			System.out.println(aa.name()); // 이름을 알고싶을때 aa.name과 aa는 다르다.
+			System.out.println("----------");
+		}
+
+	}
+
+}
+////
