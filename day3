@@ -62,3 +62,80 @@ private static void sample2() {
 	}
 
 }
+//배열연습
+package com.kosta.day03;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.function.IntPredicate;
+
+//배열 : 이름은 하나, 같은종류의 값을 여러개 저장하기 위한 자료구조
+public class 배열연습 {
+
+	public static void main(String[] args) {
+		// 함수쓸떄 앞으로 f2+enter누르기!!
+			//method1();
+			method2();
+			
+	}
+
+	private static void method2() {
+		// TODO Auto-generated method stub
+		int[] arr;
+		arr =new int[10];
+		for(int i =0;i<arr.length;i++) {
+			System.out.println(i+"번째 : "+arr[i]);
+			//arr[i]+=i;
+		//	System.out.println("arr[" +i +"]의 값 : " +arr[i]);
+		}
+		System.out.println(Arrays.toString(arr)); //배열을 []형태로만드는것은 Arrays.toString()이다.
+		String[] arr2 =new String[5];
+		System.out.println(Arrays.toString(arr2));
+		
+		//선언+생성 초기화
+		int[] arr3 = new int[5];
+		int[] arr4 = new int[] {100,99,88,50,10}; //배열의 선언 생성을 동시에
+		int[] arr5 = {100,99,88,50,10}; //축소화한것
+			System.out.println(Arrays.toString(arr3));
+			System.out.println(Arrays.toString(arr4));
+			System.out.println(Arrays.toString(arr5));
+			
+			int total =0;
+			for(int i =0; i<arr4.length;i++) {
+				total+=arr4[i];
+			}
+			System.out.println(total);
+	}
+
+	private static void method1() {
+		// 배열을 사용하기 위해 우선 배열 변수 선언
+		// int[] int Array!!
+		//1.배열변수선언
+		int[] score1;
+		double score2[];
+		boolean pass[];
+		char grade[];
+		//2. 배열생성 ....  heap영역에 만들어지는 객체는 자동초기화된다.
+		score1=new int[30];  //0
+		score2=new double[5]; //0.0
+		pass=new boolean[30]; //초기화값 false
+		grade=new char[30]; //' '
+		//3.배열 사용
+		//index(첨자)는 0부터 시작, 30개
+		System.out.println(score1.length+"개");
+		System.out.println(score2.length+"개");
+		
+		System.out.println(score1[0]);	
+		System.out.println(score2[0]);	
+		System.out.println(pass[0]);	
+		System.out.println("*"+grade[0]+"*");	
+		score1[0]=100;
+		score1[1]=99;
+		System.out.println(score1[1]);
+		
+	}
+		
+	}
+
+
+
