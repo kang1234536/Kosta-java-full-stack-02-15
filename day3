@@ -70,13 +70,58 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 
 //배열 : 이름은 하나, 같은종류의 값을 여러개 저장하기 위한 자료구조
+package com.kosta.day03;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.function.IntPredicate;
+
+//배열 : 이름은 하나, 같은종류의 값을 여러개 저장하기 위한 자료구조
 public class 배열연습 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {//String[] args 이것은 명령행 매개변수!!!
+		//명령행 매개변수 == 커맨드라인
+//		 >java 배열연습 100 200
+//		
 		// 함수쓸떄 앞으로 f2+enter누르기!!
 			//method1();
-			method2();
+			//method2();
+			//method3();
+			System.out.println(args.length +"개 parameter가 들어옴");
+			//System.out.println(args[0]);  0번째값이없다
+			System.out.println(args[0]+" "+args[1]); //run configuation에서 설정해서 값을 넣음
+			System.out.println(args[0]+args[1]);
+			//문자열->숫자로 변경
+			//String class = 기능(메서드) + 속성(변수)
+			//Integer class = 기능(메서드)+ 속성(변수)
+			int su1=Integer.parseInt(args[0]);  //Integer.parseInt는 string을 int로 바꿔줌
+			int su2=Integer.parseInt(args[1]);
+			System.out.println(Integer.parseInt(args[0])+Integer.parseInt(args[1]));
+			System.out.println(su1+su2);
+		
 			
+	}
+
+	private static void method3() {
+		// String 배열
+		//배열 생성시 갯수는 필수이다.
+		//자동초기화, 값은null이된다
+		String[] arr = new String[5];
+		System.out.println(Arrays.toString(arr)); //값은 null
+		String[] arr1 ={"java","sql","html5","css3","javascript"};
+		System.out.println(Arrays.toString(arr1));
+		String[] arr2;
+		arr2 =new String[]{"java","sql","html5","css3","javascript"};
+//		String[] arr3; 무조건  String[] 가 있어야한다.
+//		arr3={"java","sql","html5","css3","javascript"};
+		
+//		for(int i =0; i<arr2.length;i++) {
+//			System.out.println(arr2[i]);
+//		}
+//		확장 For, 향상된 for
+		for(String s:arr2) {
+			System.out.println(s);
+		}
 	}
 
 	private static void method2() {
@@ -138,4 +183,4 @@ public class 배열연습 {
 	}
 
 
-
+//
