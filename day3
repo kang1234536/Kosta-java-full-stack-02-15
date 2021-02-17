@@ -691,4 +691,109 @@ public class EnumTest2 {
 	}
 
 }
-////
+//// 마지막 문제
+package com.kosta.day03;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Exam {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//quiz7();
+		//quiz8();
+		quiz9();
+	}
+
+	private static void quiz9() {
+		// TODO Auto-generated method stub
+		boolean run=true;
+		int studentNum=0;
+		int[] scores=null;
+		int max =0;
+		double avg=0.0;
+		int count =0;
+		int sum=0;
+		Scanner scan = new Scanner(System.in);
+		
+		while(run) {
+			System.out.println("-------------------------------------");
+			System.out.println("1.학생수 |2.점수입력|3.점수리스트|4.분석|5.종료");
+			System.out.println("-------------------------------------");
+			System.out.print("선택>  ");
+			int selectNo =scan.nextInt();
+			if(selectNo==1) {
+				System.out.print("학생수를 입력하세요 :");
+				studentNum=scan.nextInt();
+			}
+			else if(selectNo ==2) {
+				
+				int[] scores1 =new int[studentNum];
+				for(int i =0;i<studentNum;i++) {
+					System.out.print("scores["+i+"]>");
+					scores1[i]=scan.nextInt();
+					count++;
+					
+				}
+				scores=scores1;
+			}else if(selectNo ==3) {
+				for(int i =0;i<studentNum;i++) {
+				System.out.println("scores["+i+"]> "+scores[i]);
+				}
+			}else if(selectNo==4) {
+				for(int i =0;i<studentNum;i++) {
+					if(scores[0]<scores[i]) {
+						max=scores[i];
+					}
+					
+				sum+=scores[i];
+				}
+				avg=1.0*sum/count;
+				System.out.println("최고점수 : "+max);
+				System.out.println("평균점수 : "+avg);
+			}else if(selectNo==5) {
+				run=false;
+			}
+		}
+		System.out.println("프로그램종료");
+	}
+
+	private static void quiz8() {
+		// TODO Auto-generated method stub
+		int[][] arr = {{95,86},{83,92,96},{78,83,93,87,88}};
+		int sum =0;
+		double avg=0.0;
+		int count=0;
+		//향상된 for문을 사용해보자
+		for(int[] arr1: arr) {
+			for(int su:arr1) {
+				sum+=su;
+				count++;
+				avg=(double)sum/count;
+			}
+			
+		}
+		System.out.println(sum);
+		System.out.println(avg);
+	}
+
+	private static void quiz7() {
+		// TODO Auto-generated method stub
+		int max=0;
+		int[] array = {1,5,3,8,2};
+		for(int i=0;i<array.length-1;i++) {
+			if(array[i]>array[i+1])
+			{
+				max=array[i];
+			}
+			
+			
+		}
+		
+		
+		System.out.println("max :"+max);
+	}
+
+}
+
