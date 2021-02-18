@@ -364,20 +364,28 @@ public class ClassTest {
 /////////////메서드 내용 오후
 ////employee
 package com.kosta.day04;
-
+/*
+ * modifier(접근제한자)
+ * 1)public :모든패키지에서 접근가능
+ * 2)protected:
+ * 3)생략(default):같은패키지내에서만 접근가능
+ * 4)private:
+ */
 public class Employee {
 	// 공통된 특성
-	// 1.멤버변수!!
+	// 1.멤버변수!!:instance변수 + static변수
+	//instance변수는 객체마다 존재한다.
+	//static변수: class변수, class당 1개, instance가 공유
 	// 1.field :객체마다 가지는 독립된 변수
-	int empno;// 직원번호
-	String empname;// 직원이름
-	String dept;// 직원부서
-	String phone;// 직원연락처
+	public int empno;// 직원번호
+	public	String empname;// 직원이름
+	public	String dept;// 직원부서
+	public String phone;// 직원연락처
 	// 2. 생성자메서드(Constructor)
 	// 1) 기본생성자(default생성자):제공됨!! , 다른 생성자추가시 지워짐
 
 	// 2)생성자추가(overloading)
-	Employee() {
+	public Employee() {
 		this(0, null, null, null);
 	}
 
@@ -386,7 +394,7 @@ public class Employee {
 		this(empno, null, null, null);
 	}
 
-	Employee(int empno, String empname) {
+	public Employee(int empno, String empname) {
 		this(empno, empname, null, null);
 	}
 
@@ -405,7 +413,7 @@ public class Employee {
 	}
 
 	// 3.메서드
-	void print() { // return값도 없고 들어오는값도없당
+	public void print() { // return값도 없고 들어오는값도없당
 		System.out.println("-----직원정보-----");
 		System.out.println("직원번호: " + empno);
 		System.out.println("직원이름: " + empname);
@@ -414,7 +422,7 @@ public class Employee {
 		System.out.println("--------End------");
 	}
 // \t(tab),\n(new line)
-	String getEmpInfo() {
+	public String getEmpInfo() {
 		String s = "★직원번호: " + empno +
 				   "\n★직원이름: " + empname+
 				   "\n★직원부서: " + dept+
@@ -422,11 +430,11 @@ public class Employee {
 		return s;
 	}
 
-	void ChangePhone(String phone) {
+	public void ChangePhone(String phone) {
 		this.phone = phone;
 		System.out.println("전화번호가 변경되었습니다.");
 	}
-	String ChangePhone2(String phone) {
+	public String ChangePhone2(String phone) {
 		String originalNumber=this.phone;
 		this.phone = phone;
 		System.out.println("전화번호가 변경되었습니다.");
@@ -476,6 +484,7 @@ public class Employee {
 }
 
 
+/////
 
 
 
