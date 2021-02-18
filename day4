@@ -269,38 +269,54 @@ public class StudentTest {
 
 }
 
-//Coffe class
+//CoffeE class
 package com.kosta.day04;
 
-import javax.print.attribute.standard.PrinterName;
+
 
 public class Coffee {
-	// 1.멤버변수(field)
+	// 1.멤버변수(field),instance변수 : object마다 존재 static 안 붙어있다.
+	// class변수 : class마다 존재, static 붙어있다.
 	String menuname;
 	int price;
+	static int count; //클래스 변수!! instance변수들이 공유하는 변수이다.
 
 	// 2.생성자 메서드 .. 생성시 자동 호출 .... 초기화목적
 	public Coffee(String menuname, int price) {
 		this.menuname = menuname;
 		this.price = price;
+		count++;
 
 	}
+
 	public Coffee(String menuname) {
 		this(menuname, 1000);
-		
 
 	}
 
 	// 3.메서드(기능)
 	void print() {
+
 		System.out.println("------------------------주문서----------------------------------");
-		System.out.println("메뉴 : "+menuname);
-		System.out.println("가격 : "+price);
-		System.out.println("당신이 주문하신 음료는 " +"*"+ menuname +"*"+ " 이고 가격은 " + price + " 원입니다.");
+		System.out.println("메뉴 : " + menuname);
+		System.out.println("가격 : " + price);
+		System.out.println("당신이 주문하신 음료는 " + "*" + menuname + "*" + " 이고 가격은 " + price + " 원입니다.");
 		System.out.println("주문해주셔서 감사합니다!");
 		System.out.println("--------------------------------------------------------------");
 	}
+	//instance메서드  new한객체는 다사용가능
+	int getCount() {
+		//사용가능
+		System.out.println(menuname);
+		return count;
+	}
+	//class메서드 new하지 않아도됨
+	static int getCount2() {
+//	사용불가	System.out.println(menuname);  //menu 접근불가 이유: class메서드이기에
+		return count;
+	}
 }
+
 //CoffeeShop
 package com.kosta.day04;
 
@@ -308,7 +324,12 @@ public class CoffeeShop {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		System.out.println(Coffee.count+ "개 주문됨");
+		System.out.println(Coffee.getCount2()); //class변수이기에 바로사용가능
+	
+		
 		Coffee order1 =new Coffee("아메리카노",2000);
+		System.out.println(Coffee.count+ "개 주문됨");
 		Coffee order2 =new Coffee("카페라떼",3000);
 		Coffee order3 =new Coffee("오늘의커피");
 		
@@ -316,9 +337,18 @@ public class CoffeeShop {
 		order1.print(); //당신이 주문하신 음료는 ~ 이고 가격은 ~입니다.
 		order2.print();
 		order3.print();
+		System.out.println(order1.count);//좋은접근이 아니다!!
+		System.out.println(order2.count);//좋은접근이 아니다!!
+		System.out.println(order3.count);//좋은접근이 아니다!!
+		System.out.println(Coffee.count+ "개 주문됨");
+		
+		System.out.println(order1.getCount());
+//		System.out.println(order1.getCount2()); //class꺼이기에 좋은접근이아니다
+		System.out.println(Coffee.getCount2()); //이게 좋은조건
 	}
 
 }
+
 ///Class사용법!!
 package com.kosta.day04;
 
@@ -484,7 +514,83 @@ public class Employee {
 }
 
 
-/////
+///// NoteBook class
+package com.kosta.day04;
+
+/*Modifier(접근제한자)
+ * 1)public:모든 패키지에서 접근가능
+ * 2)protected
+ * 3)생략(default):같은 패키지만 접근가능
+ * 4)private:같은 class내에서만 접근가능(정보은닉)
+ */
+public class NoteBook {  //extends 상속!! Object 모든것들 extends Object기본적으로 생략되어있음
+//노트북 특성
+	//1.멤버변수:instance변수 or class변수?
+	private String macAdress; //
+	public String model; //모델명
+	int price; // default  가격
+	private static int count; //class변수  노트북개수
+	//2.생성자 메서드  
+	///class변수는 넣을필요가 없다.
+	public NoteBook(String macAdress, String model, int price) {
+		super(); //부모를 먼저 실행하고 그다음에 실행한다 상속 
+		this.macAdress = macAdress;
+		this.model = model;
+		this.price = price;
+		count++; //class변수를 넣을순 있다.
+	}
+	//3.일반 메서드 ..... instance 메서드
+	//macAdress는 private이므로..
+	//macAdress를 받을수 있게 함수만들기!!
+	public String getMacAdress(){
+		return macAdress.substring(0, 3)+"******"; //substring은 짤라서보여준다!!
+	}
+	public void setmacAdress(String macAdress) {//주소를 바꾸고싶다 set, 얻고싶다 get
+		this.macAdress=macAdress;
+	}
+//일반메서드 ...class메서드	
+	public static int getCount() { //노트북 갯수 구하는 함수 static을 붙이는 이유는 new를 안해도 부를수있다.!!!
+		return count;
+	}
+	@Override //이게 오버라이딩!!  마우스오른쪽 source=> generate toString()
+	public String toString() {
+		return "NoteBook [macAdress=" + macAdress + ", model=" + model + ", price=" + price + "]";
+	}
+	
+	
+}
+
+//NoteBookTest.java
+package com.kosta.day04;
+
+public class NotebookTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//static이 붙여있는 class변수이기에 바로 부를수잇다.
+		String s= new String("자바");
+		System.out.println(s);
+		
+		
+		System.out.println(NoteBook.getCount()+"대 있음....메서드 접근"); //노트북 갯수 확인
+//		System.out.println(NoteBook.count+"대 있음...field접근");// private 이므로 접근 불가
+		NoteBook n1 = new NoteBook("abc12345", "그램123", 150);
+		NoteBook n2 = new NoteBook("DbA42333", "삼성456", 250);
+		NoteBook n3 = new NoteBook("BSH52442", "SK123", 100);
+	
+		System.out.println(NoteBook.getCount()+"대 있음");
+		System.out.println(n1.getMacAdress()); //일부만보여지게 설정
+		n1.setmacAdress("asgg1252");
+		System.out.println(n1.getMacAdress());
+		
+		System.out.println(n1);
+		System.out.println(n1.toString());
+
+	}
+
+}
+
+
 
 
 
