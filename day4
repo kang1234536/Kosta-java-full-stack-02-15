@@ -1,33 +1,77 @@
+//https://docs.oracle.com/javase/8/
+//reference -> Java SE API Documentation 클릭후 api명에서 찾아서 어떤것인지 확인이 가능하다 
+//
 
 
 
 
 
 //2월18일 클래스파트 공부!!
-//1.Car class를 먼저만든다!!
+//Car클래스!!
 package com.kosta.day04;
 // 2월 18일 !!
+
+import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 
 // Class :object를 만드는 틀이다 template, 설계도, 붕어빵틀
 //class= 변수+메서드의 묶음
 // Object: class를 이용해서 만든 독립된 개체이다.
 // instance : object 실체
-	
-public class Car {
+
+public class Car { //public: 모든패키지에서 접근이 가능하다
 	// 1.특징 =>변수=>멤버변수,field (멤버변수=field)
+	// 객체마다 가진다.
 	String model; // 모델명
 	int year; // 연식
 	int price; // 가격
 	String color; // 색깔
-	// 2.기능 =>메서드,함수
-	void go()  {//움직이는 기능
+	String company = "현대자동차";
+
+	// 2. 생성자 메서드: 생성시(new) 자동으로 수행된다.
+	// 반드시 클래스이름과 같아야한다!!
+	// return을 가질수 없다.
+	//목적 : 변수 초기화
+	//다형성의 종류 : 오버로딩!! ==>이름같고 매개변수 다르다.
+	//this : 현재객체를 의미한다. 보통 멤버변수를 지칭할떄 쓴다!!
+	//매개변수와 멤버변수가 충돌되는 경우
+	//생성자가 여러개 있다. 하나의 생성자가 다른생성자를 호출 하는 경우!!
+	public   Car() { //다른패키지에서 적용할수없다 단 public이 있으면 가능하다
+		//생성자를 2개이상 사용할수 있다.
+		this("모델 미 결정",2000);//똑같은 생성자를 호출한다
+		
+//		System.out.println("(default) 자동차가 생성됩니다"); //new할떄마다 자동으로수행된다.
+//		model="모델 미 결정";
+
+	}
+	public   Car(String model, int price) { //다른패키지에서 적용할수없다 단 public이 있으면 가능하다
+		
+		System.out.println("(매개변수2) 자동차가 생성됩니다"); //new할떄마다 자동으로수행된다.
+	
+		this.model=model; //멤버변수에 값을 대입하면 생성자를 제대로 사용할수있당!!
+		this.price=price; //가까이있는 변수의값을 넣게된다!! 중요!!
+	}
+public   Car(String model) { 
+	this(model,4000);
+//		System.out.println("(매개변수1) 자동차가 생성됩니다"); //new할떄마다 자동으로수행된다.
+//		System.out.println("===========================");
+//
+//		this.model=model; 
+//		price=4000;
+	}
+//ex) public void Car2(){} 이건 메서드!!
+//ex) public void Car(){} 이건 생성자x 왜냐하면 생성자는 반드시 클래스이름과 같아야한다!!
+	// 3.기능 =>메서드,함수
+	void go() {// 움직이는 기능
 		System.out.println("자동차가 앞으로간다");
 	}
-	void back()  {//움직이는 기능
+
+	void back() {// 움직이는 기능
 		System.out.println("자동차가 뒤로간다");
 	}
 }
-//2.호출할 클래스를 만든다!!
+
+
+//CarTest1
 package com.kosta.day04;
 
 import java.util.Arrays;
@@ -67,7 +111,8 @@ public class CarTest {
 		System.out.println("year : " + c2.year);
 		System.out.println("price : " + c2.price);
 		System.out.println("color : " + c2.color);
-		
+		System.out.println("company : " + c2.company);
+
 		//객체참조변수 선언
 		String s1;
 		//2.객체 생성
@@ -77,9 +122,207 @@ public class CarTest {
 	}
 
 }
-//https://docs.oracle.com/javase/8/
-//reference -> Java SE API Documentation 클릭후 api명에서 찾아서 어떤것인지 확인이 가능하다 
-//
+//CarTest2
+package com.kosta.day04;
+
+public class CarTest2 {
+
+	public static void main(String[] args) { // main은 void를 써야한다 무조건!!
+		//test1();
+		test2();
+	}
+
+	private static void test2() {
+		// TODO Auto-generated method stub
+		Car c1 = new Car("BMW520",7000); //매개변수를 넣어서 new를 하고싶다!!
+		Car c2 = new Car();
+		Car c3= new Car("SM7");
+		System.out.println(c1.model);
+		System.out.println(c1.price);
+		System.out.println("===========================");
+		System.out.println(c2.model);
+		System.out.println("기본가격 :" +c2.price);
+		System.out.println("===========================");
+		System.out.println(c3.model);
+		System.out.println(c3.price);
+	
+	}
+
+	static void test1() { // private는 지워도상관이 없다
+		// TODO Auto-generated method stub
+		Car c1 = new Car(); // 꼭 변수에 넣을필요는 없다. 하지만 사용하려면 넣자!
+		Car c2 = new Car();
+		//new할떄마다 자동으로수행된다.==> 생성자역할
+		System.out.println(c1.company);
+		System.out.println(c2.company);
+
+		c1.model = "ABC";
+		c2.model = "DDD";
+		c1.company = "기아";
+		System.out.println(c1.company);
+		System.out.println(c2.company);
+		System.out.println(c1.model);
+		System.out.println(c2.model);
+
+	}
+
+	// int를 쓰면 return값을 줘야한다.
+	int method1() { // private static 없애도된다!!
+		// TODO Auto-generated method stub
+		System.out.println("method 연습");
+		return 1;
+	}
+
+	// void : return값이 없다
+	void method2() {
+		System.out.println("method2 연습");
+
+	}
+
+}
+//Student class
+package com.kosta.day04;
+
+//설계도 ..... object들의 공통된 특성, 행위
+public class Student {
+//1.멤버변수(field)
+	String name; // 이름
+	String no; // 학번
+	String major;// 전공
+	int age;// 나이
+//2.생성자 메서드  .. 생성시 자동 호출 .... 초기화목적
+// 정의하지 않으면 default생성자가 제공된다.
+// 정의하면 default생성자가 없어진다.
+	public Student() {
+		//this("현성덕","123","비즈니스",20);
+		//System.out.println("default생성자:argument가 없다");
+		System.out.println("--------------------");
+		System.out.println("학생생성");
+		
+	}
+//	public Student(String name) {
+//		this(name,"123","비즈니스",20);
+//	}
+	public Student(String name,String major) {
+		//생성자가 다른모양의 생성자를 호출
+		this(name,major,"번호모름",20);
+	}
+	public Student(String name,int age) {
+		//생성자가 다른모양의 생성자를 호출
+		this(name,null,"전공모름",age);
+	}
+//	public Student(String name,String major,String n) {
+//		this(name,no,major,20);
+//	}
+	public Student(String name,String major,String no,int age) {
+		System.out.println("--------------------");
+		System.out.println("학생생성");
+		this.name=name;
+		this.no=no;
+		this.major=major;
+		this.age=age;
+	}
+//3.메서드(기능)
+	void study() {
+		System.out.println(name+"학생이 공부한다.");
+		//return; 함수종료후 자동으로 return된다.
+	}
+	String getMajor() { //void  타입이 아니기에 return값이 필요하다
+		return name + "학생의 전공은 "+major;  //String만 이렇게 사용가능하다!!
+	}
+	int getAge() {
+		return age;
+	}
+}
+//StudentTest
+package com.kosta.day04;
+
+public class StudentTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//1.연습하기위해 메서드를 하나만든다!!
+		method1();
+	}
+
+	private static void method1() {
+		// TODO Auto-generated method stub
+		Student s1= new Student(); //Student class값을 초기화한다!!
+		//System.out.println(s1);//s1의 주소를 출력한다
+		System.out.println(s1.name);//s1의 이름을 출력한다
+		Student s2 = new Student("현성덕","비지니스일본어","123",20);
+		System.out.println(s2.name);
+		Student s3 = new Student("강성빈","복학SW");
+		System.out.println(s3.name);
+		String major =s3.getMajor();
+		System.out.println(s3.name+"의 전공은 "+s3.getMajor());
+		Student s4 = new Student("고석우",22);
+		System.out.println(s4.name);
+		int age= s4.getAge();
+		System.out.println(s4.name+" 나이는 " +age);
+		
+		s1.study();
+		s2.study();
+		s3.study();
+		s4.study();
+	}
+
+}
+
+//Coffe class
+package com.kosta.day04;
+
+import javax.print.attribute.standard.PrinterName;
+
+public class Coffee {
+	// 1.멤버변수(field)
+	String menuname;
+	int price;
+
+	// 2.생성자 메서드 .. 생성시 자동 호출 .... 초기화목적
+	public Coffee(String menuname, int price) {
+		this.menuname = menuname;
+		this.price = price;
+
+	}
+	public Coffee(String menuname) {
+		this(menuname, 1000);
+		
+
+	}
+
+	// 3.메서드(기능)
+	void print() {
+		System.out.println("------------------------주문서----------------------------------");
+		System.out.println("메뉴 : "+menuname);
+		System.out.println("가격 : "+price);
+		System.out.println("당신이 주문하신 음료는 " +"*"+ menuname +"*"+ " 이고 가격은 " + price + " 원입니다.");
+		System.out.println("주문해주셔서 감사합니다!");
+		System.out.println("--------------------------------------------------------------");
+	}
+}
+//CoffeeShop
+package com.kosta.day04;
+
+public class CoffeeShop {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Coffee order1 =new Coffee("아메리카노",2000);
+		Coffee order2 =new Coffee("카페라떼",3000);
+		Coffee order3 =new Coffee("오늘의커피");
+		
+		
+		order1.print(); //당신이 주문하신 음료는 ~ 이고 가격은 ~입니다.
+		order2.print();
+		order3.print();
+	}
+
+}
+///Class사용법!!
+
+
+
 
 
 
