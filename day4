@@ -590,8 +590,100 @@ public class NotebookTest {
 
 }
 
+//Overloading test
 
 
+package com.kosta.day04;
+
+public class OverloadingTest {
+	public static void sum(int a, int b) {
+		System.out.println(a+b);
+	}
+	public static void sum(String a, String b) {
+		System.out.println(a+b);
+	}
+	public static void sum(double a, double b) {
+		System.out.println(a+b);
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		sum(10,20);
+		sum("자바", "프로그램");
+		sum(3.14, 10.5);
+		sum(3.14f, 10.5f);
+		
+	}
+
+}
+//method test
+
+package com.kosta.day04;
+
+/*
+ * >java MethodTest
+ * MethodTest의 bytecode가 method 영역에 load
+ * static붙은 메서드,변수가 메모리에 올라옵니다.
+ * static없는 메서드,변수는 new를 적용할때 메모리에 올라온다.
+ */
+
+//메서드 Overloading:메서드이름 같고 매개변수 사양이 다르다.
+public class MethodTest {
+	// int gas; // gas선언 boolean형 멤버변수!!
+//1.파라메터 없음, return없음
+	public void sum() {
+		System.out.println("1.파라메터 없음,return없음");
+		sum(11, 22); // 아래에있는 sum을부를수있음, 객체 내부에서는 그냥가능 외부에서는 new로 불러야한다.
+
+	}
+
+	// 2.파라메터(매개변수) 있음,return없음
+	public void sum(int a, int b) {
+		System.out.println("2.파라메터(매개변수) 있음,return없음");
+		System.out.println(a + b);
+		System.out.println("----------------------------");
+	}
+
+	// 2.파라메터(매개변수) 있음,return없음
+	public void sum(String a, String b) {
+		// TODO Auto-generated method stub
+		System.out.println("2.파라메터(매개변수) 있음,return없음");
+		System.out.println(a + b);
+		System.out.println("----------------------------");
+	}
+
+	// 3.파라메터(매개변수) 있음,return있음
+	public double sum(double a, double b, double c) {
+		// TODO Auto-generated method stub
+		System.out.println("3.파라메터(매개변수) 있음,return있음");
+		return a + b + c;
+	}
+
+	int gas; // gas선언 boolean형 멤버변수(field)!!
+
+	boolean isLeftGas(int aa) { // 매개변수
+		int bb; // 지역변수
+		if (gas == 0)
+			return false;
+		else {
+			return true;
+		}
+	}
+
+	public static void main(String[] args) {
+
+		MethodTest aa = new MethodTest();
+		aa.sum(); // static이 안붙어있으면 new를 써야한다!!!
+		aa.sum(10, 20);
+		aa.sum("자바", "프로그래밍");
+		double result = aa.sum(10.5, 20.5, 30.5);
+		System.out.println("result =" + result);
+		
+		boolean b = aa.isLeftGas(1000); // new로 초기화했기에 gas는 0이된다.
+		System.out.println(b);
+		// 불가 sum();
+	}
+
+}
 
 
 
