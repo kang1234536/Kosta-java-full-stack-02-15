@@ -320,6 +320,47 @@ public class CoffeeShop {
 
 }
 ///Class사용법!!
+package com.kosta.day04;
+
+import java.io.InputStream;
+import java.util.Scanner;
+
+public class ClassTest {
+//자바가 만들어놓은 String class를 사용!!예제
+	public static void main(String[] args) {
+		// 1.객체참조변수 선언
+		String s1;
+		String s2;
+		String s3;
+		String s4;
+		// 2.객체 생성
+		s1=new String();
+		s2=new String("자바");
+		byte[] b = {65,66,67};  //65는 char로 A!!
+		char[] c = {'a','b','c','d'};
+		s3=new String(b);
+		s4=new String(c);
+		// 3.객체를 사용
+		System.out.println("*"+s1+"*");
+		System.out.println("*"+s2+"*");
+		System.out.println("*"+s3+"*");
+		System.out.println("*"+s4+"*");
+		
+		//Scanner class 사용법!! 어차피 나중에 다배움!!
+		InputStream aa=System.in;  //표준입력얻기(키보드)
+		//aa.read(); //1바이트씩읽음!!
+		Scanner sc =new Scanner(aa);
+		String s=sc.nextLine(); //문자입력
+		System.out.println("당신의 입력은 :"+s);
+		
+		
+		
+		
+		
+		
+	}
+
+}
 
 
 
