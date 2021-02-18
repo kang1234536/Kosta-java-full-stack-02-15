@@ -55,7 +55,8 @@ public class CarTest {
 		System.out.println("year : " + c1.year);
 		System.out.println("price : " + c1.price);
 		System.out.println("color : " + c1.color);
-	
+		c1.go();
+		c1.back();
 		Car c2 =new Car();
 		c2.model="그랜져";
 		c2.year=2021;
@@ -66,6 +67,26 @@ public class CarTest {
 		System.out.println("year : " + c2.year);
 		System.out.println("price : " + c2.price);
 		System.out.println("color : " + c2.color);
+		
+		//객체참조변수 선언
+		String s1;
+		//2.객체 생성
+		s1= new  String("자바");
+		//3.객체 접근
+		System.out.println(s1.charAt(0));  //charAt 순서!!
 	}
 
 }
+//https://docs.oracle.com/javase/8/
+//reference -> Java SE API Documentation 클릭후 api명에서 찾아서 어떤것인지 확인이 가능하다 
+//
+
+
+
+
+
+
+
+
+
+
