@@ -1,1 +1,71 @@
+
+
+
+
+
 //2월18일 클래스파트 공부!!
+//1.Car class를 먼저만든다!!
+package com.kosta.day04;
+// 2월 18일 !!
+
+// Class :object를 만드는 틀이다 template, 설계도, 붕어빵틀
+//class= 변수+메서드의 묶음
+// Object: class를 이용해서 만든 독립된 개체이다.
+// instance : object 실체
+	
+public class Car {
+	// 1.특징 =>변수=>멤버변수,field (멤버변수=field)
+	String model; // 모델명
+	int year; // 연식
+	int price; // 가격
+	String color; // 색깔
+	// 2.기능 =>메서드,함수
+	void go()  {//움직이는 기능
+		System.out.println("자동차가 앞으로간다");
+	}
+	void back()  {//움직이는 기능
+		System.out.println("자동차가 뒤로간다");
+	}
+}
+//2.호출할 클래스를 만든다!!
+package com.kosta.day04;
+
+import java.util.Arrays;
+
+public class CarTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// 1.객체 참조변수 선언
+		int[] arr;
+		Car c1;
+		int i;
+		// 2. 객체 생성
+		arr = new int[5];
+		c1 = new Car();
+		// c1 : object
+		// new Car() : heap영역에 instance생성된다.
+		// 3.객체 사용
+		arr[0] = 100;
+		i = 10;
+		System.out.println(c1); // 패키지이름@주소
+		System.out.println(arr); // 주소
+		System.out.println("c1의 차 특징은?");
+		System.out.println("model : " + c1.model);
+		System.out.println("year : " + c1.year);
+		System.out.println("price : " + c1.price);
+		System.out.println("color : " + c1.color);
+	
+		Car c2 =new Car();
+		c2.model="그랜져";
+		c2.year=2021;
+		c2.price=5000;
+		c2.color="black";
+		System.out.println("c2의 차 특징은?");
+		System.out.println("model : " + c2.model);
+		System.out.println("year : " + c2.year);
+		System.out.println("price : " + c2.price);
+		System.out.println("color : " + c2.color);
+	}
+
+}
