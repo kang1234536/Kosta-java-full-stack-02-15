@@ -856,7 +856,112 @@ public class StudentOtherPackage {
 		Student.study5();
 	}
 }
-/////
+/////계좌 마지막문제
+
+package com.kosta.day05;
+
+public class Account2 {
+	private String ano;
+	private String owner;
+	private int balance;
+Account2(){
+	
+}
+public Account2(String ano, String owner, int balance) {
+	super();
+	this.ano = ano;
+	this.owner = owner;
+	this.balance = balance;
+}
+public String getAno() {
+	return ano;
+}
+public void setAno(String ano) {
+	this.ano = ano;
+}
+public String getOwner() {
+	return owner;
+}
+public void setOwner(String owner) {
+	this.owner = owner;
+}
+public int getBalance() {
+	return balance;
+}
+public void setBalance(int balance) {
+	this.balance = balance;
+}
+
+}
+///// 실행
+package com.kosta.day05;
+
+import java.util.Scanner;
+
+public class BankApplication {
+	// 메서드
+	private static Account1[] acc = new Account1[100];
+	private static Scanner scan = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		boolean run = true;
+		while (run) {
+			System.out.println("===================================================");
+			System.out.println("====1.계좌생성 | 2. 계좌목록 |3. 예금 |4. 출금 |5. 종료=====");
+			System.out.println("===================================================");
+			System.out.print("선택> ");
+
+			int selectNo = scan.nextInt();
+			if (selectNo == 1) {
+				createAccount();
+			} else if (selectNo == 2) {
+				accountlist();
+			} else if (selectNo == 3) {
+				deposit();
+			} else if (selectNo == 4) {
+				withdraw();
+			} else if (selectNo == 5) {
+				run=false;
+			}
+		}
+		System.out.println("프로그램 종료");
+
+	}
+
+
+	private static void withdraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void deposit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void accountlist() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void createAccount() {
+		//  계좌생성하기
+		System.out.println("------");
+		System.out.println("계좌생성");
+		System.out.println("------");
+		System.out.println("계좌번호 : ");
+		 acc[] = scan.nextInt();
+		
+
+		System.out.println("계좌주 : ");
+		int b= scan.nextInt();
+		System.out.println("초기입금액 : ");
+		int c= scan.nextInt();
+		
+		System.out.print("결과: 계좌가 생성되었습니다");
+	}
+	
+}
 
 
 
