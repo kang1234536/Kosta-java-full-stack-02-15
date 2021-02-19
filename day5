@@ -1,0 +1,347 @@
+//2월19일 kosta공부내용
+//SLACK 문제들
+//Book클래스
+package com.kosta.day05;
+//업무로직(business logic)없다.
+//==DTO(Data Transfer Object): 데이터를 전송하기위한 객체
+//VO(Value Object): 값을 넣는 가방이다.
+//Beans기술: 변수는 private 접근 지정자를 가지고 있다.
+//메서드는 public 접근 지정자를 사용한다.
+//getter/setter제공 default 생성자필수
+public class Book {
+	// 멤버변수
+	private String title;// 책제목
+	private int price;// 책 가격
+	// 생성자 메서드
+	public Book() {
+		//default 생성자
+	}
+	public Book(String title, int price) {
+		this.title = title;
+		this.price = price;
+		// 메서드
+		//멤버변수title 값을셋팅하는메소드
+		
+	}
+//	/*메서드
+//	 * setTitle(String title) : 멤버변수title 값을셋팅하는메소드 String getTitle() : 멤버변수title
+//	 * 값을반환하는메소드 void setPrice(int price) : 멤버변수price 값을셋팅하는메소드 int getPrice() :
+//	 * 멤버변수price 값을반환하는메소드
+//	 */
+//마우스오른쪽 source -> generate getter/setter 클릭후 만들면 쉽다!!
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+}
+//BookMgr 클래스
+package com.kosta.day05;
+
+/*
+ * 문제. 아래의 조건을 참조하여 Book, BookMgr 클래스를 구현하시오.
+ * BookMgr 클래스의 제약조건
+ * 1.책(Book)  객체여러개를저장할수있는책목록(booklist)이라는배열을멤버변수로가져야한다.
+ * 2.책목록(booklist)이라는배열변수를초기화하는생성자메서드를작성해야한다
+ * 3.책목록을화면에출력하는printBookList() 메서드가있어야한다.
+ * 4.모든책가격의합을출력하는printTotalPrice() 메서드가있어야한다.
+ *       [Prob4 실행결과]
+ *       === 책목록===
+ *       Java Program
+ *       JSP Program
+ *       SQL Fundamentals
+ *       JDBC
+ *        ProgramEJB Program
+ *        === 책가격의총합===
+ *        전체책가격의합: 13200
+ */
+
+public class BookMgr {
+//멤버변수
+	Book[] booklist;// 객체여러개를저장할수있는책목록
+	// 생성자메서드
+	// 2. 책목록(booklist)이라는배열변수를초기화하는생성자메서드를작성해야한다
+	public BookMgr(Book[] booklist) {
+		this.booklist = booklist;
+	}
+	// 책목록을화면에출력하는
+	void printBookList() {
+		System.out.println("=== 책 목록 ===");
+		for(Book book:booklist) {
+			System.out.println(book.getTitle());
+		}
+	}
+	// 모든책가격의합을출력하는
+	void printTotalPrice() {
+		System.out.println("==== 책가격의 총합 ====");
+		int total=0;
+		for(Book book:booklist) {
+			total+=book.getPrice();
+			
+		}
+		System.out.println(total);
+	}
+
+}
+//BookTest 실행문
+package com.kosta.day05;
+
+/*
+ * 문제. 아래의 조건을 참조하여 Book, BookMgr 클래스를 구현하시오.
+ * Book 클래스의
+ * 제약조건1. 책제목(title)과가격(price)정보를저장하는멤버변수가있어야한다.
+ *2. 멤버변수는모두private 접근제한자를가져야한다.
+ * 3. 멤버변수를모두초기화하는생성자메서드가있어야한다.
+ *  4. 멤버변수에값을설정하고리턴하는setter/getter 메서드가있어야한다.
+ *  setTitle(String title) : 멤버변수title 값을셋팅하는메소드
+ *  String getTitle() : 멤버변수title 값을반환하는메소드
+ *  void setPrice(int price) : 멤버변수price 값을셋팅하는메소드
+ *  int getPrice() : 멤버변수price 값을반환하는메소드
+ *  5. setter/getter 메서드는모두public 접근제한자를가져야한다.
+ *   BookMgr 클래스의 제약조건
+ *    1.  책(Book)  객체여러개를저장할수있는책목록(booklist)이라는배열을멤버변수로가져야한다.
+ *     2. 책목록(booklist)이라는배열변수를초기화하는생성자메서드를작성해야한다
+ *     3. 책목록을화면에출력하는printBookList() 메서드가있어야한다.
+ *      4. 모든책가격의합을출력하는printTotalPrice() 메서드가있어야한다.
+ *       [Prob4 실행결과]
+ *       === 책목록===
+ *       Java Program
+ *       JSP Program
+ *       SQL 
+ *       FundamentalsJDBC
+ *        ProgramEJB Program
+ *        === 책가격의총합===
+ *        전체책가격의합: 13200
+ */
+public class BookTest {
+	public static void main(String[] args) {
+	//배열생성
+    Book[] b = new Book[5];
+    //오브젝트 생성
+    b[0] = new Book("Java Program",30000);
+    b[1] = new Book("JSP Program",25000);
+    b[2] = new Book("SQL Fundamentals",20000);
+    b[3] = new Book("JDBC Program",32000);
+    b[4] = new Book("EJB Program",25000);
+    BookMgr bm = new BookMgr(b);
+    bm.printBookList();
+    bm.printTotalPrice();
+}
+}
+
+// 참새오리문제
+package com.kosta.day05;
+
+/*
+ * 문제. 다음과같은 설명을 읽고 Duck과 Sparrow 클래스를 작성하십시오.
+ * PlayBird 클래스를 참고하세요.오리(Duck)  클래스와 참새(Sparrow)
+ *  클래스는 이름을 나타내는 name과 다리의수를 나타내는 legs,
+ *   몸길이를 나타내는 length 데이터를 가지고 있다.
+ *   메소드로는 날다 fly, 울다 sing, 이름기록하기 setName,
+ *    문자열출력하기 toString를 가지고 있다.
+ *    PlayBird  클래스를 이용하여 두 클래스의 메소드를 호출시켰을 때
+ *     콘솔에 출력되는결과는 다음과 같다.
+ *     [PlayBird 실행결과]
+ *     오리(꽥꽥이)는 날지 않습니다.
+ *     오리(꽥꽥이)가  소리내어 웁니다.
+ *     오리의 이름은 꽥꽥이 입니다.
+ *     참새(짹짹)가 날아다닙니다.참새(짹짹)가  소리내어 웁니다.
+ *     참새의 이름은 짹짹 입니다
+ */
+class Duck {
+	// 멤버변수: 1.instance변수(non-static)//2.class변수(static)
+	private String name;// 이름
+	static int legs = 2;// 다리의수//지정할수있다. 오리가 만약다리가 무조건 2개면 static을 붙인다.
+	int length;// 몸의 길이
+	// 메서드
+
+	void fly() {
+		System.out.println("오리(" + name + ")는 날지 않습니다.");
+	}
+
+	void sing() {
+		System.out.println("오리("+name+")가 소리내어 웁니다.");
+	}
+
+	void setName(String name) {
+		this.name=name;
+		
+	}
+
+	//@Override
+	public String toString() {
+		return "오리의 이름은 "+name+"입니다.";
+	}
+
+}
+
+class Sparrow {
+	// 멤버변수: 1.instance변수(non-static)//2.class변수(static)
+	String name;// 이름
+	static int legs = 2;// 다리의수//지정할수있다. 참새가 만약다리가 무조건 2개면 static을 붙인다.
+	int length;// 몸의 길이
+	// 메서드
+
+	void fly() {
+		System.out.println("참새(" + name + ")는 날지 않습니다.");
+	}
+
+	void sing() {
+		System.out.println("참새("+name+")가 소리내어 웁니다.");
+	}
+
+	void setName(String name) {
+		this.name=name;
+		
+	}
+
+	//@Override
+	public String toString() {
+		return "참새의 이름은 "+name+"입니다.";
+	}
+
+}
+
+public class PlayBird {
+public static void main(String[] args) {
+	
+	//static은 객체생성(new)와 무관하다.
+	System.out.println("오리의 다리수는 "+Duck.legs);
+	System.out.println("참새의 다리수는 "+Sparrow.legs);
+	Duck d =new Duck();
+	d.setName("꽥꽥이");
+	d.fly();
+	d.sing();
+	String s=d.toString();  // .toString이나 String은 이렇게 초기화해서 사용해야한다!!!
+	System.out.println(s);
+//	System.out.println(d);
+	
+	Sparrow sparrow=new Sparrow();
+	sparrow.setName("짹짹이");
+	sparrow.fly();
+	sparrow.sing();
+	String s2=sparrow.toString();
+	System.out.println(s2);
+//	System.out.println(sparrow);
+	
+}
+}
+// 계좌문제
+package com.kosta.day05;
+
+/*
+ * 문제다음과같은 설명을 읽고 Account클래스를 작성하십시오.
+ * TestAccount 클래스를 참고하세요.
+ * 계좌(Account) 클래스는 계좌 번호를 나타내는  accNo 
+ * 데이터와 잔고를 나타내는balance 데이터를 가지고 있습니다.
+ * 함수로는 입금을 의미하는  save 함수와 
+ * 출금을 의미하는  deposit함수 및
+ *  잔고를확인하는  getBalance 함수와  
+ *  계좌 번호를 확인하는  getAccNo 함수를 가지고있습니다.
+ *   TestAccount 클래스를 이용하여 Account 클래스의 함수를
+ *    호출시켰을 때콘솔에 출력되는 결과는 다음과 같습니다.
+ *    [TestAccount 실행결과]
+ *    078-3762-293 계좌가개설되었습니다.
+ *    078-3762-293 계좌의잔고는0만원입니다.
+ *    078-3762-293 계좌에100만원이입금되었습니다.
+ *    078-3762-293 계좌의잔고는100만원입니다.
+ *    078-3762-293 계좌에30만원이출금되었습니다.
+ *    078-3762-293 계좌의잔고는70만원입니다.
+ * public class TestAccount {public static void main(String[] args) {
+ * Account a = new Account("078-3762-293");
+ * a.save(100000);
+ * a.deposit(50000);}}
+ */
+class Account {
+	// 매개변수
+	private String accNo; // 계좌번호
+	private int balance;// 데이터잔고
+	// 생성자 메서드
+	Account(String accNo){
+		this.accNo=accNo;
+		String message=accNo+" 계좌가개설되었습니다.";
+		print(message);
+		
+	}
+	
+
+	// 메서드
+	void save(int amount) {// 입금을 의미하는 save 함수
+		balance+=amount;
+		String message=accNo+" 계좌에"+amount+"만원이입금되었습니다.";
+		print(message);
+		
+	}
+
+	void deposit(int amount) {// 출금을 의미하는 deposit함수
+		balance-=amount;
+		String message =accNo+" 계좌에"+amount+"만원이출금되었습니다.";
+		print(message);
+
+	}
+
+	int getBalance() {// 잔고를확인하는 getBalance 함수
+		return balance;
+	}
+
+	String getAccNo() {// 계좌 번호를 확인하는 getAccNo 함수
+		return accNo;
+	}
+	void print(String message) {
+		System.out.println(message);
+		System.out.println(accNo+" 계좌에 잔고는"+balance+"만원입니다.");
+	}
+
+}
+
+public class TestAccount {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Account a = new Account("078-3762-293");
+		a.save(100);
+		a.deposit(30);
+		
+	}
+
+}
+// 계좌문제 응용2
+package com.kosta.day05;
+
+public class AccountTest2 {
+
+	public static void main(String[] args) {
+		
+		// 계좌가 여러개 있다.->배열
+		//1.배열생성
+		Account[] arr = new Account[3]; //Account 클래스는 TestAccount클래스에 있당!!
+		//2.객체 생성
+		for(int i =0;i<arr.length;i++) {
+			arr[i]=new Account((i+1)+"계좌");
+			
+		}
+		System.out.println("2번쨰계좌문제!!!!!!!1----------");
+		//3.객체접근
+		for(Account acc:arr) {
+			acc.save(10);
+		}
+	
+	}
+
+}
+////
+
+
+
+
+
