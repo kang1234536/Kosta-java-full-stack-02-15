@@ -339,7 +339,98 @@ public class AccountTest2 {
 	}
 
 }
-////
+////employee 문제
+package com.kosta.day05;
+/*
+ * 문제1
+1.  사원(Employee)  클래스는 사원번호를 나타내는
+  id(문자열)와 사원 이름을 나타내는name(문자열), 
+사원의 기본급을 나타내는 baseSalary(정수) 필드를 가지고 있다.
+ 2. 사원번호(id), 사원이름(name), 기본급(baseSalry)을 인자로 받는
+ 생성자가 있어야 합니다
+.3.  메소드는 사원의 이름 변경  setName메소드와 
+이름을 반환하는  getName,  
+기본급을변경하는  setBaseSalary  와
+ 기본급을 반환하는  getBaseSalary,
+  사원번호를 변경하는setId, 
+사원번호를 반환하는 getId 메소드를 가지고 있다. 
+4.  또한 보너스 값을 매개인자로 받아
+ 다음과 같이 봉급을 계산하여 반환하는 doublegetSalary(double bonus)
+ 메소드를 가지고 있다. 
+- double getSalary(double bonus)  메소드의 봉급 구현 방법은
+ 다음과 같이 기본급과보너스를 곱한 값에 기본급을 더하여 계산한다. 
+  -  salary = baseSalary + baseSalary * bonus ; 
+5. 다음과 같은 형식으로 사원정보를 리턴하는 String toString() 메소드를 가지고 있다
+  - "name(id) 사원의 기본급은 baseSalary원 입니다."
+모든 필드는 외부에서 직접 접근하여 값을 변경하거나 얻어가지 못하도록
+ private로 접근제한을 막고, 
+메소드는 제한 없이 모두 호출할 수 있는 접근 제한자(public)를 사용한다.
+ */
+public class Employee {
+//멤버변수
+ private String id;
+ private String name;
+ private int baseSalary;
+//생성자
+public Employee(String id, String name, int baseSalary) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.baseSalary = baseSalary;
+}
+ //getter(읽기목적)//setter(수정목적)
+public String getId() {
+	return id;
+}
+public void setId(String id) {
+	this.id = id;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getBaseSalary() {
+	return baseSalary;
+}
+public void setBaseSalary(int baseSalary) {
+	this.baseSalary = baseSalary;
+}
+double getSalary(double bonus){
+	double salary;
+	salary = baseSalary + baseSalary * bonus ; 
+	return salary;
+}
+ //toString()메서드는 Object class의 이미 정의되어있다.
+//Employee class가 상속받았다.
+//Employee class는 Object class의 toString()메서드 갖는다.
+//만약에 toString()메서드 작성한다면 재정의를 의미한다.(덮어쓰기)
+//재정의 조건: 시그니처가 똑같아야한다.== 메서드제목이 같아야한다!!
+//접근제한자가 같거나 더 넓어지는 것은 가능하지만 좁아지는 것은 불가능이다.
+public String toString() {
+	return name+"("+id+") 사원의 기본급은 "+ baseSalary+"만원 입니다.";
+}
+
+}
+//실행문
+package com.kosta.day05;
+
+public class EmployeeTest2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Employee emp = new Employee("123", "홍길동", 200);
+		emp.setBaseSalary(300);
+		double sal=emp.getSalary(1);
+		System.out.println("급여 "+sal);
+		String s=  emp.toString();
+		System.out.println(s);
+		System.out.println(emp);
+	}
+
+}
+
 
 
 
