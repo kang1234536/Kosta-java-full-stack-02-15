@@ -581,6 +581,84 @@ public class Test {
 
 }
 
+////// 오후내용 정적메서드
+package com.kosta.day05;
+
+import java.awt.Color;
+
+/*
+ * 계산기만들기
+ */
+class Calculator{
+	//1.멤버변수(field) :non-static(인스턴스변수)/static(class변수)
+	static double pi=3.14; //static:모든계산기가 pi값이 같다/non-static=pi라는 값을 각각 받는다!!
+	String color; //계산기마다 색깔이 다르다  non-static
+	//2.생성자메서드
+	//3.메서드: non-static(인스턴스메서드)/static(클래스메서드)
+	int plus(int a, int b) {
+		return a+b;
+	}
+	static int minus(int a, int b) {
+		return a-b;
+	}
+	//4.static block ,instance block(생성자와 유사)
+	//순서대로 실행
+	{
+		System.out.println("instance block .... new할때 자동실행1");
+	}
+	{
+		System.out.println("instance block .... new할때 자동실행2");
+	}
+	//static block
+	//메모리에 로드될때 한번만나옴
+	static {
+		System.out.println("static block1");
+	
+	}
+	static {
+		System.out.println("static block2");
+		System.out.println(pi); //static된 변수만 써야한다
+		//System.out.println(color);인스턴스 변수 사용 불가능
+		minus(19,30); //가능
+		//plus(10,20); //instance 메서드  사용 불가능
+		//this.pi=3; //this 사용 불가능 static에서는
+	}
+	}
+	//5.inner class
+
+
+
+
+public class StaticTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Calculator cal1=new Calculator();
+		Calculator cal2=new Calculator();
+		
+		Calculator.pi=3.141592;
+		cal1.color="red";
+		cal2.color="blue";
+		//바람직한 사용아님
+		System.out.println("계산기의 pi값은: "+cal1.pi);
+		System.out.println("계산기의 pi값은: "+cal2.pi);
+		//바람직한 사용
+		System.out.println("계산기의 pi값은: "+Calculator.pi);
+		
+		//System.out.println(cal1.color+":"+cal2.color);
+		
+		System.out.println("----------------------------");
+		System.out.println("instance메서드 호출 :"+cal1.plus(10, 20));
+		//바람직한 사용아님
+		System.out.println("static메서드 호출 :"+cal1.minus(10, 20));
+		//바람직한 사용!!
+		System.out.println("static메서드 호출 :"+Calculator.minus(10, 20));
+		
+		
+	}
+
+}
+//Singleton Test
 
 
 
