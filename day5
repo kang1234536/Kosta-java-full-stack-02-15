@@ -659,6 +659,206 @@ public class StaticTest {
 
 }
 //Singleton Test
+package com.kosta.day05;
+
+ class Singleton{
+	 int score=100;
+	 static int score2 =200;
+	static Singleton aa;
+	 private Singleton() {
+		
+	}
+static 	Singleton getInstance(){
+	if(aa==null)
+	aa=new Singleton();
+		return aa;
+		
+	}
+}
+public class SingletonTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			Singleton s1 =Singleton.getInstance();
+			Singleton s2 =Singleton.getInstance();
+			System.out.println(s1);
+			System.out.println(s2);
+			//바람직하지않다
+			System.out.println(s1.score);
+			System.out.println(s1.score2);
+			//바람직하다
+			System.out.println(s1.score);
+			System.out.println(Singleton.score2);
+			
+	}
+
+}
+//final
+package com.kosta.day05;
+
+public class Person {
+//1.멤버변수
+	//final이 붙으면 1번만 할당가능, 수정불가
+	//불변의 인스턴스변수
+	final String nation="한국";//국적  //1)선언시 초기화한다.  
+	final String ssn;//주민번호
+	//상수 =static final 불변의 정적필드  상수는무조건 대문자 다른단어결합하면_를사용한다.
+	static final String COUNTRY="대한민국";  //상수!!! /CLASS변수
+	String	name;//이름
+	int age;//나이
+	
+//2.생성자메서드
+	Person(){
+		this.ssn="";  // 멤버변수에 할당하지않으면 꼭 여기서 해야한다.
+	}
+	Person(String ssn,String name,int age){
+		//2) 생성시 초기화한다.
+		this.ssn=ssn;  // 멤버변수에 할당하지않으면 꼭 여기서 해야한다.
+		this.name=name;  
+		this.age=age;
+	}
+	
+//3.메서드
+	void Test() {
+		name="이름수정";
+		age=20;
+		//final 수정불가를 의미한다.
+//		nation="중국"; //절대바꿀수없다
+//		ssn="33333";  //절대바꿀수없다
+//		COUNTRY="미국"; //절대 바꿀수 없다.
+	}
+	void Test2() {
+//		Integer.MAX_VALUE =100; //MAX_VALUE는 상수이기에 바꿀수없다!!
+		System.out.println(Integer.MAX_VALUE);
+		System.out.println(Integer.class);
+		//bitCount()->2진수로 바꾸어서 1의갯수가 몇개인지 체크
+		System.out.println(Integer.bitCount(7));
+		
+	}
+	public static void main(String[] args) {
+		Person a= new Person();
+		a.Test2();
+	//new Person().Test2(); 위에랑 같은것
+		String s= new String("자바프로그램").substring(0, 2);
+		System.out.println(s);
+		System.out.println(s.charAt(1));
+	}
+}
+// pacakage test
+package com.kosta.day05;
+
+import java.sql.Date;
+
+import com.kosta.day04.Car;
+
+
+
+//import java.util.Date;
+////import java.util.Calendar;
+////import java.util.Scanner;
+//import java.util.*; //util쪽 다사용!!
+public class PackageTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		long aa = new java.util.Date().getTime();  //import없이 사용가능
+		//java.sql.Date d= new java.sql.Date(0); 	//import없이 사용가능!!
+		//System.out.println(d);
+		Date d=new Date(aa);
+		//System.out.println(aa);
+		System.out.println(d);
+		
+		new Car();
+	}
+
+}
+//접근제한자
+
+
+package com.kosta.day05;
+
+public class Student {
+	// public,protected,default,private
+	// 접근제한자들!!
+	public String name; // 이름 + public 접근제한자 : 어디에서나 사용가능!!
+	protected int[] scores;// 점수들 ? protected 접근제한자
+	String major; // 전공 default접근제한자
+	private String sno; // 학번 private접근제한자
+//활용방법: static, final
+	public static String School; // 모든 학생들이 다니는학교
+	public final int grade = 4;// 학년 ....정해진 학년 초기화를 해야한다 1.여기서,2.생성자에서
+	public static final String TEACHER = "김교수님"; // 상수!! 상수는 여기서만 생성해야한다!!
+
+	// 생성자의 접근권한
+	public Student(String name) {this.name=name;
+	}
+
+	protected Student(String name, String major) {
+		this.name=name;
+		this.major=major;
+	}
+
+	Student() {
+	}
+
+	private Student(int[] scores) {
+	}
+
+	// 메서드의 접근권한
+	public void study() {
+	}
+
+	protected void study2() {
+	}
+
+	void study3() {
+	}
+
+	private void study4() {
+	}
+	// 메서드의 활용방법
+	// 1.static: class메서드이다.
+
+	public static void study5() {
+	}
+
+	// 2.final: 자식이 부모의 메서드를 재정의 할수없다
+	public final void study6() {
+	}
+	// 3.abstract: 정의는 있고 구현은 없다. 구현은 자식이 한다!
+	
+	//4.synchronized: lock걸기!! .... 멀티스레드 할때 배움!!
+}
+//접근제한자 비교
+package com.kosta.day06;
+
+import com.kosta.day05.Student;
+
+public class StudentOtherPackage {
+	public static void main(String[] args) {
+		//Student s1= new Student();
+		Student s2= new Student("김학생");
+		//Student s3= new Student("박학생","컴공");
+		//한개는 private이기에 건드릴수없다.
+		System.out.println(s2.name);
+		//System.out.println(s2.scores);
+		//System.out.println(s2.major);
+		System.out.println(s2.grade);
+		//static 활용
+		System.out.println(Student.School);
+		System.out.println(Student.TEACHER);
+		s2.study();
+		//s2.study2();
+		//s2.study3();
+		s2.study6();
+		
+		//static꺼
+		Student.study5();
+	}
+}
+/////
+
+
 
 
 
