@@ -1,3 +1,251 @@
 //class복습 및 상속 공부
 
+package com.kosta.day06;
 
+/**
+ * 
+ * @author KOSTA 강희원 document 주석 복습
+ */
+public class Car {
+	// 1.멤버변수(field): non-static(instance변수),
+	// static(class변수)
+	private int speed; // 속도? 인스턴스변수!! private 정보은닉
+	private boolean stop;// 멈췄는지?
+
+	private static int count;// 자동차수.... class변수 //object 공유변수
+//instance 변수	//private final int year; //final은 한번만 값을 세팅할수 있다... 값이 설정되고 변경은 불가능하다!.
+//선언하자마자 초기화할수 있고 생성자에서 초기화할수있다.
+	private final int year;
+	private static final String COMPANY = "현대자동차"; // 상수!!
+	// 2.생성자...new시에 자동호출되는 메서드
+
+	public Car() {
+
+		// year=2021;//final 변수 초기화 !!
+		// instance변수는 자동초기화!!
+		// speed=0, stop=false....
+		// 생성자의 overloading사용시에 하나의 생성자가 다른 생성자를 호출시 사용!
+		this(0, false, 2021);
+	}
+
+	public Car(int speed, boolean stop, int year) {
+		super();
+		// 매개변수와 멤버변수가 이름충돌시 구별하기위해 사용한다.
+		this.speed = speed;
+		this.stop = stop;
+		this.year = year;
+		count++;
+		System.out.println(this.getClass().getSimpleName() + " 생성"); // 현재객체의 클래스를 얻어라 라는 함수 this.getClass()!!
+		// 클래스의 이름을 얻으려면!! ==this.getClass().getSimpleName()
+		// 3.일반메서드
+		//대부분은 getter/setter를 만든다 private를 쓰기위해!!
+		//getter/setter:외부에서 값을 읽거나 수정시 사용
+		
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
+	public static int getCount() {
+		return count;
+	}
+
+//	public static void setCount(int count) {
+//		Car.count = count;
+//	}
+	//외부에서 접근못하게 바꿔보자
+	private static void setCount(int count) {
+	Car.count = count;
+}	
+	
+//final 변수는 set할수 없다!!
+	public int getYear() {
+		return year;
+	}
+	//static method: 객체생성없이 호출가능
+	public static String getCompany() {
+		return COMPANY;
+	}
+	public void print() {
+		System.out.println("-----Car정보------");
+		System.out.println("speed : "+speed);
+		System.out.println("stop : "+stop);
+		System.out.println("year : "+year);
+		System.out.println("count : "+count);
+		System.out.println("company : "+COMPANY);
+		
+	}
+	//4.instance block, static block
+	{
+		//위에는 instance block : instance 생성시마다 수행
+		System.out.println("instance생성시 마다 수행된다.");
+		System.out.println("***********************");
+	}
+	static {
+		//static block 
+		System.out.println("class가 load시에 수행된다");
+		//load는 1번만 수행된다.
+		System.out.println("####################");
+	}
+	//5.inner class: class안에 class!!!
+	
+	
+	
+	
+	// class : object만드는 틀이다. template, 설계도
+	/*
+	 * 
+	 * object: class를 이용해서 만든 독립된 개체이다
+	 * 
+	 * 
+	 * 
+	 */
+}
+//CarTest
+
+package com.kosta.day06;
+
+public class CarTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(Car.getCompany());
+		System.out.println(Car.getCount());
+		//Car.setCount(10); private로 바꾸면 접근불가능!!
+		
+
+		Car c1=new Car();
+		//instance method호출
+		
+		System.out.println(c1.getSpeed());
+		c1.print();
+		
+		
+		Car c2= new Car(100, true, 2020);
+		c2.print();
+	}
+
+}
+//MEMBER
+package com.kosta.day06;
+
+//DTO(Data Tranfer Object)
+//VO(Value Object)
+public class Member {
+
+	private String name;
+	private String id;
+	private String password;
+	private int age;
+	
+	public Member(String name,String id){
+		this(name, id, null,0);
+	}
+
+	public Member(String name, String id, String password, int age) {
+		super();
+		this.name = name;
+		this.id = id;
+		this.password = password;
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Member [name=" + name + ", id=" + id + ", password=" + password + ", age=" + age + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	
+	
+	
+}
+//MEMBER SERVICE
+package com.kosta.day06;
+
+//Service : business logic(업무로직)
+public class MemberService {
+
+	public Member login(Member member) {
+		 
+		if (member.getId().equals("hong") && 
+				member.getPassword().equals("12345")) {
+			member.setName("홍길동");
+			member.setAge(20);
+			return member;  //로그인성공, DB정보return 
+		} else {
+			return null;//로그인실패 
+		}
+	}
+
+	public void logout(String id) {
+		System.out.println(id + "님 로그아웃되었습니다.");
+
+	}
+}
+//MEMBERSERVICE EXAMPLE
+package com.kosta.day06;
+
+//Application, App
+public class MemberServiceExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		MemberService service = new MemberService();
+		Member member=new Member(null,"hong","12345",0);
+		member =service.login(member);
+		if(member!=null) {
+			System.out.println("로그인에 성공");
+			System.out.println("로직수행......");
+			service.logout(member.getName());
+		}else {
+		System.out.println("로그인에 실패");
+		}
+		}
+
+}
+/////
