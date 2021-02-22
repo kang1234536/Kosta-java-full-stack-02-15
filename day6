@@ -248,4 +248,46 @@ public class MemberServiceExample {
 		}
 
 }
-/////
+/////Printer
+package com.kosta.day06;
+
+/**
+ * 
+ * @author KOSTA
+ * method의 Overloading: 이름같고 매개변수 사양이 다르다
+ */
+public class Printer {
+
+	public void println(int num) {
+		System.out.println("int:"+num);
+	}
+	public void println(boolean num) {
+		System.out.println("boolean:"+num);
+	}
+	public void println(double num) {
+		System.out.println("double:"+num);
+	}
+	public void println(String num) {
+		System.out.println("String:"+num);
+	}
+}
+
+//PrinterTest
+package com.kosta.day06;
+
+public class PrinterExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Printer printer =new Printer();
+		
+		printer.println(0);
+		printer.println("FALSE");
+		printer.println(3.14);
+		printer.println("자바");
+	}
+
+}
+
+
+
