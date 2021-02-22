@@ -581,7 +581,189 @@ public class AccountContoller {
 	}
 
 }
-//////
+//////7장 상속
+package com.kosta.day06.inherit;
+
+public class Account {
+	private	String accNo;//계좌번호
+	private String ownerName;//계좌주인이름
+	private int balance; //잔액
+	//생성자
+
+	public Account() {
+		
+	}
+	
+	public Account(String accNo, String ownerName, int balance) {
+		super();
+		this.accNo = accNo;
+		this.ownerName = ownerName;
+		this.balance = balance;
+	}
+	
+	//입금기능
+		public void deposit(int amount) {
+			balance += amount;
+		}
+	//출금기능
+	public int withdraw(int amount) {
+		if(amount>balance) {
+			System.out.println("잔액부족합니다");
+			return 0;
+		}
+		balance -=amount;
+		return amount;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accNo=" + accNo + ", ownerName=" + ownerName + ", balance=" + balance +   "]";
+	}
+
+	
+	
+}
+
+package com.kosta.day06.inherit;
+
+public class CheckingAccount extends Account {
+	String cardNo; // 카드번호
+
+	CheckingAccount(String accNo,String ownerName,int balance,String cardNo) {
+		// 1)부모의 default생성자를 정의한다.
+		//super();
+		// 2).명시적으로 부모의 생성자를 호출한다
+		super(accNo,ownerName,balance);
+		
+		this.cardNo=cardNo;
+	}
+
+	public int pay(String cardNo, int amount) {
+		if (this.cardNo.equals(cardNo)) {
+			return withdraw(amount);
+		} else {
+			System.out.println("카드번호 오류");
+			return 0;
+		}
+	}
+
+}
+package com.kosta.day06.inherit;
+
+public class AccountTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		method1();
+		method2();
+		
+	}
+
+	private static void method2() {
+		// TODO Auto-generated method stub
+		CheckingAccount account = new CheckingAccount("112-1888","kim",1000,"7878");
+		account.deposit(2000);
+		System.out.println(account.withdraw(500)+"출금");
+		System.out.println(account);
+		
+		System.out.println(account.pay("7878",600)+"출금");
+		System.out.println(account);
+	}
+
+	private static void method1() {
+		// TODO Auto-generated method stub
+		Account account = new Account("112-1888","kim",1000);
+		account.deposit(2000);
+		System.out.println(account.withdraw(500)+"출금");
+		System.out.println(account);
+	}
+
+}
+package com.kosta.day06.inherit;
+
+public class Person {
+	private String name;
+	private int age;
+	private String phone;
+	public Person() {
+		
+	}
+	public Person(String name, int age, String phone) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.phone = phone;
+	}
+	void exercise() {
+		System.out.println(name+"은 운동을 한다.");
+	}
+	void eatting() {
+		System.out.println(name+"은 밥을 먹는다");
+	}
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + ", phone=" + phone + "]";
+	}
+	
+}
+package com.kosta.day06.inherit;
+
+
+
+public class Student extends Person {
+	String stuNo;
+	String major;
+	
+	public Student(String name,int age, String phone,String stuNo, String major) {
+		super(name,age,phone);
+		this.stuNo = stuNo;
+		this.major = major;
+	}
+	void study() {
+		System.out.println("공부를한다");
+	}
+	void exam() {
+		
+		System.out.println(stuNo+"의 "+"시험을본다");
+	}
+	@Override
+	public String toString() {
+		return "Student [stuNo=" + stuNo + ", major=" + major + "]";
+	}
+	
+	
+}
+package com.kosta.day06.inherit;
+
+public class TEST {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		method1();
+		method2();
+	}
+
+	private static void method2() {
+		// TODO Auto-generated method stub
+		Student s = new Student("김길동",20,"010-1111-2222", "123", "컴공");
+		s.exam();
+		s.study();
+		System.out.println(s);
+	}
+
+	private static void method1() {
+		// TODO Auto-generated method stub
+		Person p = new Person("김길동",20,"010-1111-2222");
+		p.eatting();
+		p.exercise();
+		System.out.println(p);
+	
+	
+	
+	}
+
+}
+
 
 
 
