@@ -1,1 +1,247 @@
 //7. 상속 
+package com.kosta.day07;
+//extends Object가 생략되어있다.
+public class Account extends Object {
+	//1.멤버변수
+	private String accNo;// 계좌번호
+	private String ownerName;// 계좌주인
+	private int balance;// 잔고
+	//2. default 생성자 기본으로 생략되어있다.
+	public Account() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//2.생성자 추가
+	public Account(String accNo, String ownerName, int balance) {
+		super();  //부모가 먼저 생성된다
+		this.accNo = accNo;
+		this.ownerName = ownerName;
+		this.balance = balance;
+	}
+	//3. getter/setter : 일반메서드
+
+	
+
+	public String getAccNo() {
+		return accNo;
+	}
+
+	
+
+	public void setAccNo(String accNo) {
+		this.accNo = accNo;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	//3.메서드
+	//입금메서드
+	public void deposit(int amount) {
+		balance+=amount;
+		System.out.println(amount+"입금되었습니다.");
+	}
+	public int withdraw(int amount) {
+		if(balance<amount) {
+			System.out.println("잔액이 부족합니다.");
+			return 0;
+		}
+		else {
+		
+		balance-=amount;
+		return amount;
+		}
+		}
+	
+	
+	// toString()을 만들어주면 나중에 편하다!!
+	@Override
+	public String toString() {
+		return "Account [accNo=" + accNo + ", ownerName=" + ownerName + ", balance=" + balance + "]";
+	}
+
+}
+
+	// toString()을 만들어주면 나중에 편하다!!
+	@Override
+	public String toString() {
+		return "Account [accNo=" + accNo + ", ownerName=" + ownerName + ", balance=" + balance + "]";
+	}
+
+}
+package com.kosta.day07;
+//클래스를 만들떄 Superclass를 건드리면 상속된 클래스를 만들수있다.
+public class CheckingAccount extends Account {
+	
+	//1.멤버변수
+	private String cardNo;//카드번호
+	//2.생성자!!
+	//default생성자
+	public CheckingAccount() {
+		// TODO Auto-generated constructor stub
+	}
+	//2.일반생성자
+	public CheckingAccount(String accNo,String owner, int balance,String cardNo) {
+		//부모가 먼저 생성된다.(Account)
+		super(accNo,owner,balance);
+		
+		this.cardNo = cardNo;
+	}
+	
+	
+	
+	
+	
+	//3.일반메서드
+	
+	
+	
+
+
+
+
+
+	public int pay(String cardNo, int amount) {
+		if(!cardNo.equals(this.cardNo)) {
+			System.out.println("카드번호 오류....지불이 불가능합니다");
+			return 0;
+		}
+		//int aa=withdraw(amount);
+	//	return aa;
+		return withdraw(amount);
+	}
+	
+	//3.getter/setter
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+	//toString()만들어 놓으면 편하다!!
+	@Override
+	public String toString() {
+		//부모에 메서드를 호출!!
+	String s=	"부모 :"+super.toString();  
+		//재정의
+		return s+" \n자식 :CheckingAccount [cardNo=" + cardNo + "]";
+	}
+
+	
+	
+}
+////
+package com.kosta.day07;
+
+public class AccountTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		method1();
+		method2();
+		method3();
+	}
+
+	private static void method3() {
+		//Object생성-> Account 생성-> CheckingAccount생성
+		// TODO Auto-generated method stub
+		// CheckingAccount
+		CheckingAccount acc = new CheckingAccount("112-1555", "홍길동", 1000, "5555");
+
+		System.out.println(acc instanceof Object);
+		System.out.println(acc instanceof Account);
+		System.out.println(acc instanceof CheckingAccount);
+		System.out.println(acc);
+		acc.deposit(2000);
+		System.out.println(acc.withdraw(500));
+		System.out.println(acc);
+		System.out.println(acc.pay("5555", 300));
+	}
+
+	private static void method2() {
+		// CheckingAccount
+		CheckingAccount acc = new CheckingAccount();
+		acc.setAccNo("112-1555");
+		acc.setOwnerName("홍길동");
+		acc.setBalance(1000);
+		acc.setCardNo("5555");
+		System.out.println(acc);
+		acc.deposit(2000);
+		System.out.println(acc.withdraw(500));
+		System.out.println(acc);
+		System.out.println(acc.pay("5555", 300));
+	}
+
+	private static void method1() {
+		// Account
+		Account acc = new Account();
+		acc.setAccNo("112-1555");
+		acc.setOwnerName("홍길동");
+		acc.setBalance(1000);
+		System.out.println(acc);
+		acc.deposit(2000);
+		System.out.println(acc.withdraw(500));
+		System.out.println(acc);
+	}
+
+}
+////
+package com.kosta.day07;
+
+public class CreditLineAccount extends Account {
+	//멤버변수
+	private int creditLine;  //마이너스통장?
+	//2.생성자
+
+	public CreditLineAccount(String accNo, String ownerName, int balance, int creditLine) {
+		//부모의 생성자를 명시적으로 호출한다.
+		super(accNo, ownerName, balance);
+		//자신의 필드는 직접 초기화한다.
+		this.creditLine = creditLine;
+	}
+	
+	//재정의(Override):부모의 메서드를 수정
+	//메서드의 선언부가 같아야한다.(return 타입, 메서드이름, parameter)
+	//Modifier는 같거나 더 넓어져야 한다.
+	public int withdraw(int amount) {
+		int b=getBalance();
+		if(b+creditLine<amount) {
+			System.out.println("잔액이 부족합니다.");
+			return 0;
+		}
+		else {
+		setBalance(b-amount);
+	
+		return amount;
+		}
+		}
+	
+	
+	
+	
+	
+	//getter/setter 메서드
+	public int getCreditLine() {
+		return creditLine;
+	}
+
+	public void setCreditLine(int creditLine) {
+		this.creditLine = creditLine;
+	}
+	
+	
+}
+////
