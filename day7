@@ -317,3 +317,237 @@ public class BonusAccount extends Account {
 	
 	
 }
+//다형성 연습
+package com.kosta.day07;
+
+public class 다형성연습 {
+
+	public static void main(String[] args) {
+		// Account가 제일큰 부모!!
+		Account acc1= new Account("112","hong",1000);
+		CheckingAccount acc2=new CheckingAccount("113","kim",1000,"7878");
+		CreditLineAccount acc3= new CreditLineAccount("114","park", 2000, 500);
+		BonusAccount acc4= new BonusAccount("115", "lee", 3000, 100);
+				
+		accountDisplay(acc1);
+		accountDisplay(acc2);
+		accountDisplay(acc3);
+		accountDisplay(acc4);
+	}
+	public static void accountDisplay(Account acc) {
+		System.out.println(acc);
+		System.out.println("-------------------------------------------------------------------");
+		
+	}
+}
+//
+package com.kosta.day07;
+
+
+
+public   class Book {
+	//멤버변수
+	private String title;// 책제목
+	private int price;//책 가격
+	//2.생성자메서드
+	public Book(String title, int price) {
+		super();
+		this.title = title;
+		this.price = price;
+	}
+	//추상메서드
+	//abstract void 목차를출력한다(); //목차를 출력한다()
+		
+	
+//	abstract void 예제를풀이한다(); //예제를 출력한다()
+		
+	
+	
+
+	//getter/setter
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	//toString()
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Book [title=").append(title).append(", price=").append(price).append("]");
+		return builder.toString();
+	}	
+	
+
+	
+	
+	
+}
+
+package com.kosta.day07;
+
+public class JavaBook extends Book {
+
+	public JavaBook(String title, int price) {
+		super(title, price);
+		// TODO Auto-generated constructor stub
+	}
+
+//	@Override
+	void 목차를출력한다() {
+		// TODO Auto-generated method stub
+		System.out.println("JavaBook 목차입니다");
+	}
+
+//	@Override
+	void 예제를풀이한다() {
+		// TODO Auto-generated method stub
+		System.out.println("JavaBook 예제입니다");
+
+	}
+
+}
+package com.kosta.day07;
+
+public class SpringBook extends Book {
+
+	public SpringBook(String title, int price) {
+		super(title, price);
+		// TODO Auto-generated constructor stub
+	}
+
+//	@Override
+	void 목차를출력한다() {
+		// TODO Auto-generated method stub
+		System.out.println("SpringBook 목차입니다");
+		
+	}
+
+//	@Override
+	void 예제를풀이한다() {
+		// TODO Auto-generated method stub
+		System.out.println("SpringBook 예제입니다");
+
+	}
+
+}
+package com.kosta.day07;
+
+public class BookTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		print(new JavaBook("이것이 자바다", 30000)); 
+		print(new SpringBook("SpringBoot", 35000));
+	}
+	public static void print(Book b) {
+		if(b instanceof JavaBook) {
+			JavaBook aa= (JavaBook)b;
+		aa.목차를출력한다();
+		aa.예제를풀이한다();
+		}
+		else if(b instanceof SpringBook) {
+			SpringBook bb = (SpringBook)b;
+			bb.목차를출력한다();
+			bb.예제를풀이한다();
+		}
+		
+	}
+}
+//인터페이스 예제
+package com.kosta.day07.interfaceTest;
+//interfate: 규격서
+public interface TV {
+	
+	//1.상수(변경불가능)
+	public static final String CHANNEL6="SBS";
+	//같은상수
+	String CHANNEL9="KBS"; //	public static final생략 가능!!
+	//2.추상메서드
+	public abstract void powerOn();
+	//같은 추상메서드
+	void powerOff(); //	public abstract생략 가능
+	//3.default메서드
+	//4.static메서드
+	
+	
+}
+
+package com.kosta.day07.interfaceTest;
+//interface를 구현한 class
+//interface내의 추상메서드는 반드시 구현할 의무가 있다.
+public class KostaTV implements TV{  //extends Object가 생략되어잇따.
+
+	public void display() {
+		System.out.println("KostaTV에 추가된 함수이다.");
+	}
+	@Override
+	public void powerOn() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" 전원을 켠다.");
+		System.out.println(CHANNEL6 + " 채널을 본다.");
+	}
+
+	@Override
+	public void powerOff() {
+		// TODO Auto-generated method stub
+		System.out.println(CHANNEL9 + " 채널을 보고있었다.");
+		System.out.println(getClass().getSimpleName()+" 전원을 끈다.");
+		
+
+	}
+
+}
+package com.kosta.day07.interfaceTest;
+//interface를 구현한 class
+//interface내의 추상메서드는 반드시 구현할 의무가 있다.
+public class 가산TV implements TV{  //extends Object가 생략되어잇따.
+
+	public void print() {
+		System.out.println("가산TV에 추가된 함수이다.");
+	}
+	@Override
+	public void powerOn() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" 전원을 켠다.★");
+		System.out.println(CHANNEL6 + " 채널을 본다!!!!!!!◆");
+	}
+
+	@Override
+	public void powerOff() {
+		// TODO Auto-generated method stub
+		System.out.println(CHANNEL9 + " 채널을 보고있었다!!!!!!!!★");
+		System.out.println(getClass().getSimpleName()+" 전원을 끈다..★");
+		
+
+	}
+
+}
+package com.kosta.day07.interfaceTest;
+
+public class TVUser {
+
+	public static void main(String[] args) {
+		//TV tv= new TV(); 이거는 사용불가능 이유 Interface이기에
+		TV tv = new KostaTV();
+		tv.powerOn();
+		tv.powerOff();
+		((KostaTV)tv).display();
+		System.out.println("---------------");
+		TV tv2 = new 가산TV();
+		tv2.powerOn();
+		tv2.powerOff();
+		((가산TV)tv2).print();	
+			
+
+	}
+
+}
+///////
