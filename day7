@@ -153,8 +153,28 @@ public class AccountTest {
 		method1();
 		method2();
 		method3();
+		method4();
+		method5();
+	}
+	private static void method5() {
+		// BonusAccount
+		BonusAccount acc= new BonusAccount("122-9999","홍길동",1000,50);
+		acc.deposit(2000);
+		System.out.println(acc.BonusPoint+"포인트");
+		acc.deposit(2000);
+		System.out.println(acc.BonusPoint+"포인트");
+		System.out.println(acc);
+		
 	}
 
+	private static void method4() {
+		// CreditLineAccount
+		CreditLineAccount acc= new CreditLineAccount("112-1555","홍길동",1000,500);
+		acc.deposit(2000);
+		System.out.println(acc.withdraw(3500)+" 출금");
+		System.out.println(acc);
+		
+	}
 	private static void method3() {
 		//Object생성-> Account 생성-> CheckingAccount생성
 		// TODO Auto-generated method stub
@@ -242,6 +262,58 @@ public class CreditLineAccount extends Account {
 		this.creditLine = creditLine;
 	}
 	
+
+	//toString() -> inherit 체크  code style -> string builder/string buffer 
+	//toString()-> chaind-call 이 방식이 개발자들이 많이사용
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CreditLineAccount [creditLine=").append(creditLine).append(", getAccNo()=").append(getAccNo())
+				.append(", getOwnerName()=").append(getOwnerName()).append(", getBalance()=").append(getBalance())
+				.append(", toString()=").append(super.toString()).append(", getClass()=").append(getClass())
+				.append(", hashCode()=").append(hashCode()).append("]");
+		return builder.toString();
+	}
+
+	
+	
 	
 }
 ////
+package com.kosta.day07;
+
+public class BonusAccount extends Account {
+	//멤버변수
+	int BonusPoint; //보너스 포인트
+	//생성자
+
+	public BonusAccount(String accNo, String ownerName, int balance, int bonusPoint) {
+		super(accNo, ownerName, balance);
+		this.BonusPoint = bonusPoint;
+	}
+	//메서드
+	//재정의 -> source->override 클릭해서 deposit 체크 후 만들기
+	@Override
+	public void deposit(int amount) {
+		// 부모의 메서드 호출
+		super.deposit(amount);
+		BonusPoint+=amount*0.001; //자동형변환
+		//BonusPoint = (int)(BonusPoint+amount*0.001);
+	}
+	@Override
+	public String toString() {
+		//부모 메서드 호출
+		String s= super.toString();
+		//String: 고정문자열 ...변경불가 ,+ 연산자로 연결가능
+		//StringBuilder : 가변문자열 , +연산자불가
+		StringBuilder builder = new StringBuilder();
+		builder.append(s);
+		builder.append("\nBonusAccount [BonusPoint=").append(BonusPoint).append("]");
+		return builder.toString();
+	}
+	
+	
+	
+	
+}
