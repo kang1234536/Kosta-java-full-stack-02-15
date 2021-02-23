@@ -550,4 +550,129 @@ public class TVUser {
 	}
 
 }
-///////
+/////// 인터페이스문제
+package com.kosta.day07.interfaceTest;
+
+public interface Volume {
+	
+		
+		
+		//2.추상메서드
+		public abstract void volumeUp(int level);
+		public abstract void volumeDown(int level);
+		//3.default메서드
+		//4.static메서드
+}
+//Speacker class
+package com.kosta.day07.interfaceTest;
+
+public class Speaker implements Volume {
+	private int VolLevel;
+
+	
+
+
+
+	@Override
+	public void volumeUp(int level) {
+		// TODO Auto-generated method stub
+		if(level>100) {
+			VolLevel=100;
+			System.out.println(getClass().getSimpleName()+"볼륨올립니다."+VolLevel);
+		}
+		else {
+			VolLevel+=level;
+			System.out.println(getClass().getSimpleName()+"볼륨올립니다."+VolLevel);
+		}
+		
+	}
+
+	@Override
+	public void volumeDown(int level) {
+		// TODO Auto-generated method stub
+		
+		VolLevel-=level;
+		if(VolLevel<0) {
+			VolLevel=0;
+			System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+		}
+		else {
+			System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+		}
+		}
+
+}
+//Radio class
+package com.kosta.day07.interfaceTest;
+
+public class Radio implements Volume {
+	private int VolLevel;
+	
+
+	
+	@Override
+	public void volumeUp(int level) {
+		// TODO Auto-generated method stub
+		VolLevel+=level;
+		System.out.println(getClass().getSimpleName()+"볼륨올립니다."+VolLevel);
+	}
+
+	@Override
+	public void volumeDown(int level) {
+		// TODO Auto-generated method stub
+		VolLevel-=level;
+		System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+	}
+
+}
+//TV1 CLASS
+package com.kosta.day07.interfaceTest;
+
+public class TV1 implements Volume {
+	private int VolLevel;
+	
+	@Override
+	public void volumeUp(int level) {
+		// TODO Auto-generated method stub
+		VolLevel+=level;
+		System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+	}
+
+	@Override
+	public void volumeDown(int level) {
+		// TODO Auto-generated method stub
+		VolLevel-=level;
+		if(VolLevel<0) {
+			VolLevel=0;
+			System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+		}
+		else {
+			System.out.println(getClass().getSimpleName()+"볼륨내립니다."+VolLevel);
+		}
+	}
+}
+//VolTest
+package com.kosta.day07.interfaceTest;
+
+public class VolTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Volume[] v = new Volume[3];
+		v[0] = new Speaker();
+		v[1] = new Radio();
+		v[2] = new TV1();
+		for(int i = 0; i < v.length; i++)
+		{ 
+			for(int j = 1; j <= 3; j++)
+			{
+				v[i].volumeUp(200);
+				} 
+			for(int j = 1; j <= 3; j++)
+			{
+				v[i].volumeDown(300);
+			}
+		}
+	}
+
+}
