@@ -240,3 +240,559 @@ public class InterfaceTest {
 
 }
 
+//다중상속
+package com.kosta.day08.lab;
+//추상class
+	public abstract class Shape {
+	private int numSides;
+
+	public Shape(int numSides) {
+		super();
+		this.numSides = numSides;
+	}
+	//getter/setter
+	public int getNumSides() {
+		return numSides;
+	}
+
+	public void setNumSides(int numSides) {
+		this.numSides = numSides;
+	}
+	//추상메서드 abstract는 정의있고 구현은 없다.
+	public abstract double getArea();//넓이
+	
+
+	public abstract double getPerimeter();//둘레길이
+}
+/*
+(15점) 각 클래스 및 인터페이스를 작성하십시오
+A.Shape 추상 클래스를 작성하십시오.
+B.getArea 메쏘드와 getPerimeter 메쏘드의 리턴 타입은 double 형입니다.
+
+     II.(10점) ShapeTest 클래스를 작성하여 위에서 작성한 클래스를 테스트 하십시오.
+     F.밑변이 5, 높이가 6인 Rectangle Object를 하나 생성합니다.
+     G.밑변이 6, 높이가 2인 RectTriangle Object를 하나 생성합니다.
+     H.위의 2가지 Object를 ArrayList에 추가합니다.
+     I.순환문을 사용해서 ArrayList에 들어 있는 각 Shape들의 area와 perimeter를 출력합니다.
+     만일 해당 Shpae가 Resizable  하다면, 0.5  만큼 resize한 후 
+     새로운 area와 perimeter를출력합니다. (new area / new perimeter)
+
+*/
+package com.kosta.day08.lab;
+
+public class Rectangle extends Shape implements Resizable {
+	 double width;
+	 double height;
+	 public Rectangle(double width, double height) {
+			super(4);
+			this.width=width;
+			this.height=height;
+		}
+	 @Override
+		public double getArea() {
+			// TODO Auto-generated method stub
+			
+			return width*height;
+		}
+		@Override
+		public double getPerimeter() {
+			// TODO Auto-generated method stub
+			
+		
+			return 2*(width+height);
+		}
+	
+		@Override
+		public void resize(double s) {
+			// TODO Auto-generated method stub
+			width= width*s;
+			height*=s;
+		}
+}
+
+package com.kosta.day08.lab;
+
+public class RectTriangle extends Shape {
+	 private double width;
+	 private double height;
+	public RectTriangle(double width, double height) {
+		super(3);
+		this.width=width;
+		this.height=height;
+	}
+	@Override
+	public double getArea() {
+		// TODO Auto-generated method stub
+		
+		return width*height/2;
+	}
+	@Override
+	public double getPerimeter() {
+		// TODO Auto-generated method stub
+		double a= Math.hypot(width, height);
+	
+		return a+width+height;
+	}
+
+}
+
+package com.kosta.day08.lab;
+
+public interface Resizable {
+
+	//추상메서드
+	
+		public abstract void resize(double s);
+	
+}
+/*
+C.RectTriangle(직각삼각형)    클래스를   작성하십시오. 
+  직각삼각형의   둘레를   구하기   위해피타고라스의 정리를 사용할 때 Math 클래스를 이용할 수 있습니다.
+D.Rectangle(직사각형) 클래스를 작성하십시오.
+E.Resizable   인터페이스를 작성하고,   Rectangle   클래스가  implement   하도록 하십시오.
+  resize  메쏘드는 double   type의 argument  하나를 받아서,
+   기존 width와 height를 해당인자를 곱한 값으로 변경합니다.
+    (예: width = width * s; )
+
+*/
+package com.kosta.day08.lab;
+
+public class ShapeTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Shape[] shapes= new Shape[2];
+		
+		shapes[0]=new Rectangle(5, 6);
+		shapes[1]=new RectTriangle(6, 2);
+		for(Shape ss:shapes) {
+			System.out.println("--변의갯수 :"+ss.getNumSides()+"개----");
+			System.out.println("area: "+ss.getArea());
+			System.out.println("perimeter: "+ss.getPerimeter());
+			if(ss instanceof Resizable) {
+				((Resizable)ss).resize(0.5);
+				System.out.println("new area: "+ss.getArea());
+				System.out.println("new perimeter :"+ss.getPerimeter());
+			}
+		}
+	}
+
+}
+/*
+ *   II.(10점) ShapeTest 클래스를 작성하여 위에서 작성한 클래스를 테스트 하십시오.
+     F.밑변이 5, 높이가 6인 Rectangle Object를 하나 생성합니다.
+     G.밑변이 6, 높이가 2인 RectTriangle Object를 하나 생성합니다.
+     H.위의 2가지 Object를 ArrayList에 추가합니다.
+     I.순환문을 사용해서 ArrayList에 들어 있는 각 Shape들의 area와 perimeter를 출력합니다.
+     만일 해당 Shpae가 Resizable  하다면, 0.5  만큼 resize한 후 
+     새로운 area와 perimeter를출력합니다. (new area / new perimeter)
+ *
+ * 
+ * */
+ 
+	
+//inner test
+package com.kosta.day08.innerclass;
+
+public class OuterClass {
+	// 1.field
+	int java=100;
+	static int sql=90;
+	// 2.constructor method
+
+	// 3.method
+	
+	//local inner class: method 안에 class가 있다.
+	void Test(String param,String param2) {  //매개변수안에는 final이 생략되어있다.
+		 String localVar="매서드내의 지역변수";
+		 String localVar2="매서드내의 지역변수.... 내부사용안함";
+		 localVar2="수정가능";
+		 param2="수정가능";
+		//불가 localVar="asdsad";
+		 //불가 param="sadsa";
+		class LocalClass{
+			int price=1000;
+			//static int price2=2000; 불가능!!
+			//----ㅡㅡmethod내에서만 사용가능
+			void printPrice() {
+				System.out.println("local Instance 메서드 "+price);
+				System.out.println(param);
+				
+				System.out.println(localVar);
+			//수정불가	param="aaa";
+			//수정불가	localVar="Asdas";
+			}
+//			static void printPrice2() {
+//				System.out.println("local Instance 메서드 "+price);
+//			}  불가능!!
+		}
+		LocalClass local=new LocalClass();
+		System.out.println(local.price);
+		local.printPrice();
+	}
+	// 4.static block
+
+	// 5.inner class
+	//instance inner class
+	class InnerClass {
+		//변수
+		int a=10;
+		InnerClass(){
+			System.out.println("InnerClass 생성자");
+		}
+		//static int b=20;  될수가없다 처음부터 static class가 아니기 때문이다
+		void test() {
+			System.out.println(" inner class의 instance method");
+			System.out.println("outter의 instance변수....java점수는= "+java);
+			System.out.println("outter의 static변수....sql점수는= "+sql);
+		}
+//불가!!		static void test2() {System.out.println(" inner class의 instance method");}
+	}
+	//static inner class
+	static class StaticInnerClass {
+		int score=100;
+		static String grade="A학점";
+		StaticInnerClass(){
+			System.out.println("StaticInnerClass생성자");
+		}
+		void printScore() {
+			System.out.println("instance 메서드 "+score);
+//불가능!!			System.out.println("outter의 instance변수....java점수는= "+java);
+			System.out.println("outter의 static변수....sql점수는= "+sql);
+		}
+		static void printGrade() {
+			System.out.println("static 메서드 "+grade);
+//불가능!!			System.out.println("outter의 instance변수....java점수는= "+java);
+			System.out.println("outter의 static변수....sql점수는= "+sql);
+		}
+	}
+}
+
+package com.kosta.day08.innerclass;
+
+public class InnerClassTest {
+
+	public static void main(String[] args) {
+
+		method1();
+		method2();
+		method3();
+	}
+
+	private static void method3() {
+		OuterClass	outter=new OuterClass();
+		outter.Test("가산역","KOSTA");
+		
+		
+	}
+
+	private static void method2() {
+		// 1.static Inner class 사용하기
+		System.out.println(OuterClass.StaticInnerClass.grade);
+		OuterClass.StaticInnerClass.printGrade();
+		OuterClass outter = new OuterClass();
+		// 1).객체참조변수선언
+		
+		OuterClass.StaticInnerClass staticClass=new OuterClass.StaticInnerClass();
+			System.out.println(staticClass.score);
+			staticClass.printScore();
+		// 2).객체 생성
+//		inner = new OuterClass().new InnerClass();
+//		// 3).객체 사용
+//		System.out.println(inner.a);
+//		inner.test();
+
+	}
+
+	private static void method1() {
+		// 1.instance Inner class 사용하기
+
+		// 1).객체참조변수선언
+		OuterClass.InnerClass inner;
+		// 2).객체 생성
+		inner = new OuterClass().new InnerClass();
+		// 3).객체 사용
+		System.out.println(inner.a);
+		inner.test();
+	}
+
+}
+///
+package com.kosta.day08.OutterClass;
+
+
+
+public class ClassRoom {
+	// instance 변수
+	String Title = "instance 변수";
+	// static 변수
+	static String Title2 = "static 변수";
+
+	// 1.instance inner class
+	class Desk {
+		String Title3 = "instance inner class....instance 변수";
+		// 불가능 static String Title4 = "static 변수";
+	}
+
+	// 2.static inner class
+	static class Chair {
+		String Title5 = "static inner class....instance 변수";
+		static String Title6 = "static inner class....static 변수";
+	}
+
+	// 3.local inner class ==> static 붙일수 없다!!
+	void test(String param,String param2) {
+		final String Title8 = "local 변수";
+		String Title9="local 변수";
+	//param="변수수정"; //local inner class의 매개변수는 final이기에 불가능	
+		//param2="변수수정";
+		Title9="변수수정";
+		//	Title8="변수수정";// 수정불가!!
+		class Computer {
+			String Title7 = "local inner class ==>instance 변수";
+
+			// 불가능 static String Title8 = "static 변수";
+			void print() {
+				System.out.println(param);
+				System.out.println(Title8);
+			}
+			
+		}
+		//local 호출
+		Computer cc= new Computer();
+		cc.print();
+		System.out.println(cc.Title7);
+		System.out.println(param2);
+	}
+}
+/////
+package com.kosta.day08.OutterClass;
+
+import com.kosta.day08.OutterClass.ClassRoom.Desk;
+
+public class ClassRoomTest {
+
+	public static void main(String[] args) {
+		method1();
+		method2();
+		method3();
+
+	}
+
+	private static void method3() {
+		// 3.local inner class
+		ClassRoom cc= new ClassRoom();
+		cc.test("가산", "KOSTA");
+		
+	}
+
+	private static void method2() {
+		//2.static inner class 연습
+		System.out.println(ClassRoom.Chair.Title6);
+		ClassRoom.Chair cc= new ClassRoom.Chair();
+		System.out.println(cc.Title5);
+		System.out.println("************************");
+	}
+
+	private static void method1() {
+		//1.instance inner class 연습
+		ClassRoom.Desk desk=new ClassRoom().new Desk();
+		System.out.println(desk.Title3);
+		System.out.println("************************");
+		
+	}
+
+}
+///문제
+package com.kosta.day08.Lab4;
+//DAO
+
+
+
+public interface DataAccessObject {
+	
+	public abstract void select();
+	void insert();
+	void update();
+	void delete();
+}
+
+/////
+package com.kosta.day08.Lab4;
+
+public class MySqlDao implements DataAccessObject {
+
+	@Override
+	public void select() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" select");
+	}
+
+	@Override
+	public void insert() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" insert");
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" update");
+
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" delete");
+
+	}
+}
+///////
+package com.kosta.day08.Lab4;
+
+public class OracleDao implements DataAccessObject {
+
+	@Override
+	public void select() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" select");
+	}
+
+	@Override
+	public void insert() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" insert");
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" update");
+
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		System.out.println(getClass().getSimpleName()+" delete");
+
+	}
+
+}
+///////
+package com.kosta.day08.Lab4;
+
+public class DaoExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		dbWork(new OracleDao());
+		dbWork(new MySqlDao());
+		dbWork(new DataAccessObject() {
+			
+			@Override
+			public void update() {
+				// TODO Auto-generated method stub
+				System.out.println("DB2...update");	
+			}
+			
+			@Override
+			public void select() {
+				// TODO Auto-generated method stub
+				System.out.println("DB2...select");	
+			}
+			
+			@Override
+			public void insert() {
+				// TODO Auto-generated method stub
+				System.out.println("DB2...insert");	
+			}
+			
+			@Override
+			public void delete() {
+				// TODO Auto-generated method stub
+				System.out.println("DB2...delete");	
+			}
+		});
+			
+		
+		
+		
+	}
+
+	private static void dbWork(DataAccessObject d) {
+		// TODO Auto-generated method stub
+		d.select();
+		d.insert();
+		d.update();
+		d.delete();
+		System.out.println("**********************");
+	}
+
+}
+
+
+
+
+
+
+////////listTest()
+package com.kosta.day08.ListTest;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.kosta.day08.lab.Rectangle;
+import com.kosta.day08.lab.Shape;
+
+public class ListTest {
+
+	public static void main(String[] args) {
+
+		// 배열: 하나의 이름으로 같은종류의
+		// 여러개의 값을 저장하기 위한 연속공간을 만드는 자료구조
+		// 속도빠름, 갯수를 알아야 생성가능
+		Shape[] arr = new Shape[5];
+		arr[0] = new Rectangle(10, 20);
+		arr[1] = new Rectangle(10, 20);
+
+		// Collection -List,Set,Map interface
+		// List: 순서가 있다. 중복허용, 초기값이 없으면 default갯수만큼 생성함
+		// 자동으로 추가된다.
+		// 공간이 없으면 자동으로 추가된다.
+		// 다담을수 있따.
+		List alist = new ArrayList();
+		alist.add(new Rectangle(10, 20));
+		alist.add(new Rectangle(10, 20));
+		alist.add("자바");
+		alist.add(100);
+		System.out.println(alist.size());
+		System.out.println("******************");
+		// rectangle만 담을수 잇따.
+		List<Rectangle> alist1 = new ArrayList<>();
+		alist1.add(new Rectangle(10, 20));
+		alist1.add(new Rectangle(20, 20));
+		for (Rectangle r : alist1) {
+			System.out.println(r.getArea());
+			System.out.println(r.getPerimeter());
+		}
+		// 인터페이스 배우는 이유
+		List<Rectangle> alist2 = new LinkedList<>();
+		alist2.add(new Rectangle(10, 20));
+		alist2.add(new Rectangle(20, 20));
+		for (Rectangle r : alist2) {
+			System.out.println(r.getArea());
+			System.out.println(r.getPerimeter());
+
+		}
+	}
+
+}
+
+	
+
+
+
+
