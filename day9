@@ -670,4 +670,296 @@ public class DiceGame {
 ///여기까지가 기본문법!!
 
 
-////
+////오후수업
+//11장 api -->object!!
+package com.kosta.day09.f11장;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.kosta.day09.Dice;
+
+public class ObjectTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//method1();
+		//method2();
+		//method3();
+		//method4();
+		//method5();//hash code
+	//	method6();
+		method7();
+	}
+
+	private static void method7() {
+		Car car1=new Car("그랜져",4000);
+		Car car2=new Car("그랜져2",4000);
+		System.out.println(car1.hashCode());
+		System.out.println(car2.hashCode());
+		
+		Set<Car> shopping = new HashSet<Car>();
+		shopping.add(car1);
+		shopping.add(car2);
+		for(Car c:shopping) {
+			System.out.println(c.model);
+		}
+	}
+
+	private static void method6() {
+		//Collection: List , Set, Map
+		//Set: key로 사용된다. 중복안됨, 순서없음
+		Set<String> shopping = new HashSet<String>();
+		shopping.add("사과");
+		shopping.add("바나나");
+		shopping.add("오렌지");
+		shopping.add("사과");
+		shopping.add("사과");
+		shopping.add("메론");
+		shopping.add("수박");
+		for(String s:shopping) {
+			System.out.println(s); //중복 안되용!!
+		}
+		String s1= new String("사과");
+		String s2= new String("사과");
+		System.out.println(s1.hashCode());
+		System.out.println(s2.hashCode());
+	}
+
+	private static void method5() {
+		Car car1=new Car("그랜져",4000);
+		Car car2=new Car("그랜져",4000);
+		System.out.println(car1.hashCode());
+		System.out.println(car2.hashCode());
+		
+	}
+
+	private static void method4() {
+		// TODO Auto-generated method stub
+		Car car1=new Car("그랜져",4000);
+		Car car2=new Car("그랜져",4000);
+		String car3 = new String("그랜져");
+		System.out.println(car1==car2);//주소비교 ==는 재정의 불가
+		System.out.println(car1.equals(car2));//주소비교
+		System.out.println(car1.equals(car3));
+		//내용이 같다로 변경하고자 한다!! equals는 재정의 가능
+	}
+
+	private static void method3() {
+		// TODO Auto-generated method stub
+		Dice d1= new Dice(8);
+		Dice d2= new Dice(8);
+		System.out.println(d1==d2);//주소비교
+		System.out.println(d1.equals(d2)); //주소비교=>Dice는 object를 상속받았기때문
+		
+	}
+
+	private static void method2() {
+		//Object의 equals(): 주소를 비교
+		//String의 equals(): 값을비교
+		//String의 equals(): Object의 equals()를 재정의함
+		String s1= new String("자바");
+		String s2= new String("자바");
+		String s3= "자바";
+		String s4= "자바";
+		System.out.println("method2시작");
+		System.out.println(s1==s2?"주소같다":"주소다르다");
+		System.out.println(s3==s4?"주소같다":"주소다르다");
+		System.out.println(s1.equals(s2)?"내용같다":"내용다르다");
+		System.out.println(s1.equals(s4)?"내용같다":"내용다르다");
+		System.out.println(s3.equals(s4)?"내용같다":"내용다르다");
+		
+		
+	}
+
+	private static void method1() {
+		int a1=10;
+		int a2=10;
+		System.out.println(a1==a2);// 기본형은 값비교
+		
+		Object obj1=new Object();
+		Object obj2=new Object();
+		System.out.println(obj1==obj2); //객체는 주소비교
+		System.out.println(obj1.equals(obj2));//객체는 주소비교
+		
+		Integer a3=10;
+		Integer a4=10;
+		Integer b1=new Integer(10);
+		Integer b2=new Integer(10);
+		System.out.println(b1==b2); //객체는 주소비교
+		System.out.println(a3==a4); // 리터럴은 값비교
+		System.out.println(b1.equals(b2)); //값비교
+		//Object: ==는 주소비교, equals 주소비교
+		//Integer:			,equals 값비교
+		//String:			,equals 값비교
+	}
+
+}
+package com.kosta.day09;
+
+public class Dice {
+	int size;
+	public Dice(int size){
+		this.size=size;
+	}
+	int play() {
+		int number=(int) ((Math.random()*size)+1);
+		return number;
+	}
+	//equals를 재정의
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+	//	return super.equals(obj);//주소재정의
+		//d2는 Dice=>Object=>Dice
+	
+		
+//		if(size==((Dice)obj).size) {
+//			return true;
+//		}
+//		return false;
+		Dice d=(Dice)obj;
+		return size==d.size;
+	
+	
+	}
+	
+}
+package com.kosta.day09.f11장;
+
+public class Car {
+	String model;
+	int price;
+	public Car(String model, int price) {
+		super();
+		this.model = model+"*";
+		this.price = price;
+	}
+//	//equals 재정의 method4
+//	@Override
+//	public boolean equals(Object obj) {
+//		// TODO Auto-generated method stub
+//		//return super.equals(obj); 주소 재정의
+//		//car1는 Car=>Object=>Car
+//		if(!(obj instanceof Car)) return false; //String car3 이야기!!
+//		Car car1= (Car)obj;
+//		//return model==car1.model;
+//		return model.equals(car1.model)&& price==car1.price; //문자열 비교할때는 equals()를 사용하자
+//	}
+//	//hashcode 재정의 method7
+//	@Override
+//	public int hashCode() {
+//		//원래코드
+//		//return super.hashCode();
+//		//재정의코드
+//	
+//		return model.hashCode();
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + price;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Car other = (Car) obj;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (price != other.price)
+			return false;
+		return true;
+	}
+	}
+	
+//}
+
+//////
+package com.kosta.day09.f11장;
+
+public class CellPhone {
+	String model; //핸드폰 모델번호
+	double battery; //남은배터리 양
+	public CellPhone(String model) {
+		super();
+		this.model = model;
+	}
+	void call(int time) {
+		if(time<0) throw new IllegalArgumentException("통화시간입력오류");
+		System.out.println("통화시간: "+time);
+		double batteryreduce=time*0.5; //감소된양
+		if(battery-batteryreduce<=0)
+			battery=0;
+		else {
+			battery-=batteryreduce;
+		}
+		
+	}
+	void charge(int time) {
+		if(time<0) throw new IllegalArgumentException("충전시간입력오류");
+		System.out.println("충전시간 : "+time);
+		double batteryrise=time*3; //충전한양
+		if(batteryrise+battery>=100)
+			battery=100;
+		else {
+			battery+=batteryrise;
+		}
+		
+		
+	}
+	void printBattery() {
+		
+		System.out.println("남은 배터리양:"+battery);
+	}
+	public boolean equals(Object otherObject) {
+		if(otherObject==null || !(otherObject instanceof CellPhone))
+			return false;
+		CellPhone p= (CellPhone)otherObject;
+		return model.equals(p.model);
+	
+	}
+	
+}
+/////
+package com.kosta.day09.f11장;
+
+public class CellPhoneMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		CellPhone myPhone = new CellPhone("SCH-600");
+		myPhone.charge( 20 );  //20분간 충전을 한다.
+		myPhone.printBattery();
+		myPhone.call( 300 );  //300분간 통화를 한다.
+		
+		myPhone.printBattery();
+		myPhone.charge( 50 );  //50분간 충전을 한다.
+		myPhone.printBattery();
+		myPhone.call( 40 );  //40분간 통화를 한다.
+		myPhone.printBattery();try {myPhone.call( -20 );  //통화시간이 잘못 입력되었다.
+		} catch(IllegalArgumentException e) 
+		{
+			System.out.println( e.getMessage() ); 
+			} 
+		CellPhone yourPhone = new CellPhone("SCH-600");
+		if( myPhone.equals(yourPhone) )
+		{
+			System.out.println("동일 모델입니다.");
+			} else {
+				System.out.println("다른 모델입니다.");
+				}
+		}
+	}
+
+
+
