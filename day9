@@ -379,14 +379,25 @@ package com.kosta.day09;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+//예외발생
+// 1)자동... 실행시자동, 컴파일시 발생
+// 2)강제발생 ...throw(예외처리 throws와 다르다) 예외이름
+//예외처리
+//1) 내가한다. : try-catch-finally
+//2) 떠넘긴다: throws
 public class ExceptionTest3 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
 
 		//method1();
-		method2();
+		try {
+			method2();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("main end");
 	}
 
 	private static void method2() throws IOException {
@@ -439,3 +450,171 @@ public class ExceptionTest3 {
 	}
 
 }
+///////
+package com.kosta.day09;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+//예외발생
+package com.kosta.day09;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+//예외발생
+//1)자동... 실행시자동, 컴파일시 발생
+//2)강제발생 ...throw(예외처리 throws와 다르다) 예외이름
+//예외처리
+//1) 내가한다. : try-catch-finally
+//2) 떠넘긴다: throws
+public class ExceptionTest4 {
+
+	public static void main(String[] args) {
+		// method2();
+		// method3(); //예외발생 2)강제발생!!
+		// method4();
+		// method5();
+			try {
+				method6();
+			} catch (MyEception e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+				System.out.println(e.message2);
+				e.print();
+			}
+		System.out.println("main end");
+	}
+
+	private static void method6() throws MyEception {
+		// MyEception.java 활용
+		System.out.println("method start");
+		int score = 70;
+		if (score <= 70)
+			throw new MyEception("70이상만가능");
+		System.out.println("method end");
+	}
+
+	private static void method5() throws IOException {
+		int score = 70;
+		if (score <= 70)
+			throw new IOException("70이상만가능");
+		// 예외를 일으키고 처리는 하지않음. 프로그램 중단됨
+		System.out.println("method end");
+	}
+
+	private static void method4() {
+		int score = 70;
+		try {
+			if (score <= 70)
+				throw new RuntimeException("70이상만가능");
+
+		} catch (RuntimeException e) {
+			System.out.println(e.getMessage());
+		}
+		// 예외를 일으키고 처리를함. 프로그램 실행
+		System.out.println("method end");
+	}
+
+	private static void method3() {
+		int score = 70;
+		if (score <= 70)
+			throw new RuntimeException("70이상만가능");
+		// 예외를 일으키고 처리는 하지않음. 프로그램 중단됨
+		System.out.println("method end");
+	}
+
+	private static void method2() {
+		try {
+			FileReader fr = new FileReader("aa.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	private static void method1() {
+		int a = 10 / 0;
+
+	}
+
+}
+////
+package com.kosta.day09;
+
+public class MyEception extends Exception {
+	private static final long serialVersionUID=1L;
+	String message2;
+	public MyEception(String message){
+		super(message);
+		System.out.println("나의 Exception생성자");
+		this.message2=message;
+	}
+	public void print() {
+		System.out.println("예외 발생: "+message2);
+	}
+}
+////  7번문제
+package com.kosta.day09;
+
+public class NotExistIDException extends Exception {
+	public	NotExistIDException()
+	{
+		
+	}
+	public	NotExistIDException(String message)
+	{
+		super(message);
+	}
+	
+}
+package com.kosta.day09;
+
+public class WrongPasswordException extends Exception {
+	public WrongPasswordException() {}
+	public WrongPasswordException(String message)
+	{
+		super(message);
+	}
+	
+}
+package com.kosta.day09;
+
+import java.util.Scanner;
+
+public class LoginExample {
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		System.out.print("ID입력>>");
+		String id=scan.next();
+		System.out.print("PASS입력>>");
+		String pass=scan.next();
+		
+			try {
+				Login(id,pass);
+			} catch (NotExistIDException | WrongPasswordException e) {
+				System.out.println(e.getMessage());
+				scan.close();
+				return;
+			}
+	
+			scan.close();
+		System.out.println("로그인 성공");
+	}
+
+	private static void Login(String id, String pass) throws NotExistIDException, WrongPasswordException {
+		if(!id.equals("blue")) {
+			throw new NotExistIDException("존재하지않은 ID");
+		}
+		if(!pass.equals("12345")) {
+			throw new WrongPasswordException("PASS 오류");
+		}
+		System.out.println("ID PASS 정상");
+	
+	}
+}
+///////
