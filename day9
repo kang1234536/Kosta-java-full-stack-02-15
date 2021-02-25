@@ -1,0 +1,441 @@
+//2월25일  9장 중첩interface 복습 및
+//10장 예외처리
+package com.kosta.day09;
+
+public class OutterClass extends Object implements Comparable<OutterClass> {
+	//1.멤버변수: non-static /static
+	//2.생성자
+	//3.메서드: non-static, static
+	//4.static block, instance block
+	//5.inner class, inner interface
+	class InnerClass{
+		
+	}
+	static class InnerClass2{
+		
+	}
+	void test() {
+		class InnerClass3{
+			
+		}
+		InnerClass3 aa=new InnerClass3();
+		
+	}
+	@Override
+	public int compareTo(OutterClass o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}
+///
+package com.kosta.day09;
+
+//구현한 클래스
+
+class MessageListener implements Button.OnClickListener{
+
+	@Override
+	public void onClick() {
+		// TODO Auto-generated method stub
+		System.out.println("MessageListener 클릭한다");
+	}
+	
+}
+class CallListener implements Button.OnClickListener{
+
+	@Override
+	public void onClick() {
+		// TODO Auto-generated method stub
+		System.out.println("CallListener 클릭한다");
+	}
+
+	
+	
+}
+
+
+
+
+
+public class Button {
+	OnClickListener listener;
+	
+	void setListener(OnClickListener listener) {
+		this.listener =listener;
+	}
+	//일반메서드
+	void touch() {
+		listener.onClick();
+	}
+	//inner interface
+	interface OnClickListener{
+		void onClick();
+	}
+	
+	
+}
+package com.kosta.day09;
+
+public class ButtonExample {
+
+	
+	public static void method1(Button.OnClickListener listener) {
+		Button b= new Button();
+		b.setListener(listener);
+		b.touch();
+	}
+	public static void method2(Button.OnClickListener bb) {
+		
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Button b = new Button();
+		
+		MessageListener m=new MessageListener();
+		//method1(new MessageListener());
+		//method1(new CallListener());
+		//method1((new Button.OnClickListener());
+		
+		b.setListener(m);
+		//b.setListener(new MessageListener());
+		b.touch();
+		
+		
+		b.setListener(new CallListener());
+		b.touch();
+		//익명클래스
+		b.setListener(new Button.OnClickListener() {
+			
+			@Override
+			public void onClick() {
+				// TODO Auto-generated method stub
+				System.out.println("익명구현class");
+			}
+		});
+		b.touch();
+	}
+
+}
+/////
+package com.kosta.day09;
+
+
+
+//2월25일 10장 예외 공부!!
+public class ExceptionTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+//		method1();
+//		System.out.println("main END");
+//		method2();
+//		System.out.println("main END");
+//		method3();
+//		System.out.println("main END");
+//		method4();
+//		System.out.println("main END");
+//		method5();
+//		System.out.println("main END");
+//		method6();
+//		System.out.println("main END");
+//		method7();
+//		System.out.println("main END");
+		method8();
+		System.out.println("main END");
+
+	}
+
+	private static void method8() {
+		// 다중캐치문
+		try {
+			int a = 10 / 1;
+			int[] arr = new int[5];
+			arr[4] = 100;
+			String s = "JAVA";
+			System.out.println(s.length());
+			Object obj = new String("자바");
+			Integer i = (Integer)obj;
+		} catch (ArithmeticException e) {
+			System.out.println("0으로 나눌수 없음");
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("index범위가 잘못되었다.");
+		} catch (NullPointerException e) {
+			System.out.println("NULL 참조 불가");
+		} catch (ClassCastException e) {
+			System.out.println("형변환 오류");
+
+		}catch (Exception e) {
+			//상위예외는 마지막에 기술한다.
+			System.out.println("기타 오류"+e.getMessage());
+
+		}  finally {
+			System.out.println("반드시 수행한다.");
+		}
+	}
+
+	private static void method7() {
+		// 예외처리
+//		1) 내가한다. try-catch-finally
+//		2) 떠넘긴다.
+		try {
+			System.out.println("예외 발생 가능성 있는 문장들");
+			int a = 10 / 0;
+			System.out.println(" 예외발생시 이문장은 수행 안한다.");
+			System.out.println(" 예외발생시 윗줄부터 안읽힌다");
+		} catch (ArithmeticException e) {
+			// ArithmeticException ->RuntimeException->Exception
+			System.out.println("예외 발생시 수행한다.");
+		} finally {
+			System.out.println("항상 수행한다. 생략가능");
+			// 자원반납코드를 한다 :DB닫기 ,파일닫기
+
+		}
+
+	}
+
+	private static void method6() {
+		// TODO Auto-generated method stub
+		System.out.println("method6의 시작");
+		String s = new String("자바");
+		// 자동형변환
+		Object s2 = new String("자바");
+		// String s3= s2;
+		try {
+			// 강제형변환
+			String s3 = (String) s2;
+			Integer i = (Integer) s2; // 실행시 오류
+		} catch (ClassCastException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void method5() {
+		// TODO Auto-generated method stub
+		System.out.println("method5의 시작");
+		int[] arr = new int[5];
+		try {
+			System.out.println(arr[100]); // 실행하면 오류
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// e.printStackTrace();
+
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void method4() {
+		// TODO Auto-generated method stub
+		System.out.println("method4의 시작");
+		try {
+			String s = "자바";
+			System.out.println(s.length() + "글자");
+			s = null;
+			System.out.println(s.length() + "글자");
+		} catch (NullPointerException e) {
+			System.out.println("null은 메서드 사용불가");
+			System.out.println("null은 참조불가");
+		}
+	}
+
+	private static void method3() {
+		System.out.println("method3의 시작");
+		// Exception종류: 컴파일체크예외,실행예외(Runtime Exception)
+		try {
+			Class.forName("com.kosta.day09.Button");
+			System.out.println("load성공");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("class load 실패");
+			e.printStackTrace();
+		}
+	}
+
+	// 오류가 발생하지 않도록 업무로직 중간에 값을 체크
+	// 업무로직 + 오류처리로직이 섞인다......좋은코드가 아니다.
+	// Exception사용 :업무로직,오류처리로직을 분리한다.
+	// 오류발생시 프로그램이 비정상적으로 종료되지 않게하기위서 사용
+	private static void method1() {
+		System.out.println("method1의 시작");
+
+		int a = 10;
+		int b = 0;
+		if (b == 0) {
+			System.out.println("나누는 수는 0이 될수 없습니다.");
+//			System.out.println(a/b); //실행시 오류가남
+			return;// 호출한곳으로 돌아가라
+
+		}
+		System.out.println(a / b);
+
+	}
+
+	private static void method2() {
+		System.out.println("method2의 시작");
+
+		int a = 10;
+		int b = 0;
+		try {
+			// 예외발생 가능성 있는 문장들
+			System.out.println(a / b);
+		} catch (ArithmeticException aa) {
+			System.out.println("0으로 나누기 불가");
+		}
+	}
+}
+////
+package com.kosta.day09;
+
+
+
+//>java ExceptionTest2 10 3
+//자동으로 예외발생 -> 예외처리를 하지 않았다면 JVM으로 간다.
+//JVM이 예외객체를 만들어준다.
+//프로그램 중단
+public class ExceptionTest2 {
+
+	public static void main(String[] args) {
+		// 명령행 매개변수 2개를 받아서 사칙연산 수행한다.
+		//+,-,*,/,%
+		
+		try {
+		int su1=Integer.parseInt(args[0]);
+		int su2=Integer.parseInt(args[1]);
+		System.out.println(su1+su2);
+		System.out.println(su1-su2);
+		System.out.println(su1*su2);
+		System.out.println(su1/su2);
+		System.out.println(su1%su2);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			//JVM이 만들어준 예외객체를 받는다. 처리한다.
+			System.out.println("예외처리 :"+e.getMessage());
+		}catch(NumberFormatException | ArithmeticException e) {
+			System.out.println("예외처리 :"+e.getMessage());
+		}
+//		catch(ArithmeticException e){
+//			System.out.println("예외처리 :"+e.getMessage());
+//		}
+		System.out.println("------main end-----");
+	}
+
+	
+
+}
+
+///////
+package com.kosta.day09;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class ExceptionTest3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		method1();
+	}
+
+	private static void method1() {
+		// 예외처리
+//		1) 내가한다. : try-catch-finally
+//		2) 떠넘긴다. : throws
+		FileReader fr = null; //변수를 여기에 설정해야한다.
+		try {
+			fr=new FileReader("src/com/kosta/day09/Button.java");
+			System.out.println("파일열기성공");
+			int i;
+			
+		while((i=fr.read())!=-1)    //-1 파일의 끝
+		{
+			System.out.print((char)i);
+		}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("파일이 존재하지 않는다");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("읽기 오류");
+		}finally {
+			try {
+			if(fr!=null)
+				fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	
+	}
+
+}
+/////파일 읽기
+package com.kosta.day09;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class ExceptionTest3 {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		//method1();
+		method2();
+	}
+
+	private static void method2() throws IOException {
+		// TODO Auto-generated method stub
+		// 예외처리
+//		1) 내가한다. : try-catch-finally
+//		2) 떠넘긴다. : throws -->나를 호출한곳으로 떠넘긴다.
+		FileReader fr = null; // 변수를 여기에 설정해야한다.
+		fr = new FileReader("src/com/kosta/day09/ExceptionTest3.java");
+		int i;
+		while ((i = fr.read()) != -1) // -1 파일의 끝
+		{
+			System.out.print((char) i);
+		}
+		fr.close();
+		System.out.println("throws End");
+	}
+
+	private static void method1() {
+		// 예외처리
+//		1) 내가한다. : try-catch-finally
+//		2) 떠넘긴다. : throws
+		FileReader fr = null; // 변수를 여기에 설정해야한다.
+		try {
+			fr = new FileReader("src/com/kosta/day09/ExceptionTest3.java");
+			System.out.println("파일열기성공");
+			int i;
+
+			while ((i = fr.read()) != -1) // -1 파일의 끝
+			{
+				System.out.print((char) i);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("파일이 존재하지 않는다");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("읽기 오류");
+		} finally {
+			try {
+				if (fr != null)
+					fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("try~catch END");
+
+	}
+
+}
