@@ -1,1 +1,243 @@
 //2월26일 11장 API
+package com.kosta.day10;
+
+
+
+public class Car {
+	private String model; //모델
+	private int price; //가격
+	//생성자
+	public Car(String model, int price) {
+		super();
+		this.model = model;
+		this.price = price;
+	}
+
+	
+	
+	
+	//getter/setter 메서드
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	//toString() 재정의
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Car [model=").append(model).append(", price=").append(price).append("]");
+		return builder.toString();
+	}
+
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + price;
+		return result;
+	}
+
+
+
+
+
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj==null||!(obj instanceof Car))
+			return false;
+		Car otherCar=(Car)obj;
+		return model.equals(otherCar.model) && price==otherCar.price;
+	}
+
+
+
+
+}
+package com.kosta.day10;
+
+import java.util.Arrays;
+
+public class Person implements Cloneable {
+	// 멤버변수
+	private String name;
+	private int age;
+	private Car car;
+	private String[] phone;
+
+	// 생성자
+	public Person(String name, int age, Car car, String[] phone) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.car = car;
+		this.phone = phone;
+	}
+
+	// getter/setter
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public String[] getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String[] phone) {
+		this.phone = phone;
+	}
+
+	// toString() 재정의
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Person [name=").append(name).append(", age=").append(age).append(", car=").append(car)
+				.append(", phone=").append(Arrays.toString(phone)).append("]");
+		return builder.toString();
+	}
+// source 에서 override/implements에서 equals만 클릭후 생성후 따로만든다!!
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Person))
+			return false;
+
+		Person otherPerson = (Person) obj;
+		return name.equals(otherPerson.name)&& this.age==otherPerson.age&& this.car.equals(otherPerson.car) && Arrays.equals(phone, otherPerson.phone);
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// 구현 추가 안해도 얕은복제가능
+		//return super.clone();
+		//깊은복제.... car, phone
+		Person p=(Person)super.clone();
+		p.car=new Car(car.getModel(),car.getPrice());
+		p.phone=Arrays.copyOf(phone, phone.length);
+		return p;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + age;
+		
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		
+		return result;
+	}
+
+
+
+	
+
+}
+package com.kosta.day10;
+
+import java.util.Arrays;
+
+
+
+public class PersonTest {
+
+	public static void main(String[] args) {
+		try {
+			sample1();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//sample2();
+		//sample3();
+
+	}
+
+	private static void sample3() {
+		//배열
+		String[] phone1= new String[]{"010-2222-3333","02-4444-5555"};
+		String[] phone2= new String[]{"010-2222-3333","02-4444-5555"};
+		boolean b=Arrays.equals(phone1, phone2);
+		System.out.println(b);
+	}
+
+	private static void sample2() {
+		Object car= new Car("SM7",4000);
+		
+		
+	}
+
+	private static void sample1() throws CloneNotSupportedException {
+		Car car1= new Car("SM7",4000);
+		Car car2= new Car("SM7",4000);
+		String[] phone1= new String[]{"010-2222-3333","02-4444-5555"};
+		String[] phone2= new String[]{"010-2222-3333","02-4444-5555"};
+		String[] phone= new String[]{"010-2222-3333","02-4444-5555"};
+		Person p1 = new Person("홍길동", 20,car1 ,phone);
+		Person p3 = new Person("홍길동", 20,car2 ,phone);
+		Person p2 = new Person("김길동", 30,new Car("그랜져",5000) ,new String[]{"010-3222-3333","02-5444-5555"});
+		System.out.println(p1.equals(p3)?"동명이인,나이같다,차 같다":"다르다");
+		System.out.println(p1.hashCode());
+		System.out.println(p3.hashCode());
+		System.out.println(p1.equals(p3)?"동명이인,나이같다,차 같다":"다르다");
+
+		Person p4 = p3; //복제아님 같은주소를 참조한다.
+		p3.setName("박가산");
+		System.out.println(p3);
+		System.out.println(p4);
+		System.out.println("----------------------------------------------------------------------------------------------");
+		//복제: 원본이 수정되면 복제된 객체에 영향을 미치지않는다. 각자의 정보를 관리한다.
+		//얕은복제는 implements Cloneable을 class에 붙이고 clone()메서드 추가!!
+		//깊은복제는 clone()메서드에 코드추가
+		Person p5=(Person)p3.clone();
+		p3.setName("박가산1");
+		p3.setAge(50);
+		//신규생성해서 참조하는 곳을 변경한것이다.
+		//p3.setCar(new Car("수정모델", 1000));
+		//p3.setPhone(new String[] {"1234","5678"});
+		//복제가 아님을 확인
+		p3.getCar().setModel("수정모델"); // 얕은복제의 한계
+		p3.getPhone()[0]="0000"; //얕은복제의 한계
+		System.out.println(p3);
+		System.out.println(p5);
+		System.out.println(p1.hashCode());
+		System.out.println(p3.hashCode());
+		System.out.println(p1.equals(p3)?"동명이인,나이같다,차 같다":"다르다");
+	}
+
+}
+
