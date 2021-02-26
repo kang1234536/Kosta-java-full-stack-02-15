@@ -3,7 +3,11 @@ package com.kosta.day10;
 
 
 
-public class Car {
+package com.kosta.day10;
+
+
+
+public class Car implements Comparable<Car>  {//implements Comparable<Car>
 	private String model; //모델
 	private int price; //가격
 	//생성자
@@ -68,7 +72,59 @@ public class Car {
 
 
 
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+		
+	}
+
+
+
+
+//	@Override
+//	public int compareTo(Car obj) {
+//		//음수가나오면 뒤에가/큼 양수가나오면 앞에가큼
+//		//return price-obj.price;
+//		//return model.compareTo(obj.model);
+//		int aa= model.compareTo(obj.model);
+//		if(aa==0)
+//			return price-obj.price;
+//		return aa;
+//	
+//	}
+	public int compareToAA(Car obj) {
+		//음수가나오면 뒤에가/큼 양수가나오면 앞에가큼
+		//return price-obj.price;
+		//return model.compareTo(obj.model);
+		int aa= model.compareTo(obj.model);
+		if(aa==0)
+			return price-obj.price;
+		return aa;
+	
+	}
+
+
+
+
+	@Override
+	public int compareTo(Car o) {
+		// TODO Auto-generated method stub
+		int aa= model.compareTo(o.model);
+		if(aa==0)
+			return price-o.price;
+		return aa;
+	}
+
+
+
+
+
+
+
+
 }
+
 package com.kosta.day10;
 
 import java.util.Arrays;
@@ -240,4 +296,288 @@ public class PersonTest {
 	}
 
 }
+/////////////////
+package com.kosta.day10;
+
+import java.util.Comparator;
+
+public class CarDescending implements Comparator<Car> {
+
+	@Override
+	public int compare(Car o1, Car o2) {
+		// TODO Auto-generated method stub
+		int result =o1.getModel().compareTo(o2.getModel())*-1;
+		if(result==0)
+			return (o1.getPrice()-o2.getPrice())*-1;
+		return result;
+	}
+
+	
+	
+
+}
+package com.kosta.day10;
+
+import java.util.Comparator;
+//Descending은 Comparator
+public class IntegerDescending implements Comparator<Integer> {
+
+	@Override
+	public int compare(Integer o1, Integer o2) {
+		// TODO Auto-generated method stub
+		return (o1-o2)*-1;
+	}
+
+}
+package com.kosta.day10;
+
+public class Book implements Cloneable,Comparable<Book> {
+	private String title;
+	private int price;
+	private boolean ebook;
+	//생성자
+	public Book(String title, int price, boolean ebook) {
+		super();
+		this.title = title;
+		this.price = price;
+		this.ebook = ebook;
+	}
+	//getter/setter 메서드
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public boolean isEbook() {
+		return ebook;
+	}
+	public void setEbook(boolean ebook) {
+		this.ebook = ebook;
+	}
+	//toStrint()
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Book [title=").append(title).append(", price=").append(price).append(", ebook=").append(ebook)
+				.append("]");
+		return builder.toString();
+	}
+	//clone복제 메서드
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	//hash코드 메서드
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (ebook ? 1231 : 1237);
+		result = prime * result + price;
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+	//equals 메서드
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (ebook != other.ebook)
+			return false;
+		if (price != other.price)
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+	//비교메서드 --> implements Comparable<?>
+	@Override
+	public int compareTo(Book newBook) {
+		//기본 sort는 가격으로 Ascending
+		// < = >
+		return price-newBook.price;  //Ascending
+	}
+	
+	
+	
+}
+package com.kosta.day10;
+
+import java.util.Comparator;
+
+public class BookDescendingCompareator implements Comparator<Book> {
+
+	@Override
+	public int compare(Book o1, Book o2) {
+		// descending ..... 제목과 가격
+		int result =(o1.getTitle().compareTo(o2.getTitle()))*-1;
+		if(result ==0) {
+			return o1.getPrice()-o2.getPrice(); //가격으로 Ascending
+			//return (o1.getPrice()-o2.getPrice())*-1;
+		}
+		
+		return result;
+	}
+
+}
+package com.kosta.day10;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
+public class ObjectTest {
+
+	public static void main(String[] args) {
+		// sample1();
+		// sample2();
+		// sample3();
+		// sample4();
+		// sample5();
+		// sample6();
+		// sample7();
+		// sample8();
+		sample9(); // Book 관련
+
+	}
+
+	private static void sample9() {
+		Book[] bookList = new Book[5];
+		bookList[0] = new Book("java", 25000, false);
+		bookList[1] = new Book("sql", 20000, true);
+		bookList[2] = new Book("html", 23000, false);
+		bookList[3] = new Book("javascript", 35000, true);
+		bookList[4] = new Book("javascript", 45000, false);
+		Arrays.sort(bookList); //가격으로  Ascending
+		
+		for(Book b:bookList) {
+			System.out.println(b);
+		}
+		System.out.println("***********************");
+		Arrays.sort(bookList, new BookDescendingCompareator());//제목으로 descending,가격으로 Ascending
+		for(Book b:bookList) {
+			System.out.println(b);
+		}
+	}
+
+	private static void sample8() {
+		// TODO Auto-generated method stub
+		Car[] carList = new Car[3];
+		carList[0] = new Car("C", 2000);
+		carList[1] = new Car("B", 1000);
+		carList[2] = new Car("B", 3000);
+		System.out.println("before :" + Arrays.toString(carList));
+		Arrays.sort(carList);
+		System.out.println("Ascending :" + Arrays.toString(carList));
+		Arrays.sort(carList, new CarDescending());
+		System.out.println("Descending :" + Arrays.toString(carList));
+
+	}
+
+	private static void sample7() {
+		//
+		Integer[] arr = { 10, 3, 5, 8, 4 };
+		System.out.println("before :" + Arrays.toString(arr));
+		Arrays.sort(arr);
+		System.out.println("Ascending sort :" + Arrays.toString(arr));
+		Arrays.sort(arr, new IntegerDescending());
+
+		System.out.println("descending sort :" + Arrays.toString(arr));
+		// implements Comparable를 사용해야하는이유
+//		Car[] carList=new Car[3];
+//		carList[0]=new Car("C",2000);
+//		carList[1]=new Car("B",1000);
+//		carList[2]=new Car("B",3000);
+//		System.out.println("before :"+Arrays.toString(carList));
+//		Arrays.sort(carList);
+//		System.out.println("after :"+Arrays.toString(carList));
+
+	}
+
+	private static void sample6() {
+		//
+		int[] arr = { 10, 3, 5, 8, 4 };
+		System.out.println("before :" + Arrays.toString(arr));
+		Arrays.sort(arr);
+		System.out.println("after :" + Arrays.toString(arr));
+		// implements Comparable를 사용해야하는이유
+		Car[] carList = new Car[3];
+		carList[0] = new Car("C", 2000);
+		carList[1] = new Car("B", 1000);
+		carList[2] = new Car("B", 3000);
+		System.out.println("before :" + Arrays.toString(carList));
+		Arrays.sort(carList);
+		System.out.println("after :" + Arrays.toString(carList));
+
+	}
+
+	private static void sample5() {
+		Car car1 = new Car("ABC", 7000);
+		Car car2 = new Car("ABC", 5000);
+
+		int result = car1.compareToAA(car2);
+		System.out.println(result);
+
+	}
+
+	private static void sample4() {
+		Car car1 = new Car("ABC", 7000);
+		Car car2 = new Car("ABC", 5000);
+
+		int result = car1.compareToAA(car2);
+		System.out.println(result);
+		// compareTo 를 사용하기위해선 implements Comparable <클래스이름> //
+		// 메서드를 마우스로 만들어준다
+	}
+
+	private static void sample3() {
+		Object s1 = new Object();
+		Object s2 = new Object();
+
+		// 같으면 0
+		// < = >
+		// System.out.println(Objects.compare(s1, s2, null));
+
+	}
+
+	private static void sample2() {
+		String s1 = "자바";
+		String s2 = "자바";
+		// 같으면 0
+		System.out.println(s1.compareTo(s2));
+		String a1 = "A"; // int값 65
+		String a2 = "B"; // int값 66
+		System.out.println(a1.compareTo(a2));
+
+	}
+
+	private static void sample1() {
+		Car car1 = new Car("모델", 1000);
+		System.out.println(car1);
+
+		car1 = null;
+		System.gc();// 가비지컬렉터를 수행한다.
+		System.out.println(car1);
+	}
+
+}
+////
+
 
