@@ -432,6 +432,97 @@ public class DateTest {
 	}
 
 }
-/////
+///// 12장 thread
+
+package com.kosta.day11;
+
+public class MultiThreadProcessTest {
+
+	public static void main(String[] args) {
+		System.out.println(Thread.currentThread().getName() + " 시작");
+//		for(char c ='A'; c<='Z';c++) {
+//			System.out.println(c);
+//		}
+		//Multi Thread 사용하기
+		//1.Thread상속받은 class 이용 ...대문자 출력
+		//2.Runnable Interface를 구현한 class ...소문자 출력
+		Thread t1= new AlphabetThread();
+//		Thread t2 = new AlphabetThread2(); 이것은 쓰레드가 아니므로 runnable이거나 alphabetThread2로 객체생성한다.
+		
+	
+
+		
+		
+		Runnable r= new AlphabetThread2();
+		Thread t2= new Thread(r);
+		
+		t1.start(); //run이 자동실행
+		t2.start();
+		//main은 숫자를 출력해라!!
+		for(int c =1; c<=26;c++) {
+			System.out.println(c);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	
+	
+		System.out.println(Thread.currentThread().getName() + " 끝");
+	
+	}
+
+}
+package com.kosta.day11;
 
 
+//다른class를 상속받고 있지 않아서 Thread 상속 가능
+//run메서드를 구현해야 멀티스레드로 사용가능
+
+public class AlphabetThread extends Thread {
+
+	@Override
+	public void run() {
+		System.out.println("이름 : "+getName() );
+		for(char c ='A'; c<='Z';c++) {
+			System.out.println(c);
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //0.5초대기
+		}
+	}
+	
+}
+package com.kosta.day11;
+
+
+//다른class를 상속받고 있으면 Thread 상속 불가능
+//run메서드를 구현해야 멀티스레드로 사용가능
+
+public class AlphabetThread2 extends Object implements Runnable {
+
+	@Override
+	public void run() {
+		System.out.println("이름 : "+Thread.currentThread().getName());
+		for(char c ='a'; c<='z';c++) {
+			System.out.println(Thread.currentThread().getName()+"-->"+c);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+
+	
+}
+////////////////
