@@ -531,3 +531,165 @@ public class AlphabetThread2 extends Object implements Runnable {
 	
 }
 ////////////////
+package com.kosta.day11;
+
+import java.awt.Toolkit;
+
+//소리나는 스레드
+public class BeepThread extends Thread {
+
+	
+	public BeepThread(String name) {
+		setName(name);
+	}
+	
+	
+	
+	
+	@Override
+	public void run() {
+		//삑소리가남!
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		for(int i=1;i<=5;i++) {
+			toolkit.beep(); // 삑소리남
+			System.out.println(getName());
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+package com.kosta.day11;
+
+public class BeepPrintExample {
+
+	public static void main(String[] args) {
+		// 
+		BeepThread t1= new BeepThread("삑쓰레드");
+		t1.start();
+		
+		
+		for(int i=1;i<=5;i++) {
+			System.out.println(Thread.currentThread().getName()+" .... 띵");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+package com.kosta.day11;
+
+public class PriorityExample {
+
+	public static void main(String[] args) {
+		for(int i =0;i<10;i++) {
+			Thread t= new AlphabetThread();
+			if(i%2==0)
+			{
+				t.setPriority(Thread.MIN_PRIORITY);
+			}else {
+				t.setPriority(Thread.MAX_PRIORITY);
+			}
+			t.start();
+	}
+
+	}
+
+}
+
+/////CALCULLATOR 공유객체 만들어보기
+package com.kosta.day11;
+
+public class Calculator {
+	private int memory;
+	//getter만 만들기
+	public int getMemory() {
+		return memory;
+	}
+	//setter만 만들기 따로따로만들기 가능
+	//synchronized 동기화 메서드....하나의 스레드가 점유동안 다른 스레드가 접근불가
+	public synchronized void setMemory(int memory) {
+		this.memory = memory;
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName()+" --> " +	this.memory);
+	}
+	
+}
+package com.kosta.day11;
+
+public class User1 extends Thread {
+	//멤버변수
+	private Calculator cal;
+	
+	
+		//생성자만들기
+	public User1(String name,Calculator cal) {
+		setName(name); //Thread 이름 바꾸끼
+		this.cal = cal;
+	}
+
+	// thread는 run메서드를 재정의 해야한다
+	@Override
+	public void run() {
+		cal.setMemory(100);
+	}
+	
+	
+}
+package com.kosta.day11;
+
+public class User2 extends Thread   {
+	//멤버변수
+	private Calculator cal;
+	
+	
+		//생성자만들기
+	public User2(String name, Calculator cal) {
+		setName(name); //Thread 이름 바꾸끼
+		this.cal = cal;
+	}
+
+
+	// thread는 run메서드를 재정의 해야한다
+	@Override
+	public void run() {
+		cal.setMemory(50);
+	}
+	
+	
+}
+package com.kosta.day11;
+
+public class MainThreadExample {
+
+	public static void main(String[] args) {
+		
+		// 공유객체
+		Calculator cal = new Calculator();
+		
+	//	User1 t1= new User1("USER1쓰레드",cal);
+		Thread t1= new User1("USER1쓰레드",cal); //위에도 가능 아래도 가능
+		User2 t2= new User2("USER2쓰레드",cal);
+		
+		t1.start();
+		t2.start();
+		
+		 
+		
+	}
+
+}
+//////
