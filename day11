@@ -1106,4 +1106,58 @@ public class WaitNotifyExample {
 	}
 
 }
-/////
+/////2번문제
+package com.kosta.day11;
+
+public class MovieThread extends Thread {
+
+	@Override
+	public void run() {
+	for(int i =0;i<3;i++) {
+		System.out.println("동영상을 재생합니다");
+		try {
+			sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
+	
+}
+package com.kosta.day11;
+
+public class MusicRunnable implements Runnable {
+
+	@Override
+	public  void run() {
+		for(int i=0;i<3;i++) {
+			System.out.println("음악을 재생합니다.");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+}
+package com.kosta.day11;
+
+public class ThreadExample2 {
+
+	public static void main(String[] args) {
+		Thread t1= new MovieThread();
+		t1.start();
+		
+		//Runnable r= new MusicRunnable();
+		Thread t2= new Thread(new MusicRunnable());
+		t2.start();
+
+	}
+
+}
+
+
