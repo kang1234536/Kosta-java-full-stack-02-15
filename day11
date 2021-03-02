@@ -693,3 +693,63 @@ public class MainThreadExample {
 
 }
 //////
+package com.kosta.day11;
+
+public class BathRoom {
+
+//기능	
+	public synchronized void use(String name) {
+
+		System.out.println("=================");
+		System.out.println(name + " 입장 ");
+		System.out.println(name + " 사용합니다. ");
+		System.out.println(name + " 퇴장합니다. ");
+
+	}
+
+}
+package com.kosta.day11;
+
+public class BathThread extends Thread {
+	//공유영역
+	 BathRoom room;
+	//사용자 이름
+	 String userName;
+	
+	//생성자
+	public BathThread(BathRoom room,String userName) {
+		this.room=room;
+		this.userName=userName;
+	}
+	//run 메서드 구현
+	@Override
+	public void run() {
+		for(int i=1;i<=3;i++) {
+			room.use(userName);
+		}
+	}
+	
+	
+	
+	
+	
+}
+package com.kosta.day11;
+
+public class BathExample {
+
+	public static void main(String[] args) {
+		BathRoom room= new BathRoom();
+		BathThread t1= new BathThread(room,"김씨");
+		BathThread t2= new BathThread(room,"박씨");
+		BathThread t3= new BathThread(room,"양씨");
+		BathThread t4= new BathThread(room,"정씨");
+		
+		t1.start();
+		t2.start();
+		t3.start();
+		t4.start();
+	}
+
+}
+/////////////
