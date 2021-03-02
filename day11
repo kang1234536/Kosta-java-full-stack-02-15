@@ -455,9 +455,13 @@ public class MultiThreadProcessTest {
 		
 		Runnable r= new AlphabetThread2();
 		Thread t2= new Thread(r);
-		
+		Thread t3= new AlphabetThread();
+		t1.setName("대문자1"); //이름설정
+		t2.setName("소문자1");
+		t3.setName("대문자2");
 		t1.start(); //run이 자동실행
 		t2.start();
+		t3.start();
 		//main은 숫자를 출력해라!!
 		for(int c =1; c<=26;c++) {
 			System.out.println(c);
@@ -476,6 +480,7 @@ public class MultiThreadProcessTest {
 	}
 
 }
+
 package com.kosta.day11;
 
 
