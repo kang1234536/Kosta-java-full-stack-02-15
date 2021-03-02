@@ -605,7 +605,8 @@ public class PriorityExample {
 
 }
 
-/////CALCULLATOR 공유객체 만들어보기
+/////CALCULLATOR 공유객체 만들어보기 
+//synchronized 내용!!
 package com.kosta.day11;
 
 public class Calculator {
@@ -752,4 +753,357 @@ public class BathExample {
 	}
 
 }
+////// BathRoom 은 이것도 가능
+package com.kosta.day11;
+
+public class BathRoom {
+
+//기능	
+	public  void use(String name) {
+		synchronized(this) {
+		System.out.println("=================");
+		System.out.println(name + " 입장 ");
+		System.out.println(name + " 사용합니다. ");
+		System.out.println(name + " 퇴장합니다. ");
+		}
+	}
+
+}
+
 /////////////
+package com.kosta.day11;
+
+public class Account {
+//멤버변수
+	String accNo;
+	String ownerName;
+	int balance;
+	// 생성자
+	public Account(String accNo, String ownerName, int balance) {
+		super();
+		this.accNo = accNo;
+		this.ownerName = ownerName;
+		this.balance = balance;
+	}
+	//입금기능
+	public void deposite(int amount) {
+		balance+=amount;
+	}
+	//출금기능
+	public int withdraw(int amount) {
+		if(balance>amount) {
+			System.out.println("잔고부족");
+			return 0;
+		}
+		balance-=amount;
+		return amount;
+	}
+}
+package com.kosta.day11;
+
+public class ShareAccount {
+//공유영역
+	Account lee; //이몽룡
+	Account sung;//성춘향
+	//생성자
+	public ShareAccount(Account lee, Account sung) {
+		super();
+		this.lee = lee;
+		this.sung = sung;
+	}
+	//이체하기(lee ->sung)
+	public synchronized void transfer() {
+		int amount=lee.withdraw(1000000); //출금
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sung.deposite(amount); //입금
+		System.out.println(amount+ "---->이체(lee-->sung)");
+	}
+	
+	
+	
+	
+	//잔액 얻기 
+	public int getTotal() {
+		synchronized(this) {
+			return lee.balance+sung.balance;
+		}
+		
+	}
+	
+}
+package com.kosta.day11;
+
+public class PrintThread extends Thread{
+
+	ShareAccount shareAccount;
+
+	public PrintThread(ShareAccount shareAccount) {
+		this.shareAccount=shareAccount;
+	}
+
+	@Override
+	public void run() {
+		for(int i=1;i<=3;i++) {
+			System.out.println("잔액합계: "+shareAccount.getTotal());
+		}
+	}
+	
+	
+	
+}
+package com.kosta.day11;
+
+public class TransferThread extends Thread{
+
+	ShareAccount shareAccount;
+
+	public TransferThread(ShareAccount shareAccount) {
+		this.shareAccount=shareAccount;
+	}
+
+	@Override
+	public void run() {
+		for(int i=1;i<=12;i++) {
+			shareAccount.transfer();
+			
+		}
+	}
+	
+	
+	
+}
+package com.kosta.day11;
+
+public class SynchronizedTest {
+
+	public static void main(String[] args) {
+		Account sung=new Account("112", "성춘향",1000);
+		Account lee=new Account("122", "이몽룡",2000);
+		//공유계좌
+		ShareAccount sa=new ShareAccount(lee, sung);
+		Thread t1= new TransferThread(sa);
+		Thread t2= new PrintThread(sa);
+		t1.start();
+		t2.start();
+	}
+
+}
+////// yield() 사용법
+package com.kosta.day11;
+
+public class ThreadA extends Thread {
+	public boolean stop = false;
+	public boolean work = true;
+
+	@Override
+	public void run() { 
+		while (!stop) {
+			if (work) {
+				System.out.println(getClass().getSimpleName()+" 작업내용");
+			} else {
+				yield(); //잠시 쉬고있다!!..  양보할게
+			}
+		}
+		System.out.println(getClass().getSimpleName()+" 작업 종료");
+	}
+
+}
+package com.kosta.day11;
+
+public class ThreadB extends Thread {
+	public boolean stop = false;
+	public boolean work = true;
+
+	@Override
+	public void run() { 
+		while (!stop) {
+			if (work) {
+				System.out.println(getClass().getSimpleName()+" 작업내용");
+			} else {
+				yield(); //잠시 쉬고있다!!..  양보할게
+			}
+		}
+		System.out.println(getClass().getSimpleName()+" 작업 종료");
+	}
+
+}
+package com.kosta.day11;
+
+public class YieldExample {
+
+	public static void main(String[] args) {
+		ThreadA t1= new ThreadA();
+		ThreadB t2= new ThreadB();
+
+		t1.start();
+		t2.start();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t1.work=false;
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t1.work=true;
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t1.stop=true;
+		t2.stop=true;
+		
+	}
+
+}
+////////////////// join()
+package com.kosta.day11;
+
+public class SumThread extends Thread {
+	private long sum;
+
+	
+
+	public long getSum() {
+		return sum;
+	}
+
+	public void setSum(long sum) {
+		this.sum = sum;
+	}
+
+	@Override
+	public void run() {
+		for(int i=1;i<=100;i++)
+		{
+			sum+=i;
+		}
+	}
+
+	
+}
+package com.kosta.day11;
+
+public class JoinExample {
+
+	public static void main(String[] args) {
+		SumThread t= new SumThread();
+		t.start();
+		
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("1~100까지 합계 : "+t.getSum());
+
+	}
+
+}
+///////////
+package com.kosta.day11;
+//여러 스레드가 공유데이터(생성자 thread, 소비자 thread)
+public class DataBox {
+	private String data;
+
+	public synchronized String getData() {
+		if(this.data==null) {
+			try {
+				wait(); // 데이터가 없으면기다려라
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String returnValue=data;
+		System.out.println("ConsumerThread가 읽은 데이터: " +returnValue);
+		data = null;
+		notify(); //일어나라
+		return returnValue;
+	}
+
+	public synchronized void setData(String data) {
+		if(this.data!=null) {
+			try {
+				wait(); // 데이터가 없으면기다려라
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.data = data;
+		System.out.println("생성자가 만든 데이터: "+data);
+		notify();
+	}
+	
+}
+package com.kosta.day11;
+
+public class ProducerThread extends Thread {
+	DataBox dataBox;
+	String[] message;
+
+	public ProducerThread(DataBox dataBox,String[] message) {
+		this.dataBox=dataBox;
+		this.message=message;
+	}
+
+	@Override
+	public void run() {
+		for(int i =0;i<message.length;i++) {
+			dataBox.setData(message[i]);
+		}
+	}
+	
+}
+package com.kosta.day11;
+
+public class ConsumerThread extends Thread {
+	DataBox dataBox;
+	int count;
+
+	public ConsumerThread(DataBox dataBox,int count) {
+		this.dataBox=dataBox;
+		this.count=count;
+	}
+
+	@Override
+	public void run() {
+		for(int i=0;i<count;i++) {
+			System.out.println("Consumer Thread: "+dataBox.getData());
+		}
+	}
+
+
+}
+package com.kosta.day11;
+
+public class WaitNotifyExample {
+
+	public static void main(String[] args) {
+
+		DataBox dataBox = new DataBox();
+		String[] message = { "하이~", "화요일 ", "곧퇴근" };
+		ProducerThread p = new ProducerThread(dataBox, message);
+		ConsumerThread c= new ConsumerThread(dataBox, message.length);
+		p.start();
+		c.start();
+	}
+
+}
+//////////
