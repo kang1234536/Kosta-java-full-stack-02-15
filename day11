@@ -1,0 +1,437 @@
+//day 11 api 복습 및 공부
+package com.kosta.day11;
+
+public class Car implements Comparable<Car> {
+	private String model;
+	private int price;
+	
+	public Car() {
+		
+	}
+
+	public Car(String model, int price) {
+		super();
+		this.model = model;
+		this.price = price;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Car [model=").append(model).append(", price=").append(price).append("]");
+		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Car obj) {
+		// model 이름으로 Ascending sort 한다.
+		return model.compareTo(obj.model);
+	}
+	
+}
+package com.kosta.day11;
+
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+
+public class ArraysTest {
+
+	public static void main(String[] args) {
+		// Arrays API
+	//	method1();
+	//	method2();
+			method3();
+	}
+
+	private static void method3() {
+		Car[] arr= new Car[5];
+		arr[0]= new Car("A",5000);
+		arr[1]= new Car("B",1000);
+		arr[2]= new Car("C",9000);
+		arr[3]= new Car("D",6000);
+		arr[4]= new Car("E",3000);
+		
+		print("before: ",arr);
+		Arrays.sort(arr);
+		print("after: " ,arr);
+	
+	Arrays.sort(arr,new Comparator<Car>() {
+
+		@Override
+		public int compare(Car o1, Car o2) {
+			// TODO Auto-generated method stub
+			return o2.getPrice()-o1.getPrice();
+		}
+	});
+	print("descending sort:" ,arr);
+	int result= Arrays.binarySearch(arr, new Car("C",9000));
+	System.out.println(result+ "번째");
+	}
+
+	
+
+	private static void print(String message, Car[] arr) {
+		System.out.println("======================"+message+"=====================");
+		for(Car cc: arr) {
+			System.out.println(cc);
+		}
+		
+	}
+
+	private static void method2() {
+		Character[] arr= {'J','A','V','A'};
+		System.out.println(Arrays.binarySearch(arr, 'V') +"번째");
+		System.out.println(Arrays.binarySearch(arr, 'A') +"번째");
+	}
+
+	private static void method1() {
+		Character[] arr= {'J','A','V','A'};
+		Character[] arr2= Arrays.copyOf(arr, arr.length-1);
+		Character[] arr3=new Character[arr.length];
+		System.out.println("원본:"+Arrays.toString(arr));
+		System.out.println("원본:"+Arrays.toString(arr2));
+		
+		System.arraycopy(arr, 0, arr3, 0, arr.length);
+		System.out.println("복사:"+ Arrays.toString(arr3));
+		
+		System.out.println(Arrays.equals(arr, arr2));
+		System.out.println(Arrays.equals(arr, arr3));
+		
+		//sort!!
+		Arrays.sort(arr);
+		System.out.println("sort: "+Arrays.toString(arr));
+		
+		
+		//
+		Arrays.sort(arr,new Comparator<Character>() {
+
+			@Override
+			public int compare(Character o1, Character o2) {
+				// TODO Auto-generated method stub
+				return o2.compareTo(o1);
+			}
+		});
+		System.out.println("desc sort : "+Arrays.toString(arr));
+
+		Arrays.sort(arr3,new CharDescending());
+		System.out.println("desc sort: "+Arrays.toString(arr3));
+	
+		//익명
+		Arrays.sort(arr3,new Comparator<Character>() {
+
+			@Override
+			public int compare(Character o1, Character o2) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+		});
+		System.out.println("desc sort: "+Arrays.toString(arr3));
+	
+	}
+
+}
+class CharDescending implements Comparator<Character>{
+
+	@Override
+	public int compare(Character o1, Character o2) {
+		// TODO Auto-generated method stub
+		return o2-o1;
+	}
+	
+}
+
+///Wrapper class
+
+package com.kosta.day11;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
+import com.sun.org.apache.xml.internal.security.c14n.implementations.Canonicalizer11_OmitComments;
+
+public class WrapeerClassTest {
+
+	public static void main(String[] args) {
+
+		// method1();
+		// method2();
+		// method3();
+		// method4();
+		// method5();
+		method6();
+	}
+
+	private static void method6() {
+		// 중복 허용하지 않음! ->Set
+		Random r = new Random();
+		// Set<Integer> luckNum=new HashSet<Integer>();
+		Set<Integer> luckNum = new HashSet<>();
+		while (true) {
+			if (luckNum.size() == 6)
+				break;
+			int su= r.nextInt(45) + 1;
+			luckNum.add(su);
+		}
+		System.out.println(luckNum.toString());
+	}
+
+	private static void method5() {
+		// 로또번호 6개가 무작위 추출, 중복없기
+		int[] arr = new int[6];
+		int last = 0;
+		int su;
+		Random r = new Random();
+		AA: while (last != arr.length) {
+			su = (r.nextInt(45) + 1);
+			for (int i = 0; i < last; i++) {
+				if (su == arr[i]) {
+					continue AA;
+				}
+
+			}
+			arr[last] = su;
+			last++;
+
+		}
+		System.out.println(Arrays.toString(arr));
+
+	}
+
+	private static void method4() {
+		//
+		Random r = new Random(1);
+		System.out.println(r.nextInt(45) + 1);
+	}
+
+	private static void method3() {
+		// random 함수
+
+		System.out.println(Math.random()); /// 0<= <1
+		System.out.println(Math.random() * 10); // 0<= <1
+		System.out.println((int) (Math.random() * 10)); // 0<= <1
+
+		double a = Math.random();
+
+		System.out.println((int) (a * 45));
+		System.out.println((int) (a * 45) + 1); // 1<= <=45
+	}
+
+	private static void method2() {
+		// math 함수
+		int a = 10;
+		int b = 20;
+		System.out.println(Math.max(a, b));
+		System.out.println(Math.min(a, b));
+		System.out.println(Math.round(98.5)); // 반올림해라
+		System.out.println(Math.ceil(98.1)); // 무조건올린다.
+		System.out.println(Math.floor(98.9)); // 무조건버린다.
+
+	}
+
+	private static void method1() {
+		byte b = 10;
+		short s = 10;
+		char c = 'A';
+		int i = 10;
+		long l = 10l;
+		float f = 3.14f;
+		double d = 3.14;
+		boolean bl = true;
+
+		// AutoBoxing
+		Byte b2 = 10; // new Byte(10)
+		Short s2 = 10;
+		Character c2 = 'A';
+		Integer i2 = 10;
+		Long l2 = 10l;
+		Float f2 = 3.14f;
+		Double d2 = 3.14;
+		Boolean bl2 = true;
+		// Unboxing
+		// System.out.println(b2.byteValue() + 20);
+		System.out.println(b2 + 20);
+		System.out.println(s2 + 20);
+		System.out.println(c2 + 20);
+		System.out.println(i2 + 20);
+		System.out.println(l2 + 20);
+		System.out.println(f2 + 20);
+		System.out.println(d2 + 20);
+		System.out.println(bl2.booleanValue());
+
+		String str = "100";
+		System.out.println(Integer.parseInt(str));
+		System.out.println(Double.parseDouble(str));
+
+		String str2 = "true";
+		if (Boolean.parseBoolean(str2)) {
+			System.out.println("참이다");
+		} else {
+			System.out.println("거짓이다.");
+		}
+		System.out.println(Boolean.parseBoolean(str2));
+	}
+
+}
+////
+package com.kosta.day11;
+
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+public class DateTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// method1();
+		// method2();
+		// method3();
+		// method4();
+		// method5();
+		// method6();
+		method7();
+		//method8();
+	}
+
+	private static void method8() {
+		//
+		Date d1= new Date();
+		System.out.println(d1);
+		
+	}
+
+	private static void method7() {
+		//
+		LocalDate ld = LocalDate.now();
+		LocalDate ld3 = ld.minusDays(7);
+		
+		System.out.println("오늘: "+ld);
+		System.out.println(ld.getYear());
+		System.out.println(ld.getMonth());
+		System.out.println(ld.getMonthValue());
+		System.out.println("일주일전: "+ld3);
+		
+		
+		
+		
+		LocalDateTime ld2=LocalDateTime.now();
+		System.out.println(ld2);
+
+	}
+
+	private static void method6() {
+		//
+		Car car = new Car("모델A", 2000);
+		String s = "자동차의 모델은 {0}이고 자동차의 가격은 {1}원 이다.";
+		String s2 = MessageFormat.format(s, car.getModel(), car.getPrice());
+		System.out.println(s2);
+
+		String[] obj = { car.getModel(), car.getPrice() + "" };
+		String s3 = MessageFormat.format(s, obj);
+		System.out.println(s3);
+
+	}
+
+	private static void method5() {
+		//
+		String message = "아이디는 {0} 전화는 {1}";
+		String result = MessageFormat.format(message, "hong", "010-2222-3333");
+		System.out.println(result);
+
+		String message2 = " 전화는 {1} 아이디는 {0} ";
+		String result2 = MessageFormat.format(message2, "honggu", "010-2222-3333-11");
+		System.out.println(result2);
+	}
+
+	private static void method4() {
+		//
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss D/365 E요일 a w/52 W/4 S K");
+		String s = sdf.format(d);
+		System.out.println(s);
+
+	}
+
+	private static void method3() {
+		//
+		int su = 10000000;
+		DecimalFormat df = new DecimalFormat("###,###,###");
+		String s = df.format(su);
+		System.out.println(s);
+	}
+
+	private static void method2() {
+		// Calendar
+		Calendar cal = Calendar.getInstance();
+		TimeZone tz = TimeZone.getTimeZone("America/Los_Angles");
+		Calendar cal2 = Calendar.getInstance(tz);
+		System.out.println(cal);
+		System.out.println(cal2);
+
+		System.out.println(cal.get(Calendar.YEAR));
+		System.out.println(cal.get(Calendar.MONTH));
+		System.out.println(cal.get(Calendar.DAY_OF_MONTH));
+		System.out.println(cal.get(Calendar.HOUR));
+		System.out.println(cal.get(Calendar.MINUTE));
+		System.out.println(cal.get(Calendar.SECOND));
+		System.out.println(cal.get(Calendar.AM_PM) == 0 ? "오전" : "오후");
+
+		System.out.println("------------------------------");
+		System.out.println(cal2.get(Calendar.YEAR));
+		System.out.println(cal2.get(Calendar.MONTH));
+		System.out.println(cal2.get(Calendar.DAY_OF_MONTH));
+		System.out.println(cal2.get(Calendar.HOUR));
+		System.out.println(cal2.get(Calendar.MINUTE));
+		System.out.println(cal2.get(Calendar.SECOND));
+		System.out.println(cal2.get(Calendar.AM_PM) == 0 ? "오전" : "오후");
+
+	}
+
+	private static void method1() {
+		// Date class
+		Date d = new Date();
+		System.out.println(d);
+		System.out.println(d.toString());
+		System.out.println(d.toLocaleString());
+		System.out.println(d.getYear());
+		System.out.println(d.getMonth() + 1);
+		System.out.println(d.getTime());
+
+		java.sql.Date d2 = new java.sql.Date(d.getTime());
+		System.out.println(d2);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년도 MM월 dd일 hh:mm:ss");
+		System.out.println(sdf.format(d));
+
+	}
+
+}
+/////
+
+
