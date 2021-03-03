@@ -1,0 +1,264 @@
+//3월3일 12일차 thread 복습
+package com.kosta.day12;
+
+public class MailBox {
+	String message;
+
+	//getter ->reader /setter-> writer
+	public synchronized String getMessage() {
+		System.out.println("메시지읽음: "+message);
+		if(this.message==null) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String returnValue= message;
+		message=null;
+		notify(); //wait상태를 깨우기
+		return returnValue;
+	}
+
+	public synchronized void setMessage(String message) {
+		if(this.message!=null) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		this.message = message;
+		notify();
+		
+		//System.out.println("메시지를변경: " +message);
+	}
+	
+	
+	
+}
+package com.kosta.day12;
+
+//다중 상속을 받아!! thread 상속불가 그래서 Runnable 인터페이스 ㄱㄱ!
+public class WriterThread implements Runnable {
+	MailBox box; // mailbox 변수선언
+	String[] messages; // 메시지들을 여러개를 넣는 배열
+	String myName="WriterThread";
+	public WriterThread(MailBox box, String[] messages) {
+		this.box=box;
+		this.messages=messages;
+		Thread.currentThread().setName(myName);
+	}
+
+	@Override
+	public void run() {
+		for(String s: messages) {
+			box.setMessage(s);
+			System.out.println(myName+"-->"+s);
+			System.out.println("******************************");
+		}
+
+	}
+
+}
+package com.kosta.day12;
+
+public class ReaderThread extends Thread {
+	MailBox box;
+	int count;
+
+	public ReaderThread(MailBox box, int count) {
+		setName("ReaderThread임");
+		//Thread.currentThread().setName("aaa");
+		this.box = box;
+		this.count = count;
+	}
+
+	@Override
+	public void run() {
+		for (int i = 0; i < count; i++) {
+			String name = getName();
+			String m = box.getMessage();
+			System.out.println(name+"-->"+m);
+			System.out.println("------------");
+		
+		}
+
+	}
+
+}
+package com.kosta.day12;
+
+public class ThreadTest {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		MailBox box = new MailBox();
+		String[] messages= {"하이","열공","잘가!!"};
+		Thread reader2= new ReaderThread(box,messages.length);
+		Runnable write = new WriterThread(box, messages);
+		Thread writerThread =new Thread(write);
+		
+		reader2.start();
+		writerThread.start();
+		
+	}
+
+}
+////// stop // interrupt 메서드
+//stop메서드
+package com.kosta.day12;
+
+// stop / interrupt
+public class PrintThread1 extends Thread {
+	private boolean stop;
+
+	public PrintThread1() {
+		setName(getClass().getSimpleName()+"쓰레드"); //이름주기
+	}
+	//멈추기위한 함수
+	public void setStop(boolean stop) {
+		this.stop=stop;
+	}
+	
+	@Override
+	public void run() {
+		while(!stop) {
+			System.out.println(getName()+" 작업실행");
+		}
+		System.out.println("자원종료");
+		System.out.println("실행종료");
+	}
+	
+}
+package com.kosta.day12;
+
+public class ThreadTest2 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		Thread t1= new PrintThread1();
+		t1.start();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		((PrintThread1)t1).setStop(true);
+	}
+
+}
+//interrupt 메서드
+package com.kosta.day12;
+
+// stop / interrupt
+public class PrintThread2 extends Thread {
+
+	public PrintThread2() {
+		setName(getClass().getSimpleName() + "쓰레드"); // 이름주기
+	}
+	// 멈추기위한 함수
+
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				System.out.println(getName() + " 작업실행");
+				sleep(1000);
+			}
+		} catch (InterruptedException aa) {
+			//aa.printStackTrace();
+			System.out.println("다른쓰레드가 인터럽드걸어서 나의 쓰레드 종료!");
+		}
+		System.out.println(getClass().getSimpleName() +" 자원종료");
+		System.out.println(getClass().getSimpleName() +" 실행종료");
+	}
+}
+package com.kosta.day12;
+
+public class ThreadTest3 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		Thread t1= new PrintThread2();
+		t1.start();
+		try {
+			t1.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t1.interrupt();
+	}
+
+}
+/////데몬 쓰레드
+package com.kosta.day12;
+
+public class AutoSaveThread extends Thread {
+	public AutoSaveThread(String name) {
+		setName(name);
+	}
+	
+	public void save() {
+		System.out.println("자동저장합니다");
+	}
+	
+	
+	public void run() {
+		try {
+		while(true) {
+			save();
+			sleep(1000);
+		}
+		}catch(InterruptedException e) {
+			System.out.println("interruptedException....");
+		}
+		
+	}
+}
+package com.kosta.day12;
+
+public class ThreadTest4 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		AutoSaveThread t= new AutoSaveThread("자동저장쓰레드");
+		t.setDaemon(true); //데몬으로 설정하기 ..main종료시 같이 종료
+		t.start();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//t.interrupt();
+		
+		
+		System.out.println("main end");
+	
+	}
+
+}
+///////
+
