@@ -260,5 +260,312 @@ public class ThreadTest4 {
 	}
 
 }
+/////// 13장 Generic 제네릭
+
+package com.kosta.day12.Generic;
+
+public class Box<T> {
+	//private Object object;  Object일떄
+	private T object; //Generic 사용할떄
+
+	public T getObject() {
+		return object;
+	}
+
+	public void setObject(T object) {
+		this.object = object;
+	}
+	
+
+}
+package com.kosta.day12.Generic;
+
+public class GenericTest2 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		// Object일떄
+		Box b = new Box();
+		b.setObject(100);
+		int i = (int) b.getObject();
+		System.out.println(i);
+
+		b.setObject("Hello");
+		String s = (String) b.getObject();
+		// Integer s= (Integer)b.getObject();
+		System.out.println(s);
+		//Generic 사용할때 <T>
+		
+		Box<Integer> b1= new Box<Integer>();
+		b1.setObject(100);
+		int aa=b1.getObject();
+		System.out.println(aa);
+		
+		Box<String> b2= new Box<String>();
+		b2.setObject("Hello111");
+		String s1=  b2.getObject();
+		System.out.println(s1);
+
+	}
+
+}
+/////
+package com.kosta.day12.Generic;
+
+public class Product<T,M> {
+	private T kind;
+	private M model;
+	private int price;
+	public Product(T kind, M model, int price) {
+		super();
+		this.kind = kind;
+		this.model = model;
+		this.price = price;
+	}
+	public T getKind() {
+		return kind;
+	}
+	public void setKind(T kind) {
+		this.kind = kind;
+	}
+	public M getModel() {
+		return model;
+	}
+	public void setModel(M model) {
+		this.model = model;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Product [kind=").append(kind).append(", model=").append(model).append(", price=").append(price)
+				.append("]");
+		return builder.toString();
+	}
+	
+	
+}
+package com.kosta.day12.Generic;
+
+public class NoteBook {
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("NoteBook []");
+		return builder.toString();
+	}
+
+}
+package com.kosta.day12.Generic;
+
+public class TV {
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TV []");
+		return builder.toString();
+	}
+	
+}
+package com.kosta.day12.Generic;
+
+public class Coffee {
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Coffee []");
+		return builder.toString();
+	}
+
+}
+package com.kosta.day12.Generic;
+
+
+
+public class GenericTest3 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		Product<TV, String> p1 = new Product<>(new TV(),"S1234",100);
+		System.out.println(p1);
+		Product<NoteBook, String> p2 = new Product<>(new NoteBook(),"N1234",120);
+		System.out.println(p2);
+		Product<Coffee, Integer> p3 = new Product<>(new Coffee(),234,40);
+		System.out.println(p3);
+	}
+
+}
+//////////
+package com.kosta.day12.Generic;
+
+public class Util {
+
+	public static<A> Box<A> boxing(A t) {
+		Box<A> b = null;
+
+		return b;
+	}
+
+	public static <T> Box<T> boxing1(T t) {
+		Box<T> b = new Box<>();
+		b.setObject(t);
+		return b;
+	}
+}
+/////
+package com.kosta.day12.Generic;
+
+public class Util {
+
+	
+
+//	public static <T> Box<T> boxing1(T t) {
+//		Box<T> b = new Box<>();
+//		b.setObject(t);
+//		return b;
+//	}
+//	
+	public static<Integer> Box<Integer> boxing(Integer a) {
+		Box<Integer> b= new Box<>();
+		b.setObject(a);
+		return b;
+		
+	}
+}
+package com.kosta.day12.Generic;
+
+
+
+public class GenericTest4 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		Box<Integer> a = Util.boxing(100);
+		Box<Integer> b = Util.<Integer>boxing(100);
+		
+		
+		
+		Box<String>c= Util.boxing("Hello");
+		Box<String>d= Util.<String>boxing("Hello");
+		
+		
+		Box<TV>e= Util.boxing(new TV());
+		Box<TV>f= Util.<TV>boxing(new TV());
+		
+		
+		System.out.println(a.getObject());
+		System.out.println(b.getObject());
+		System.out.println(c.getObject());
+		System.out.println(d.getObject());
+		System.out.println(e.getObject());
+		System.out.println(f.getObject());
+		
+	}
+
+}
 ///////
+package com.kosta.day12.Generic;
+
+public class Pair<K,V> {
+	private K key;
+	private V val;
+	
+	//private이므로 getter/setter가 필요하다
+	public K getKey() {
+		return key;
+	}
+	public void setKey(K key) {
+		this.key = key;
+	}
+	public V getVal() {
+		return val;
+	}
+	public void setVal(V val) {
+		this.val = val;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pair [key=").append(key).append(", val=").append(val).append("]");
+		return builder.toString();
+	}
+	
+}
+package com.kosta.day12.Generic;
+
+public class Util {
+
+	public static<K,V> boolean compare(Pair<K, V>p1,Pair<K, V>p2) {
+		boolean result = false;
+		result=p1.getKey().equals(p2.getKey())&&p1.getVal().equals(p2.getVal());
+		
+		
+		return result;
+	}
+
+//	public static <T> Box<T> boxing1(T t) {
+//		Box<T> b = new Box<>();
+//		b.setObject(t);
+//		return b;
+//	}
+//	
+//	public static<Integer> Box<Integer> boxing(Integer a) {
+//		Box<Integer> b= new Box<>();
+//		b.setObject(a);
+//		return b;
+//		
+//	}
+}
+package com.kosta.day12.Generic;
+
+
+
+public class GenericTest5 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		Pair<String, String> p1= new Pair<>();
+		p1.setKey("이름");
+		p1.setVal("사과");
+		Pair<String, String> p2= new Pair<>();
+		p2.setKey("이름");
+		p2.setVal("오렌지");
+		Pair<String, Integer> p3= new Pair<>();
+		p3.setKey("한라봉");
+		p3.setVal(1000);
+		Pair<String, Integer> p4= new Pair<>();
+		p4.setKey("한라봉");
+		p4.setVal(1000);
+		boolean b1 =Util.compare(p1, p2);
+		System.out.println(b1);
+		boolean b2 =Util.compare(p3, p4);
+		System.out.println(b2);
+	}
+
+}
+//////
 
