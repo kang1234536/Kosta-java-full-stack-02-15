@@ -567,5 +567,274 @@ public class GenericTest5 {
 	}
 
 }
-//////
+////// 제한된 타입 파라미터
+package com.kosta.day12.Generic;
+//Object <----- Number<-----Integer,Double,......
+
+public class Util {
+	//타입에 제한을 건다.
+	public static<T extends Number> int compare(T a,T b) {
+		
+		double su1= a.doubleValue();
+		double su2= b.doubleValue();
+		
+		int result= Double.compare(su1, su2);  
+		//su1-su2
+		// < = >
+		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+//	public static<K,V> boolean compare(Pair<K, V>p1,Pair<K, V>p2) {
+//		boolean result = false;
+//		result=p1.getKey().equals(p2.getKey())&&p1.getVal().equals(p2.getVal());
+//		
+//		
+//		return result;
+//	}
+
+//	public static <T> Box<T> boxing1(T t) {
+//		Box<T> b = new Box<>();
+//		b.setObject(t);
+//		return b;
+//	}
+//	
+//	public static<Integer> Box<Integer> boxing(Integer a) {
+//		Box<Integer> b= new Box<>();
+//		b.setObject(a);
+//		return b;
+//		
+//	}
+}
+package com.kosta.day12.Generic;
+
+
+
+public class GenericTest6 {
+
+	public static void main(String[] args) {
+		method1();
+
+	}
+
+	private static void method1() {
+		int result =Util.compare(10, 20);
+		System.out.println(result);
+	}
+
+}
+//////와일드카드!!
+package com.kosta.day12.Generic;
+//Person <---- Student <------HighStudent
+//Person<------Worker
+public class Person {
+	private String name;
+
+	public Person(String name) {
+		super();
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Person [name=").append(name).append("]");
+		return builder.toString();
+	}
+
+
+
+
+}
+package com.kosta.day12.Generic;
+
+public class Student extends Person {
+
+	public Student(String name) {
+		super(name);
+		
+	}
+}
+package com.kosta.day12.Generic;
+
+public class Worker extends Person {
+
+	public Worker(String name) {
+		super(name);
+	}
+}
+package com.kosta.day12.Generic;
+
+public class HighStudent extends Student {
+
+	public HighStudent(String name) {
+		super(name);
+		
+	}
+
+}
+package com.kosta.day12.Generic;
+//교육과정
+public class Course<T> {
+	private String name;
+	private T[] students;
+	
+	public Course(String name,int capacity) {
+		super();
+		this.name = name;
+		this.students= (T[])new Object[capacity];
+		
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public T[] getStudents() {
+		return students;
+	}
+	public void add(T t) {
+		//배열의 빈곳에 한명의 학생을 추가한다.
+		for(int i =0; i<students.length;i++) {
+			if(students[i]==null) {
+				students[i]=t;
+				break;
+			}
+		}
+	}
+	
+}
+package com.kosta.day12.Generic;
+
+import java.util.Arrays;
+
+public class WildCardExample {
+
+	public static void main(String[] args) {
+		Course<Person> persons=makePerson();
+		Course<Student> students=makeStudent();
+		Course<HighStudent> highstudents=makeHighStudent();
+		Course<Worker> workers =makeWorker();
+		registerCourse(persons);
+		registerCourse(students);
+		registerCourse(highstudents);
+		registerCourse(workers);
+		System.out.println("!!!!!!Course2!!!!!!!!");
+		registerCourse2(students);
+		registerCourse2(highstudents);
+		System.out.println("!!!!!!Course3!!!!!!!!");
+		registerCourse3(persons);
+		registerCourse3(students);
+		System.out.println("!!!!!!Course4!!!!!!!!");
+		registerCourse4(persons);
+		registerCourse4(workers);
+		
+	}
+	public static void registerCourse4(Course<? super Worker> cc) {
+		System.out.println("*****"+cc.getName()+"******");
+		String s= Arrays.toString(cc.getStudents());
+		System.out.println(s);
+		
+	}
+	public static void registerCourse3(Course<? super Student> cc) {
+		System.out.println("*****"+cc.getName()+"******");
+		String s= Arrays.toString(cc.getStudents());
+		System.out.println(s);
+		
+	}
+	public static void registerCourse2(Course<? extends Student> cc) {
+		System.out.println("*****"+cc.getName()+"******");
+		String s= Arrays.toString(cc.getStudents());
+		System.out.println(s);
+		
+	}
+	public static void registerCourse(Course<?> cc) {
+		System.out.println("*****"+cc.getName()+"******");
+		String s= Arrays.toString(cc.getStudents());
+		System.out.println(s);
+		
+	}
+	private static Course<Worker> makeWorker() {
+		Course<Worker> pCourse=new Course<Worker>("직장인과정",2);
+	
+		pCourse.add(new Worker("직장인1"));
+		pCourse.add(new Worker("직장인2"));
+		
+			
+//		Object[] ps=	pCourse.getStudents();
+//		myPrint(ps);
+		return pCourse;
+		
+	}
+	private static Course<HighStudent> makeHighStudent() {
+		Course<HighStudent> pCourse=new Course<HighStudent>("고등학생과정", 2);
+		
+		
+		pCourse.add(new HighStudent("고등학생1"));
+		pCourse.add(new HighStudent("고등학생2"));
+			
+//		Object[] ps=	pCourse.getStudents();
+//		myPrint(ps);
+		return pCourse;
+		
+	}
+	private static Course<Student> makeStudent() {
+		Course<Student> pCourse=new Course<Student>("학생과정", 4);
+		
+		pCourse.add(new Student("학생1"));
+		pCourse.add(new Student("학생2"));
+		pCourse.add(new HighStudent("고등학생1"));
+		pCourse.add(new HighStudent("고등학생2"));
+			
+//		Object[] ps=	pCourse.getStudents();
+//		myPrint(ps);
+		return pCourse;
+		
+	}
+	private static Course<Person> makePerson() {
+		Course<Person> pCourse=new Course<Person>("일반인과정", 8);
+		pCourse.add(new Person("일반인1"));
+		pCourse.add(new Person("일반인2"));
+		pCourse.add(new Worker("직장인1"));
+		pCourse.add(new Worker("직장인2"));
+		pCourse.add(new Student("학생1"));
+		pCourse.add(new Student("학생2"));
+		pCourse.add(new HighStudent("고등학생1"));
+		pCourse.add(new HighStudent("고등학생2"));
+			
+		//Object[] ps=	pCourse.getStudents();
+		//myPrint(ps);
+		return pCourse;
+		
+	}
+	private static void myPrint(Object[] ps) {
+		for(Object p:ps)
+		{
+
+			System.out.println(p);
+
+			
+		}
+		System.out.println("------------------------");
+	}
+
+}
+////////
+
 
