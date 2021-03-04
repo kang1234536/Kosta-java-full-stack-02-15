@@ -1023,10 +1023,10 @@ public class CustomerDAO {
 	public int delete(int custId) {  
 		//고객 정보를 삭제한다.
 		for(int i =0; i<custlist.size();i++) {
-		if(custlist.get(i).getCustId()==custId)
+		if(custlist.get(i).getCustId()==custId){
 			custlist.remove(i);
 			return 1;
-		
+		}
 		}
 		
 		return 0;
