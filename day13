@@ -715,6 +715,396 @@ public static class Student{
 	
 }
 }
-//////
+//////오후
+//15장  컬랙션 프레임워크
+package com.kosta.day13.Collection;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+
+import com.kosta.day13.Student;
+
+
+public class CollectionTest {
+	public static void main(String[] args) {
+		//method1();
+		//method2();
+		//method3();
+		method4();
+	}
+	private static void method4() {
+		//Collection이 배열과 차이점 : 여러 타입 가능
+		//Collection이 배열과 차이점 : 갯수가 자동
+		
+		//List interface : 순서 있음, 중복 허용
+		//구현class :ArrayList, LinkedList, Vector
+		
+		
+		//제네릭 사용
+		List<String>datas=new Vector<String>();
+		datas.add(0,"hello");// 0부터찍어야한다
+		datas.add(1,new String("hello"));
+		datas.add("Hello");
+		datas.add("Hello");
+		datas.add("JAVA");
+		System.out.println(datas.size()+"건");
+		datas.remove(1);
+		for(String s:datas) {
+			System.out.println(s);
+		}
+		System.out.println(datas.size()+"건");
+		
+}
+	private static void method3() {
+		//Collection이 배열과 차이점 : 여러 타입 가능
+		//Collection이 배열과 차이점 : 갯수가 자동
+		
+		//List interface : 순서 있음, 중복 허용
+		//구현class :ArrayList, LinkedList, Vector
+		
+		
+		//제네릭 사용
+		List<String>datas=new LinkedList<String>();
+		datas.add(0,"hello");// 0부터찍어야한다
+		datas.add(1,new String("hello"));
+		datas.add("Hello");
+		datas.add("Hello");
+		datas.add("JAVA");
+		System.out.println(datas.size()+"건");
+		datas.remove(1);
+		for(String s:datas) {
+			System.out.println(s);
+		}
+		System.out.println(datas.size()+"건");
+		
+}
+	
+	
+	
+	private static void method2() {
+		//Collection이 배열과 차이점 : 여러 타입 가능
+		//Collection이 배열과 차이점 : 갯수가 자동
+		
+		//List interface : 순서 있음, 중복 허용
+		//구현class :ArrayList, LinkedList, Vector
+		
+		
+		//제네릭 사용
+		ArrayList<String>datas=new ArrayList<String>();
+		datas.add(0,"hello");// 0부터찍어야한다
+		datas.add(1,new String("hello"));
+		datas.add("Hello");
+		datas.add("Hello");
+		datas.add("JAVA");
+		System.out.println(datas.size()+"건");
+		datas.remove(1);
+		for(String s:datas) {
+			System.out.println(s);
+		}
+		System.out.println(datas.size()+"건");
+		
+}
+	private static void method1() {
+		//Collection이 배열과 차이점 : 여러 타입 가능
+		//Collection이 배열과 차이점 : 갯수가 자동
+		
+		//List interface : 순서 있음, 중복 허용
+		//구현class :ArrayList, LinkedList, Vector
+		//1.ArrayList
+		ArrayList datas= new ArrayList();
+		datas.add(100); //AutoBoxing
+		datas.add(new Integer(100)); //unAutoBoxing
+		datas.add(2,"hello");
+		datas.add(3,new String("hello"));
+		datas.add(new Student("홍길동","남",20));
+		//강제 타입변환이 필요  ... 단점
+		Student s= (Student)datas.get(4);
+		System.out.println(s);
+		
+		
+		
+		
+	}
+}
+////////////////////////MVC모델 예
+//DTO->VIEW->SERVICE->DAO->SERVICE->CONTROLLER
+package com.kosta.day13.model;
+//DTO (Data Transfer Object)
+public class CustomerDTO {
+	
+	//멤버변수
+	private int custId;  //고객번호
+	private String custName; //고객이름
+	private String phone;//고객 전화번호
+	private String addr; //고객 주소
+	//생성자	
+	public CustomerDTO() {
+		super();
+	}
+	public CustomerDTO(int custId, String custName, String phone, String addr) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.phone = phone;
+		this.addr = addr;
+	}
+	//getter/setter
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	//ToString()
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerDTO [custId=").append(custId).append(", custName=").append(custName).append(", phone=")
+				.append(phone).append(", addr=").append(addr).append("]");
+		return builder.toString();
+	}
+	
+	
+	
+	
+	
+	
+}
+package com.kosta.day13.view;
+
+import java.util.List;
+
+import com.kosta.day13.model.CustomerDTO;
+//고객정보 보여주기!!
+//나중에는 Web전환...HTML,CSSS이용
+public class CustomerView {
+
+	public static void display(List<CustomerDTO> custlist) {//여러명
+		System.out.println("******고객정보 여러건******");
+		for(CustomerDTO cust:custlist) {
+			System.out.println(cust); //TOstring을 해놔서 다나온다.
+		}
+	}
+	public static void display(CustomerDTO cust) { //한명
+		System.out.println("******고객정보 1건******");
+		System.out.println(cust);
+	}
+	
+	public static void display(String message) { //메시지
+		System.out.println(message);
+	}
+	
+}
+package com.kosta.day13.model;
+
+import java.util.List;
+
+//사용자요청 ->Controller->Service(business logic(업무로직))->DAO(데이터를 접근하는 객체)->DB
+//응답	  <-		  <-		 				      <-				    <-
+public class CustomerService {
+	
+	//CustomerDAO 를 쓰고 다시Service로 와서 정리!!
+	CustomerDAO dao= new CustomerDAO();
+	
+	
+	
+	public List<CustomerDTO> selectAll() {
+		//모두고객을 조회한다.
+		
+		return dao.selectAll();
+	}
+	public CustomerDTO selectById(int custId) {  
+		//특정아이디로 고객 조회
+		
+		return dao.selectById(custId);
+	}
+	public CustomerDTO selectByPhone(String phone) {  
+		//특정 전화번호로 고객 조회
+		
+		return dao.selectByPhone(phone);
+	}
+	public int insert(CustomerDTO cust) {  
+		//고객 정보를 입력한다.
+		
+		return dao.insert(cust);
+	}
+	public int update(CustomerDTO cust) {  
+		//고객 정보를 변경한다.
+		
+		return dao.update(cust);
+	}
+	public int delete(int custId) {  
+		//고객 정보를 삭제한다.
+		
+		return dao.delete(custId);
+	}
+}
+package com.kosta.day13.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+//사용자요청 ->Controller->Service(business logic(업무로직))->DAO(데이터를 접근하는 객체)->DB
+//응답	  <-		  <-		 				      <-				    <-
+//DAO(Data Access Object) : 업무로직중에 DB에 가야하는 업무를 작성한다.
+public class CustomerDAO {
+	List<CustomerDTO> custlist= new ArrayList<CustomerDTO>();
+	public CustomerDAO() {
+		custlist.add(new CustomerDTO(1,"aaa","010-1111-1111","서울"));
+		custlist.add(new CustomerDTO(2,"aaa1","010-1111-1112","경기"));
+		custlist.add(new CustomerDTO(3,"aaa2","010-1111-1113","대전"));
+		custlist.add(new CustomerDTO(4,"aaa3","010-1111-1114","강원도"));
+		custlist.add(new CustomerDTO(5,"aaa4","010-1111-1115","경상도"));
+	}
+	public List<CustomerDTO> selectAll() {
+		//모두고객을 조회한다.
+	//	custlist.clear();
+		
+		return custlist;
+	}
+	public CustomerDTO selectById(int custId) {  
+		//특정아이디로 고객 조회
+		for(CustomerDTO cust:custlist) {
+			if(cust.getCustId()==custId)
+				return cust;
+		}
+		return null;
+	}
+	public CustomerDTO selectByPhone(String phone) {  
+		//특정 전화번호로 고객 조회
+		for(CustomerDTO cust:custlist) {
+			if(cust.getPhone().equals(phone))
+				return cust;
+		}
+		return null;
+	}
+	public int insert(CustomerDTO cust) {  
+		//고객 정보를 입력한다.
+		custlist.add(cust);
+		
+		return 1;
+	}
+	public int update(CustomerDTO cust) {  
+		//고객 정보를 변경한다.
+		for(int i =0; i<custlist.size();i++) {
+			CustomerDTO cc= custlist.get(i);
+			if(custlist.get(i).getCustId()==cust.getCustId())
+			{
+				
+				cc.setCustName(cust.getCustName());
+				cc.setPhone(cust.getPhone());
+				cc.setAddr(cust.getAddr());
+				
+				return 1;
+			}
+		}
+		return 0;
+	}
+	public int delete(int custId) {  
+		//고객 정보를 삭제한다.
+		for(int i =0; i<custlist.size();i++) {
+		if(custlist.get(i).getCustId()==custId)
+			custlist.remove(i);
+			return 1;
+		
+		}
+		
+		return 0;
+	}
+}
+package com.kosta.day13.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.kosta.day13.model.CustomerDTO;
+import com.kosta.day13.model.CustomerService;
+import com.kosta.day13.view.CustomerView;
+
+//서버프로그램 작성될 예정(웹으로 할때는 servlet / spring으로 할때는 controller)
+public class CustomerController {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		List<CustomerDTO> custlist = null; // 여러건
+		CustomerDTO cust = null; // 한건
+		int result = 0; // 건수가 몇번인지?
+		CustomerService service = new CustomerService();
+		while (true) {
+			System.out.println("================================");
+			System.out.println("0번. END");
+			System.out.println("1번.모두조회");
+			System.out.println("2번.특정고객 ID로 조회");
+			System.out.println("3번.전화번호로 조회");
+			System.out.println("4번.입력");
+			System.out.println("5번.수정");
+			System.out.println("6번.삭제");
+			System.out.println("================================");
+			System.out.print("작업을 선택하시오 >>");
+			int select = sc.nextInt();
+			if (select == 0)
+				break;
+			switch (select) {
+			case 1:
+				custlist = service.selectAll();
+				CustomerView.display(custlist);
+				break;
+			case 2:
+				System.out.print("조회할 id를 입력>>");
+				int custId = sc.nextInt();
+				cust = service.selectById(custId);
+				CustomerView.display(cust);
+				break;
+			case 3:
+				System.out.print("조회할 전화번호를 입력>>");
+				String p=sc.next();
+				cust=service.selectByPhone(p);
+				CustomerView.display(cust);
+				break;
+			case 4:
+				System.out.print("신규입력(1.고객번호,2.이름,3.전화번호,4.주소)>>");
+				cust= new CustomerDTO(sc.nextInt(),sc.next(),sc.next(),sc.next());
+				result=service.insert(cust);
+				CustomerView.display(result==1?"입력성공":"입력실패");
+				break;
+			case 5:
+				System.out.print("수정정보(1.고객번호,2.이름,3.전화번호,4.주소)>>");
+				cust= new CustomerDTO(sc.nextInt(),sc.next(),sc.next(),sc.next());
+				result=service.update(cust);
+				CustomerView.display(result==1?"수정성공":"수정실패");
+				break;
+			case 6:
+				System.out.print("삭제할 ID>>");
+				result=service.delete(sc.nextInt());
+				CustomerView.display(result==1?"삭제성공":"삭제실패");
+				break;
+			}
+		}
+		System.out.println("=======작업 끝===============");
+		sc.close();
+	}
+
+}
+
 
 
