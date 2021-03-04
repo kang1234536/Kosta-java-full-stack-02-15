@@ -1,1 +1,658 @@
-//13
+ //13  람다공
+package com.kosta.day13;
+@FunctionalInterface  //람다표현식으로 사용이 가능한지 컴파일 단계에서 체크하는 어노테이션
+//method4 1번쨰 순서.interface만들기
+interface MyInterface{
+	void myFunction();// public abstract  생략가능
+	
+}
+//method4 2번쨰 순서.interface를 구현한 class
+class MyInterfaceImplClass implements MyInterface{
+
+	@Override
+	public void myFunction() {
+		System.out.println("1.interface 구현 class");
+		
+	}
+	
+}
+
+
+//1.interface를 구현한 class 만들기  implements Runnable!!
+class MyRunnableimpl extends Object implements Runnable{
+
+	@Override
+	public void run() {
+		for(int i =0; i<=10;i++) {
+			System.out.println(i);
+		}
+		
+	}
+	
+}
+
+public class LambdaExample {
+
+	public static void main(String[] args) {
+		method1();//방법1 //1.interface를 구현한 class 만들기  implements Runnable!!
+		method2();//방법2 //2. 익명 class이용
+		
+		method3(); //람다로 표현!! 중요!!
+		
+		method5(); //인터페이스가 있을떄 사용법!!
+		method6(); //익명class만들기
+		method7(); //Lambda 표현식
+
+	}
+
+	private static void method7() {
+		//3.Lambda 표현식 사용하기
+		MyInterface a=	()->{
+			System.out.println("3.Lambda 표현식 사용하기 ");
+		};
+		a.myFunction();
+	}
+
+	private static void method6() {
+		//2.익명 class 만들기
+		(new MyInterface() {
+			
+			@Override
+			public void myFunction() {
+				System.out.println("2.익명class만들기");
+				
+			}
+		}).myFunction();
+		
+	}
+
+	private static void method5() {
+	
+		MyInterface a = new MyInterfaceImplClass();
+		a.myFunction();
+	}
+
+
+
+	private static void method3() {
+		// 3. Lambda 표현식
+		//인터페이스에 함수가  하나만 있는경우 사용 가능
+		Runnable a=()->{
+			for(int i =11;i<=15;i++) {
+				System.out.println(i);
+			}
+		};
+				
+			
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method3 end");
+		
+	}
+
+	private static void method2() {
+		
+		Runnable a=new Runnable() {
+
+			@Override
+			public void run() {
+				for(int i =11;i<=15;i++) {
+					System.out.println(i);
+				}
+				
+			}
+			
+		};
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method2 end");
+		
+	}
+
+	private static void method1() {
+		MyRunnableimpl a = new MyRunnableimpl();
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method1 end");
+		
+	}
+
+}
+//////
+package com.kosta.day13;
+@FunctionalInterface  //람다표현식으로 사용이 가능한지 컴파일 단계에서 체크하는 어노테이션
+//method4 1번쨰 순서.interface만들기
+interface MyInterface{
+	void myFunction();// public abstract  생략가능
+	
+}
+//method4 2번쨰 순서.interface를 구현한 class
+class MyInterfaceImplClass implements MyInterface{
+
+	@Override
+	public void myFunction() {
+		System.out.println("1.interface 구현 class");
+		
+	}
+	
+}
+
+
+//1.interface를 구현한 class 만들기  implements Runnable!!
+class MyRunnableimpl extends Object implements Runnable{
+
+	@Override
+	public void run() {
+		for(int i =0; i<=10;i++) {
+			System.out.println(i);
+		}
+		
+	}
+	
+}
+
+public class LambdaExample {
+
+	public static void main(String[] args) {
+		method1();//방법1 //1.interface를 구현한 class 만들기  implements Runnable!!
+		method2();//방법2 //2. 익명 class이용
+		
+		method3(); //람다로 표현!! 중요!!
+		
+		method5(); //인터페이스가 있을떄 사용법!!
+		method6(); //익명class만들기
+		method7(); //Lambda 표현식
+
+	}
+
+	private static void method7() {
+		//3.Lambda 표현식 사용하기
+		MyInterface a=	()->{
+			System.out.println("3.Lambda 표현식 사용하기 ");
+		};
+		a.myFunction();
+	}
+
+	private static void method6() {
+		//2.익명 class 만들기
+		(new MyInterface() {
+			
+			@Override
+			public void myFunction() {
+				System.out.println("2.익명class만들기");
+				
+			}
+		}).myFunction();
+		
+	}
+
+	private static void method5() {
+	
+		MyInterface a = new MyInterfaceImplClass();
+		a.myFunction();
+	}
+
+
+
+	private static void method3() {
+		// 3. Lambda 표현식
+		//인터페이스에 함수가  하나만 있는경우 사용 가능
+		Runnable a=()->{
+			for(int i =11;i<=15;i++) {
+				System.out.println(i);
+			}
+		};
+				
+			
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method3 end");
+		
+	}
+
+	private static void method2() {
+		
+		Runnable a=new Runnable() {
+
+			@Override
+			public void run() {
+				for(int i =11;i<=15;i++) {
+					System.out.println(i);
+				}
+				
+			}
+			
+		};
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method2 end");
+		
+	}
+
+	private static void method1() {
+		MyRunnableimpl a = new MyRunnableimpl();
+		Thread t = new Thread(a);
+		t.start();
+		System.out.println("method1 end");
+		
+	}
+
+}
+////
+package com.kosta.day13;
+
+@FunctionalInterface
+interface ThisTestInterface {
+	void Test();
+
+}
+
+public class UsingThis {
+	public int a = 10;
+	String java = "outter자바";
+
+	class Inner {
+		int b = 20;
+		String java = "inner자바";
+
+		void method() {
+			ThisTestInterface kim = () -> {
+				System.out.println("outeer변수 접근 :" + a);
+				System.out.println("outeer변수 접근 :" + UsingThis.this.a);
+				System.out.println("inner변수접근 :" + b);
+				System.out.println("inner변수접근 :" + this.b);
+
+				System.out.println(java);
+				System.out.println(UsingThis.this.java);
+				System.out.println(this.java);
+
+			};
+			kim.Test();
+		}
+	}
+
+	public static void main(String[] args) {
+		UsingThis.Inner inn = new UsingThis().new Inner();
+		inn.method();
+	}
+}
+////
+package com.kosta.day13;
+
+@FunctionalInterface
+interface ThisTestInterface {
+	void Test();
+
+}
+
+public class UsingThis {
+	public int a = 10;
+	String java = "outter자바";
+
+	class Inner {
+		int b = 20;
+		String java = "inner자바";
+
+		void method(int score) { // 파라메타도 local변수
+			String grade = "A학점"; // local변수
+			//final  생략되어있다.
+
+			// score =88; 수정하면 내부 클래스에서 사용불가 final 특성
+			// grade ="B학점"; 수정하면 내부 클래스에서 사용불가 final 특성
+
+			ThisTestInterface kim = () -> {
+				System.out.println("outeer변수 접근 :" + a);
+				System.out.println("outeer변수 접근 :" + UsingThis.this.a);
+				System.out.println("inner변수접근 :" + b);
+				System.out.println("inner변수접근 :" + this.b);
+
+				System.out.println(java);
+				System.out.println(UsingThis.this.java);
+				System.out.println(this.java);
+				//score =88; 수정하면 내부 클래스에서 사용불가 final 특성
+				//grade ="B학점"; 수정하면 내부 클래스에서 사용불가 final 특성
+				System.out.println("score :" + score);
+				System.out.println("grade :" + grade);
+
+			};
+			kim.Test();
+		}
+	}
+
+	public static void main(String[] args) {
+		UsingThis.Inner inn = new UsingThis().new Inner();
+		inn.method(99);
+	}
+}
+////
+package com.kosta.day13;
+
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.Supplier;
+
+interface LongToDoubleFunction2 {
+	double applyAsDouble(long num);
+}
+
+public class LambdaExample3 {
+
+	public static void main(String[] args) {
+//		method1();// 소비자 interface
+//		method2();//소비자 interface -> BiConsumer
+//		method3(); // 공급자 interface->Supplier
+//		method4();
+//		method5(); // BooleanSupplier  boolean 값
+//		method6(); //Function
+//		method7(); //BiFunction
+//		method8(); //LongToDoubleFunction
+//		method9(); //BinaryOperator
+//		method10(); //IntBinaryOperator
+		method11();//
+	}
+
+	private static void method11() {
+		int[] scores = { 100, 30, 70, 20, 99 };
+//		int max = 0;
+//		for (int i = 0; i < scores.length; i++) {
+//			if (scores[i] > max) {
+//				max = scores[i];
+//			}
+//		}
+//		System.out.println("가장 높은 점수는 :" + max);
+
+		IntBinaryOperator f = (a, b) -> {
+			if (a > b)
+				return a;
+			return b;
+		};
+		f.applyAsInt(10, 20);
+		int max = 0;
+		for (int i = 0; i < scores.length; i++) {
+			if (scores[i] > max) {
+				max=f.applyAsInt(scores[i], max);
+			}
+		}
+		System.out.println("가장 높은 점수는 :" + max);
+		
+
+	}
+
+	private static void MaxOrmin(IntBinaryOperator ibo) {
+
+		int result = ibo.applyAsInt(10, 20);
+		System.out.println(result);
+	}
+
+	private static void MaxOrmax(IntBinaryOperator ibo) {
+
+		int result = ibo.applyAsInt(10, 20);
+		System.out.println(result);
+	}
+
+	private static void method10() {
+		MaxOrmin((a, b) -> {
+			if (a >= b)
+				return a;
+			else
+				return a;
+		});
+		MaxOrmax((a, b) -> {
+			if (a >= b)
+				return b;
+			else
+				return b;
+		});
+
+	}
+
+	private static void method9() {
+		BinaryOperator<String> bo = (a, b) -> a + b;
+		String string = bo.apply("10", "20");
+		System.out.println(string);
+	}
+
+	private static void method8() {
+		LongToDoubleFunction l = (a) -> a * Math.PI;
+		double d = l.applyAsDouble(100);
+		System.out.println(d);
+
+		LongToDoubleFunction2 l2 = (a) -> a * Math.PI;
+		double d1 = l2.applyAsDouble(100);
+		System.out.println(d1);
+
+	}
+
+	private static void method7() {
+		BiFunction<Integer, Integer, String> f = (num1, num2) -> {
+			String grade = "F";
+			int a = num1 + num2;
+			if (a >= 90)
+				grade = "A";
+			else if (a >= 80)
+				grade = "B";
+			else if (a >= 70)
+				grade = "C";
+			else if (a >= 60)
+				grade = "D";
+			else
+				grade = "F";
+			return grade;
+		};
+		String result = f.apply(40, 50);
+		System.out.println("결과는 : " + result);
+	}
+
+	private static void method6() {
+		Function<Integer, String> f = (a) -> {
+			String grade = "F";
+			if (a >= 90)
+				grade = "A";
+			else if (a >= 80)
+				grade = "B";
+			else if (a >= 70)
+				grade = "C";
+			else if (a >= 60)
+				grade = "D";
+			else
+				grade = "F";
+			return grade;
+		};
+		String result = f.apply(99);
+		System.out.println("결과는 : " + result);
+	}
+
+	private static void method5() {
+		BooleanSupplier supplier = () -> 10 > 20;
+
+		boolean s = supplier.getAsBoolean();
+		System.out.println(s);
+	}
+
+	private static void method4() {
+		Supplier<String> supplier = () -> "문자를 공급합니다.";
+
+		String s = supplier.get();
+		System.out.println(s);
+	}
+
+	private static void method3() {
+		Supplier<String> supplier = () -> {
+			System.out.println("파라메타는 없고 return만 있음");
+			return "문자를 공급합니다.";
+		};
+		String s = supplier.get();
+		System.out.println(s);
+	}
+
+	private static void method2() {
+		// 소비자 interface -> Consumer
+		BiConsumer<String, Person> consumer = (a, b) -> {
+			System.out.println("파라메터 1개 받아서 실행한다. ");
+			System.out.println("받은값 : " + a);
+			System.out.println("받은값 : " + b);
+		};
+		consumer.accept("자바프로그래밍", new Person("홍길동"));
+
+	}
+
+	private static void method1() {
+		// 소비자 interface -> Consumer
+		Consumer<String> consumer = a -> {
+			System.out.println("파라메터 1개 받아서 실행한다. ");
+			System.out.println("받은값 : " + a);
+		};
+		consumer.accept("자바프로그래밍");
+
+	}
+
+}
+////
+
+package com.kosta.day13;
+
+public class Student {
+	private String name;
+	private String gender;
+	private int score;
+	public Student(String name, String gender, int score) {
+		super();
+		this.name = name;
+		this.gender = gender;
+		this.score = score;
+	}
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Student [name=").append(name).append(", gender=").append(gender).append(", score=")
+				.append(score).append("]");
+		return builder.toString();
+	}
+	
+	
+	
+	
+}
+
+///andThen
+package com.kosta.day13;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+public class LambdaExample4 {
+
+	public static void main(String[] args) {
+//		method1(); // predicate
+//		method2(); // Student 이용해서 학생의 수 구하기!!
+		//method3();	//andThen 디폴트메시지
+		method4();
+	}
+	
+	private static void method4() {
+	//Compose
+		Student s =new Student("홍길동","남",90);
+		Function<Student, String> f1=(a)->
+			a.getName();
+		
+		Function<String, Integer> f2=(a)->
+			a.length();
+		
+		Function<Student, Integer> f3=f1.andThen(f2);
+		
+		int result = f3.apply(s);
+		System.out.println("학생의 이름의 길이 : "+result);
+		
+		
+		Function<Student, Integer> f4=f2.compose(f1);
+		result=f4.apply(s);
+		System.out.println("학생의 이름의 길이 : "+result);
+	}
+
+	private static void method3() {
+		//andThen
+		Student s =new Student("홍길동","남",90);
+		Consumer<Student>	consumerA=(a)->{
+			System.out.println("Student를 소비한다.A");
+			System.out.println("학생이름 : "+a.getName());
+		};
+		Consumer<Student>	consumerB=(a)->{
+			System.out.println("Student를 소비한다.B");
+			System.out.println("학생점수 : "+a.getScore());
+		};
+		Consumer<Student> aa=consumerA.andThen(consumerB);
+		aa.accept(s);
+	
+	}
+
+	private static void method2() {
+//		Student[] arr = new Student[5];
+//		arr[0]= new Student("홍길동","남",90);
+//		arr[1]= new Student("홍길동","남",90);
+//		arr[2]= new Student("홍길동","남",90);
+//		arr[3]= new Student("홍길동","남",90);
+//		arr[4]= new Student("홍길동","남",90);
+		Student[] arr = {
+		new Student("홍길동","남",90),
+		new Student("김채연","여",50),
+		new Student("김현빈","여",40),
+		new Student("오정훈","남",20),
+		new Student("윤종무","남",10)
+		};
+		//남자 몇명?
+		Predicate<Student>	p=(s)->{
+			if(s.getGender().equals("남")) return true;
+			return false;
+		}; 
+	boolean aa=	p.test(new Student("윤종무","남",10));
+	System.out.println("성별은? :" +aa);
+	int count =0;
+	for(Student s:arr) {
+	if(p.test(s)) count++;
+	}
+	System.out.println("남자는 : "+count);
+	}
+
+	private static void method1() {
+		Predicate<String> p = (a) -> {
+			if (a.length() >= 3)
+				return true;
+			return false;
+
+		};
+		System.out.println(p.test("Hello"));
+		System.out.println(p.test("Hi"));
+	}
+
+}
+//////
+
