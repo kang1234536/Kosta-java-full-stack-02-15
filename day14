@@ -277,5 +277,777 @@ public class CustomerDTO {
 	
 }
 //////////MAP
+package com.kosta.day14;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+
+import com.kosta.day13.Student;
+import com.kosta.day13.model.CustomerDTO;
 
 
+
+public class CollectionTest2 {
+
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		//method1,2,3 hashmap 
+	//	method1();
+	//	method2();
+	//	method3(); //13일차 Student 활용   13일차 model 에서CustomerDTO 활용
+	//	method4(); //Hashtable  -> 쓰레드 동기화가 된상태 멀티스레드인상태에서 안전하게 사용가능
+	//	method5(); //Properties
+	//	method6(); 
+	//	method7();
+	//	method8();  //Properties oracleinfo.properties 이 파일 활용해서 !!
+		method9();
+	
+	
+	}
+
+	private static void method9() {
+		
+		
+	}
+
+	private static void method8() throws FileNotFoundException, IOException {
+		// 
+		Properties pro= new Properties();
+		String fname="src/com/kosta/day14/oracleinfo.properties";
+		pro.load(new FileReader(fname));
+		for(Entry entry:pro.entrySet()) {
+			System.out.println("키 : "+entry.getKey());
+			System.out.println("값 : "+entry.getValue());
+			System.out.println("------------------------------------------------------");
+		}
+	}
+
+	private static void method7() {
+		// 
+		Properties datas=System.getProperties();
+		for(Entry entry:datas.entrySet()) {
+			System.out.println("키 : "+entry.getKey());
+			System.out.println("값 : "+entry.getValue());
+			System.out.println("------------------------------------------------------");
+		}
+	}
+
+	private static void method6() {
+		//
+		Map<String, String>datas=System.getenv();
+		for(Entry<String, String>entry:datas.entrySet()) {
+			System.out.println("키 : "+entry.getKey());
+			System.out.println("값 : "+entry.getValue());
+			System.out.println("------------------------------------------------------");
+		}
+	}
+
+	private static void method5() {
+		//Properties
+		Properties datas= new Properties();
+		datas.put("자바", "이것이 자바다");
+		datas.put("SQL", "SQL 정복");
+		datas.put("HTML", "WEB 정복");
+		for(Entry<Object, Object> entry:datas.entrySet()) {
+			System.out.println("키 : "+entry.getKey());
+			System.out.println("값 : "+entry.getValue());
+			System.out.println("------------------------------------------------------");
+		}
+	}
+
+	private static void method4() {
+		//Hashtable
+		Map<Student,CustomerDTO> datas=new Hashtable<>();
+		datas.put(new Student("학생1", "남", 100), new CustomerDTO(1, "고객1", "010-0000-0001", "부천"));
+		datas.put(new Student("학생2", "남", 100), new CustomerDTO(1, "고객2", "010-0000-0002", "역곡"));
+		datas.put(new Student("학생3", "남", 100), new CustomerDTO(1, "고객3", "010-0000-0003", "송내"));
+		for(Entry<Student, CustomerDTO> entry :datas.entrySet()) {
+			System.out.println("학생키 :"+entry.getKey());
+			System.out.println("고객값 :"+entry.getValue());
+			System.out.println("=======================================================================================");
+		}
+	}
+
+	private static void method3() {
+		Map<Student,CustomerDTO> datas=new HashMap<>();
+		datas.put(new Student("학생1", "남", 100), new CustomerDTO(1, "고객1", "010-0000-0001", "부천"));
+		datas.put(new Student("학생2", "남", 100), new CustomerDTO(1, "고객2", "010-0000-0002", "역곡"));
+		datas.put(new Student("학생3", "남", 100), new CustomerDTO(1, "고객3", "010-0000-0003", "송내"));
+	
+		//모두제거
+		//datas.clear();
+		//한개만제거
+//		CustomerDTO cust = datas.remove(new Student("학생3", "남", 100));
+//			System.out.println(cust+"가 지워짐");
+//			System.out.println("==================================================================================================");
+		for(Entry<Student, CustomerDTO> entry :datas.entrySet()) {
+			System.out.println("학생키 :"+entry.getKey());
+			System.out.println("고객값 :"+entry.getValue());
+			System.out.println("=======================================================================================");
+		}
+		//작성후 Student로 가서 equals/hashcode 체크를 해야한다!!
+		
+	}
+
+	private static void method2() {
+		Map<String,Integer> datas=new HashMap<>();  // key value 값 필요 제네릭에
+		datas.put("홍길동", 100);
+		datas.put("홍길동", 90);  //같은키가 이미 존재하면 덮어쓰기
+		datas.put("박길동", 90);
+		datas.put("김길동", 20);
+		datas.put("최길동", 30);
+		
+		//키가 있는지?
+		System.out.println(datas.containsKey("박길동"));
+		//값이 있는지?
+		System.out.println(datas.containsValue(90));
+		
+		
+		Collection<Integer> scores=datas.values();
+		int sum=0;
+		for(Integer i:scores) {
+			sum+=i;
+			
+		}
+		System.out.println("총점은 :"+sum);
+	}
+
+	private static void method1() {
+		//Map interface 구현class : HashMap, TreeMap, Properties ....
+		//키와 값의 쌍이다.(Map.Entry)
+		Map<String,Integer> datas=new HashMap<>();  // key value 값 필요 제네릭에
+		datas.put("홍길동", 100);
+		datas.put("홍길동", 90);  //같은키가 이미 존재하면 덮어쓰기
+		datas.put("박길동", 10);
+		datas.put("김길동", 20);
+		datas.put("최길동", 30);
+		System.out.println(datas);
+		//키를 이용해서 값을 얻는다.
+		int val=datas.get("홍길동");
+		System.out.println(val);
+		//키를 모를떄?
+		//모든 키를 얻기
+		
+		Set<String> keys=datas.keySet();
+		for(String key:keys) {
+			System.out.println(key+"--->"+datas.get(key));
+		}
+		System.out.println("==========================");
+		for(String key:datas.keySet()) {
+			System.out.println(key+"--->"+datas.get(key));
+		}
+		System.out.println("***************************");
+		Set<Entry<String, Integer>> entrys =datas.entrySet();
+		Iterator<Entry<String, Integer>> it	=entrys.iterator();
+		while(it.hasNext()) {
+			Entry<String, Integer> entry=it.next();
+			System.out.println("키: "+entry.getKey());
+			System.out.println("값: "+entry.getValue());
+		//	System.out.println(it.next());
+		}
+		System.out.println("***************************");
+		for(Entry<String, Integer> entry:datas.entrySet()) {
+			System.out.println("키: "+entry.getKey());
+			System.out.println("값: "+entry.getValue());
+			System.out.println("--------------------------");
+		}
+	}
+
+}
+package com.kosta.day13;
+
+public class Student {
+	private String name;
+	private String gender;
+	private int score;
+	public Student(String name, String gender, int score) {
+		super();
+		this.name = name;
+		this.gender = gender;
+		this.score = score;
+	}
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Student [name=").append(name).append(", gender=").append(gender).append(", score=")
+				.append(score).append("]");
+		return builder.toString();
+	}
+	//중복체크!! 3월5일차
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + score;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (score != other.score)
+			return false;
+		return true;
+	}
+	
+	
+	
+	
+	
+}
+driver=oracle.jdbc.OracleDriver
+url=jdbc:oracle:thin:@localhost:1521:xe
+username=scott
+password=tiger
+///////////
+package com.kosta.day14;
+
+import java.util.HashSet;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+import com.kosta.day13.model.CustomerDTO;
+
+public class CollectionTest3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		method1();
+		method2();
+		method3(); // customerdto에서 ascending !!
+		method4();
+		method5();
+	}
+
+	private static void method5() {
+		// 
+		System.out.println("========method5 start==========");
+		TreeSet<CustomerDTO> datas = new TreeSet<CustomerDTO>();
+
+		datas.add(new CustomerDTO(10, "고객1", "12", "서울"));
+		datas.add(new CustomerDTO(2, "고객2", "22", "부산"));
+		datas.add(new CustomerDTO(13, "고객3", "23", "서울"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "부산"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "서울"));
+		
+		NavigableSet<CustomerDTO> descendingSet	=datas.descendingSet();
+		
+		System.out.println("Descending");
+		
+		for (CustomerDTO cust : descendingSet) {
+			System.out.println(cust);
+		}
+		System.out.println("Ascending");
+		NavigableSet<CustomerDTO> asc=descendingSet.descendingSet();
+		for(CustomerDTO s:asc) {
+			System.out.println(s);
+		}
+	}
+
+	private static void method4() {
+		//
+		System.out.println("========method4 start==========");
+		TreeSet<CustomerDTO> datas = new TreeSet<CustomerDTO>();
+
+		datas.add(new CustomerDTO(10, "고객1", "12", "서울"));
+		datas.add(new CustomerDTO(2, "고객2", "22", "부산"));
+		datas.add(new CustomerDTO(13, "고객3", "23", "서울"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "부산"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "서울"));
+		System.out.println(datas.size()+"개");
+		
+		while(!datas.isEmpty()) {
+		CustomerDTO cust =datas.pollFirst();
+		//CustomerDTO cust =datas.pollLast();
+		System.out.println(cust);
+		System.out.println(datas.size()+"개");
+		}
+	}
+
+	private static void method3() {
+		//
+		System.out.println("========method3 start==========");
+		TreeSet<CustomerDTO> datas = new TreeSet<CustomerDTO>();
+
+		datas.add(new CustomerDTO(10, "고객1", "12", "서울"));
+		datas.add(new CustomerDTO(2, "고객2", "22", "부산"));
+		datas.add(new CustomerDTO(13, "고객3", "23", "서울"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "부산"));
+		datas.add(new CustomerDTO(24, "고객4", "43", "서울"));
+
+		// 첫번째 item
+		System.out.println("첫번쨰 item :" + datas.first());
+		// 마지막 item
+		System.out.println("마지막 item : " + datas.last());
+		System.out.println("============================================================");
+		for (CustomerDTO cust : datas) {
+			System.out.println(cust);
+		}
+
+	}
+
+	private static void method2() {
+		// TreeSet
+		System.out.println("==========method2 start==========");
+		Set<String> datas = new TreeSet<String>();
+		datas.add("월");
+		datas.add("화");
+		datas.add("수");
+		datas.add("토");
+		datas.add("토");
+		for (String s : datas) {
+			System.out.println(s);
+		}
+	}
+
+	private static void method1() {
+		// TreeSet은 값을 넣을때 binary tree이용,
+		// 크기비교,크면 오른쪽, 작으면 왼쪽
+		System.out.println("=============method1 start=========");
+		TreeSet<Integer> datas = new TreeSet<Integer>();
+		datas.add(100);
+		datas.add(50);
+		datas.add(70);
+		datas.add(30);
+		datas.add(30);
+		// 첫번째 item
+		System.out.println("첫번쨰 item :" + datas.first());
+		// 마지막 item
+		System.out.println("마지막 item : " + datas.last());
+		//기준보다 작은item
+		System.out.println("기준보다 작은item :" + datas.lower(50));
+		//기준보다 큰item
+		System.out.println("기준보다 큰item :" + datas.higher(50));
+		//floor : 동등하거나 밑
+		System.out.println("floor : 동등하거나 밑 :" + datas.floor(50));
+		//ceiling : 동등하거나 위
+		System.out.println("ceiling : 동등하거나 위 :" + datas.ceiling(51));
+		
+		
+		
+		
+		System.out.println("============================================================");
+		for (Integer i : datas) {
+			System.out.println(i);
+		}
+
+	}
+
+}
+package com.kosta.day13.model;
+
+
+
+//DTO (Data Transfer Object)
+//3월5일차 Collection test3 에서 method3에서 쓰임!!implements Comparable<CustomerDTO> 
+public class CustomerDTO implements Comparable<CustomerDTO> {
+	
+	//멤버변수
+	private int custId;  //고객번호
+	private String custName; //고객이름
+	private String phone;//고객 전화번호
+	private String addr; //고객 주소
+	//생성자	
+	public CustomerDTO() {
+		super();
+	}
+	public CustomerDTO(int custId, String custName, String phone, String addr) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.phone = phone;
+		this.addr = addr;
+	}
+	//getter/setter
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	//ToString()
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerDTO [custId=").append(custId).append(", custName=").append(custName).append(", phone=")
+				.append(phone).append(", addr=").append(addr).append("]");
+		return builder.toString();
+	}
+	//중복체크를위해 추가됨(2021-03-05)
+	//hashcode and equals-> equals와 hash코드를 체크
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + custId;
+		result = prime * result + ((custName == null) ? 0 : custName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerDTO other = (CustomerDTO) obj;
+		if (custId != other.custId)
+			return false;
+		if (custName == null) {
+			if (other.custName != null)
+				return false;
+		} else if (!custName.equals(other.custName))
+			return false;
+		return true;
+	}
+	@Override
+	public int compareTo(CustomerDTO obj) {
+		int aa=addr.compareTo(obj.addr);
+		if(aa==0)
+			return custId-obj.custId;
+		else {
+			return aa;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+///////오후 수업
+package com.kosta.day14;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+
+import com.kosta.day13.model.CustomerDTO;
+
+public class CollectionTest4 {
+
+	public static void main(String[] args) {
+	//	method1();
+		method2();
+
+	}
+
+	private static void method2() {
+		// TreeMap                   TreeMap은 implements comparable 이용!!
+		TreeMap<Car, CustomerDTO> datas = new TreeMap<>(); //  hashmap은 hashcode(),equals()구현
+		datas.put(new Car("ABC모델",1000),new CustomerDTO(100,"고객1","123","서울"));
+		datas.put(new Car("DDD모델",5000),new CustomerDTO(100,"고객2","133","부산"));
+		datas.put(new Car("EEE모델",7000),new CustomerDTO(100,"고객4","143","부산"));
+		datas.put(new Car("ZZZ모델",2000),new CustomerDTO(100,"고객3","223","서울"));
+		{
+			Entry<Car, CustomerDTO> entry = datas.firstEntry();
+			System.out.println(entry);//키=값
+			System.out.println("키 :"+entry.getKey());
+			System.out.println("값 :"+entry.getValue());
+			entry =datas.lowerEntry(new Car("EEE",2000));
+			System.out.println("lower :"+entry);
+			entry =datas.higherEntry(new Car("EEE",2000));
+			System.out.println("higherEntry :"+entry);
+		}
+		
+		System.out.println("*******************************************************8");
+		
+		for(Entry<Car, CustomerDTO> entry:datas.entrySet()) {
+			System.out.println("키 :"+entry.getKey());
+			System.out.println("값 :"+entry.getValue());
+			System.out.println("==========================================");
+		}
+		NavigableMap<Car, CustomerDTO >desc=datas.descendingMap();
+		for(Entry<Car, CustomerDTO> entry:desc.entrySet()) {
+			System.out.println("키 :"+entry.getKey());
+			System.out.println("값 :"+entry.getValue());
+			System.out.println("==========================================");
+		}
+
+	}
+
+	private static void method1() {
+		// TreeMap
+		Map<String, Integer> datas = new TreeMap<>();
+		datas.put("홍길동", 100);
+		datas.put("홍길동", 90);
+		datas.put("박길동", 10);
+		datas.put("김길동", 20);
+		datas.put("최길동", 30);
+		System.out.println(datas);
+
+	}
+
+}
+package com.kosta.day14;
+
+public class Car implements Comparable<Car> {
+//멤버변수
+private String model;	
+private int price;
+//생성자
+public Car(String model, int price) {
+	super();
+	this.model = model;
+	this.price = price;
+}
+
+//getter/setter
+public String getModel() {
+	return model;
+}
+public void setModel(String model) {
+	this.model = model;
+}
+public int getPrice() {
+	return price;
+}
+public void setPrice(int price) {
+	this.price = price;
+}
+//toString()	
+@Override
+public String toString() {
+	StringBuilder builder = new StringBuilder();
+	builder.append("Car [model=").append(model).append(", price=").append(price).append("]");
+	return builder.toString();
+}
+//TreeMap 해결
+@Override
+public int compareTo(Car obj) {
+	
+	return price-obj.price;
+}
+//hashmap 문제해결
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((model == null) ? 0 : model.hashCode());
+	result = prime * result + price;
+	return result;
+}
+
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Car other = (Car) obj;
+	if (model == null) {
+		if (other.model != null)
+			return false;
+	} else if (!model.equals(other.model))
+		return false;
+	if (price != other.price)
+		return false;
+	return true;
+}	
+	
+	
+
+	
+	
+
+	
+	
+	
+
+}
+package com.kosta.day14;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+public class TreeMapExample1 {
+
+	public static void main(String[] args) {
+		TreeMap<Integer, String>s=new TreeMap<>();
+		s.put(new Integer(99), "강태공0");
+		s.put(new Integer(89), "강태공1");
+		s.put(new Integer(79), "강태공2");
+		s.put(new Integer(69), "강태공3");
+		s.put(new Integer(59), "강태공4");
+
+		
+		Map.Entry<Integer, String> entry = null;
+		
+		entry=s.firstEntry();
+		System.out.println("가장낮은점수 : "+entry.getKey()+" - "+entry.getValue());
+		entry=s.lastEntry();
+		System.out.println("가장높은점수 : "+entry.getKey()+" - "+entry.getValue()+"\n");
+		entry=s.lowerEntry(new Integer(95));
+		System.out.println("95점 아래 점수 : "+entry.getKey()+" - "+entry.getValue());
+		entry=s.higherEntry(new Integer(95));
+		System.out.println("95점 위 점수 : "+entry.getKey()+" - "+entry.getValue()+"\n");
+		entry=s.floorEntry(new Integer(95));
+		System.out.println("95점이거나 바로 아래 점수  : "+entry.getKey()+" - "+entry.getValue());
+		entry=s.ceilingEntry(new Integer(85));
+		System.out.println("85점이거나 바로 위 점수 : "+entry.getKey()+" - "+entry.getValue()+"\n");
+	
+	
+	while(!s.isEmpty()) {
+		entry= s.pollFirstEntry();
+		System.out.println(entry.getKey()+" - "+entry.getValue()+"(남은객체 수: "+s.size()+")");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+
+}
+package com.kosta.day14;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class StackQueueTest {
+
+	public static void main(String[] args) {
+
+		// method1(); //Stack ==클래스
+		method2(); // Queue ==인터페이스
+	}
+
+	// Queue : FIFO
+	private static void method2() {
+		// Queue(FIFO : First In First Out)
+		Queue<String> queue = new LinkedList<>();
+		queue.offer("월");
+		queue.offer("화");
+		queue.offer("수");
+		queue.offer("목");
+		System.out.println(queue.peek()); // 맨처음꺼!!
+//		System.out.println(queue.poll()); //제거 
+		System.out.println(queue.size());
+		System.out.println(queue.peek());
+		System.out.println("******************");
+	/*	int count= queue.size();
+		for (int i = 0; i < count; i++) {
+		System.out.println(queue.poll());	
+		System.out.println(queue.size());
+		}*/
+		while(!queue.isEmpty()) {
+			System.out.println(queue);
+			System.out.println(queue.poll());
+			System.out.println(queue.size());
+			
+		}
+
+	}
+
+	private static void method1() {
+		// Stack(LIFO: Last In First Out)
+		Stack<String> st = new Stack<>();
+		st.push("월");
+		st.push("화");
+		st.push("수");
+		st.add("토");
+		st.add("일");
+		System.out.println(st);
+		System.out.println(st.size() + "건");
+		System.out.println("1.마지막값:" + st.get(st.size() - 1));
+		System.out.println("2.마지막값:" + st.peek()); // 마지막값
+		System.out.println(st.size() + "건");
+		st.pop();// 마지막값 제거
+		System.out.println(st);
+		System.out.println(st.size() + "건");
+		System.out.println("3.마지막값 제거 :" + st.pop());
+		System.out.println(st.size() + "건");
+		System.out.println(st);
+
+	}
+
+}
+//////
