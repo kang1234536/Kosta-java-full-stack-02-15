@@ -1,0 +1,281 @@
+////// 컬랙션 복습  14일차
+package com.kosta.day14;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
+
+import com.kosta.day13.model.CustomerDTO;
+
+public class CollectionTest {
+
+	public static void main(String[] args) {
+//		method1();
+//		method2();
+//		method3();
+//		method4();
+//		method5();
+//		method6();
+		method7();  // CustomerDTO 추가해서 문제풀이!!
+
+	}
+
+	private static void method7() {
+		String s1 = "홍길동";
+		String s2 = "홍길동";
+		System.out.println(s1.equals(s2));
+		System.out.println(s1.hashCode());
+		System.out.println(s2.hashCode());
+		Set<CustomerDTO> datas = new HashSet<>();
+		CustomerDTO c1 = new CustomerDTO(100, "홍길동", "010-0000-1111", "부천");
+		CustomerDTO c2 = new CustomerDTO(100, "이자바", "010-0000-1112", "부천");
+		
+		System.out.println("중복c1,c2 비교");
+		System.out.println(c1.hashCode());
+		System.out.println(c2.hashCode());
+		System.out.println(c1.equals(c2)); 
+		datas.add(c1);
+		// datas.add(new CustomerDTO(100, "홍길동", "010-0000-1111", "부천"));
+		datas.add(new CustomerDTO(101, "김길동", "010-0000-1111", "부산"));
+		datas.add(new CustomerDTO(102, "박길동", "010-0000-1111", "서울"));
+		datas.add(new CustomerDTO(103, "정길동", "010-0000-1111", "광주"));
+		// datas.add(new CustomerDTO(100, "홍길동", "010-0000-1111", "부천"));
+		datas.add(c2);
+		//customerdto에서 코드 추가후 바뀜!!
+		System.out.println(datas);
+		System.out.println(datas.size());
+		System.out.println("========================");
+		for(CustomerDTO cust:datas) {
+			System.out.println(cust);
+		}
+	}
+
+	private static void method6() {
+		Set<String> datas = new HashSet<String>();
+		datas.add("월요일");
+		datas.add("화요일");
+		datas.add("수요일");
+		datas.add("토요일");
+		datas.add("토요일");
+		datas.add("일요일");
+
+		System.out.println(datas.size() + "건");
+		System.out.println(datas);
+
+	}
+
+	private static void method5() {
+		// Set interface를 구현한 class: HashSet,TreeSet
+		// 순서가 없다, 중복 불가, 키로 사용된다.
+
+		Set<String> datas = new HashSet<String>();
+		datas.add("월요일");
+		datas.add("화요일");
+		datas.add("수요일");
+		datas.add("토요일");
+		datas.add("토요일");
+		datas.add("일요일");
+
+		System.out.println(datas.size() + "건");
+		System.out.println(datas);
+		// 1.일반 for로 읽기 .... 불가능
+		// 2.향상된 for로 읽기
+		for (String s : datas) {
+			System.out.println(s);
+		}
+		System.out.println("====================");
+		// iterator이용(반복자)
+		Iterator<String> it = datas.iterator();
+		while (it.hasNext()) {
+//			String data=	it.next();
+//				System.out.println(data);
+			System.out.println(it.next());
+		}
+	}
+
+	private static void method4() {
+		//
+		String[] days = { "월", "화", "수", "목", "금", "토", "토", "일" };
+		String s = Arrays.toString(days);
+		// System.out.println(s);
+
+		List<String> datas = Arrays.asList(days);
+		// print(datas);
+
+		// System.out.println(datas.contains("일")?"OK":"NO");
+
+		// 1.일반 for읽기 .....for(;;) print2()
+		// 3.향상된 for 읽기 .....for(:) print()
+		// 2.Iterator 반복자 이용해서 읽기
+		Iterator<String> it = datas.iterator();
+		while (it.hasNext()) {
+			String data = it.next();
+			System.out.println(data);
+		}
+
+	}
+
+	private static void method3() {
+		// List인터페이스를 구현한 class : Vector
+		// 순서가 있다.
+		// 중복허용된다.
+		System.out.println("Method3 start");
+		List<String> datas = new Vector<String>();
+		String[] days = { "월", "화", "수", "목", "금", "토", "토", "일" };
+		for (String s : days) {
+			datas.add(s + "요일");
+		}
+
+		print2(datas);
+	}
+
+	private static void method2() {
+		// List인터페이스를 구현한 class : LinkedList
+		// 순서가 있다.
+		// 중복허용된다.
+		System.out.println("Method2 start");
+		List<String> datas = new LinkedList<String>();
+		String[] days = { "월", "화", "수", "목", "금", "토", "토", "일" };
+		for (String s : days) {
+			datas.add(s + "요일");
+		}
+
+		print(datas);
+	}
+
+	private static void print(List<String> datas) {
+		for (String s : datas) {
+			System.out.println(s);
+		}
+	}
+
+	private static void print2(List<String> datas) {
+		for (int i = 0; i < datas.size(); i++) {
+
+			System.out.println(i + "번째--->" + datas.get(i));
+		}
+	}
+
+	private static void method1() {
+		// List인터페이스를 구현한 class : ArrayList
+		// 순서가 있다.
+		// 중복허용된다.
+		System.out.println("Method1 start");
+		List<String> datas = new ArrayList<String>(3);
+		String[] days = { "월", "화", "수", "목", "금", "토", "토", "일" };
+		for (String s : days) {
+			datas.add(s + "요일");
+		}
+
+		// 함수 연습
+		// System.out.println(datas.get(0)+" 연습 ");
+		String s1 = datas.get(7);
+		System.out.println("7번쨰 값 가져오기 : " + s1);
+		// datas.clear();
+		if (datas.contains("화요일")) {
+			System.out.println("화요일 존재한다.");
+		}
+
+		print(datas);
+	}
+
+}
+package com.kosta.day13.model;
+//DTO (Data Transfer Object)
+public class CustomerDTO {
+	
+	//멤버변수
+	private int custId;  //고객번호
+	private String custName; //고객이름
+	private String phone;//고객 전화번호
+	private String addr; //고객 주소
+	//생성자	
+	public CustomerDTO() {
+		super();
+	}
+	public CustomerDTO(int custId, String custName, String phone, String addr) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.phone = phone;
+		this.addr = addr;
+	}
+	//getter/setter
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	//ToString()
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerDTO [custId=").append(custId).append(", custName=").append(custName).append(", phone=")
+				.append(phone).append(", addr=").append(addr).append("]");
+		return builder.toString();
+	}
+	//중복체크를위해 추가됨(2021-03-05)
+	//hashcode and equals-> equals와 hash코드를 체크
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + custId;
+		result = prime * result + ((custName == null) ? 0 : custName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerDTO other = (CustomerDTO) obj;
+		if (custId != other.custId)
+			return false;
+		if (custName == null) {
+			if (other.custName != null)
+				return false;
+		} else if (!custName.equals(other.custName))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+//////////MAP
+
+
