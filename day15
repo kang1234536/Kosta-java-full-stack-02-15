@@ -1,1 +1,787 @@
 ////15
+////복습
+package com.kosta.day15;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
+//15일차 복습
+public class Review {
+	public static void main(String[] args) {
+		method1();
+		method2();
+		method3();
+		method4();
+		method5();
+	}
+	private static void method5() {
+		// Collection : List, Set,Map
+		// List:순서,중복 .. ArrayList,LinkedList,Vector
+		// Set: 순서x,중복x, Key로 사용 ... HashSet,TreeSet
+		// Map : key,value 쌍 (entry)... HashMap,TreeMap,Properties
+		// Stack(LIFO),Queue(FIFO)
+		//Key,Value
+		System.out.println("========================================");
+		System.out.println("method5 start");
+		Map<Student,Integer> datas = new TreeMap<>();
+		datas.put(new Student("홍길동", 50),100);
+		datas.put(new Student("김길동", 40),101);
+		datas.put(new Student("박길동", 60),102);
+		datas.put(new Student("정길동", 90),103);
+		datas.put(new Student("이길동", 70),104);
+		datas.put(new Student("이길동", 70),105);
+	
+		System.out.println(datas.size()+"개");
+		System.out.println("-------entry 얻기-----");
+		for(Entry<Student, Integer> entry :datas.entrySet()) {
+			System.out.println("키 :"+entry.getKey());
+			System.out.println("값 :"+entry.getValue());
+		}
+		System.out.println("-------key 얻기-----");
+		for(Student st :datas.keySet()) {
+			System.out.println("키 :"+ st);
+			System.out.println("값 :"+ datas.get(st));
+		}
+		//JavaScript :JSON(JavaScript Object Notation)
+		//JavaScript Object:{"name" :"홍길동", "score":100}
+		//문자로 변경
+		//.csv ->XML(본래자료의 3배정도 커진다)->JSON
+		// Java,PYTHON : map
+	}
+	private static void method4() {
+		// Collection : List, Set,Map
+		// List:순서,중복 .. ArrayList,LinkedList,Vector
+		// Set: 순서x,중복x, Key로 사용 ... HashSet,TreeSet
+		// Map : key,value 쌍 (entry)... HashMap,TreeMap,Properties
+		// Stack(LIFO),Queue(FIFO)
+		//Key,Value
+		System.out.println("========================================");
+		System.out.println("method4 start");
+		Map<Student,Integer> datas = new HashMap<>();
+		datas.put(new Student("홍길동", 50),100);
+		datas.put(new Student("김길동", 40),101);
+		datas.put(new Student("박길동", 60),102);
+		datas.put(new Student("정길동", 90),103);
+		datas.put(new Student("이길동", 70),104);
+		datas.put(new Student("이길동", 70),105);
+	
+		System.out.println(datas.size()+"개");
+		System.out.println("-------entry 얻기-----");
+		for(Entry<Student, Integer> entry :datas.entrySet()) {
+			System.out.println("키 :"+entry.getKey());
+			System.out.println("값 :"+entry.getValue());
+		}
+		System.out.println("-------key 얻기-----");
+		for(Student st :datas.keySet()) {
+			System.out.println("키 :"+ st);
+			System.out.println("값 :"+ datas.get(st));
+		}
+		//JavaScript :JSON(JavaScript Object Notation)
+		//JavaScript Object:{"name" :"홍길동", "score":100}
+		//문자로 변경
+		//.csv ->XML(본래자료의 3배정도 커진다)->JSON
+		// Java,PYTHON : map
+	}
+
+	private static void method3() {
+		// Collection : List, Set,Map
+		// List:순서,중복 .. ArrayList,LinkedList,Vector
+		// Set: 순서x,중복x, Key로 사용 ... HashSet,TreeSet
+		// Map : key,value 쌍 (entry)... HashMap,TreeMap,Properties
+		// Stack(LIFO),Queue(FIFO)
+		System.out.println("========================================");
+		System.out.println("method3 start");
+		// Set은 동일객체인지 체크 : hashcode(),equals()
+//		Set<Student> datas=new HashSet<Student>();
+		// binary sort : tree구조로 정렬 : compareTO
+//		Set<Student> datas=new TreeSet<Student>();
+		TreeSet<Student> datas = new TreeSet<Student>(); // Descending하기위해서
+
+		datas.add(new Student("홍길동", 50));
+		datas.add(new Student("김길동", 40));
+		datas.add(new Student("박길동", 60));
+		datas.add(new Student("정길동", 90));
+		datas.add(new Student("이길동", 70));
+		datas.add(new Student("이길동", 70));
+
+		System.out.println(datas.size() + "개");
+		// System.out.println(datas);
+		for (Student s : datas) {
+			System.out.println(s);
+			System.out.println(s.name);
+		}
+		System.out.println("=====descending Sort======");
+//		NavigableSet<Student> nset=datas.descendingSet();
+		for (Student s1 : datas.descendingSet()) {
+			System.out.println(s1);
+			System.out.println(s1.name);
+		}
+
+	}
+
+	private static void method2() {
+		// Collection : List, Set,Map
+		// List:순서,중복 .. ArrayList,LinkedList,Vector
+		// Set: 순서x,중복x, Key로 사용 ... HashSet,TreeSet
+		// Map : key,value 쌍 (entry)... HashMap,TreeMap,Properties
+		// Stack(LIFO),Queue(FIFO)
+		System.out.println("========================================");
+		System.out.println("method2 start");
+		// Set은 동일객체인지 체크 : hashcode(),equals()
+		// Set<String> datas=new HashSet<String>();
+		// binary sort : tree구조로 정렬 : compareTO
+		Set<String> datas = new TreeSet<String>();
+		datas.add(new String("자바2"));
+		datas.add(new String("자바3"));
+		datas.add("자바");
+		datas.add("자바");
+		datas.add(new String("자바"));
+		datas.add(new String("자바"));
+		System.out.println(datas.size() + "개");
+		System.out.println(datas);
+		for (String s : datas) {
+			System.out.println(s);
+		}
+
+	}
+
+	private static void method1() {
+		// Collection : List, Set,Map
+		// List:순서,중복 .. ArrayList,LinkedList,Vector
+		// Set: 순서x,중복x, Key로 사용 ... HashSet,TreeSet
+		// Map : key,value 쌍 (entry)... HashMap,TreeMap,Properties
+		// Stack(LIFO),Queue(FIFO)
+
+		// List<String> datas=new ArrayList<String>();
+		// List<String> datas=new LinkedList<String>();
+		List<String> datas = new Vector<String>();
+		datas.add("자바");
+		datas.add("자바");
+		datas.add(new String("자바"));
+		datas.add(new String("자바"));
+		System.out.println(datas.size() + "개");
+		System.out.println(datas);
+		for (String s : datas) {
+			System.out.println(s);
+		}
+
+	}
+}
+package com.kosta.day15;
+
+public class Student implements Comparable<Student> {
+	// 멤버변수
+	String name;
+	int score;
+
+	// 생성자
+	public Student(String name, int score) {
+		super();
+		this.name = name;
+		this.score = score;
+	}
+
+	@Override
+	public int compareTo(Student o) {
+		// 여기서는 Ascending, Descending 정렬 정하기
+		//		return score-o.score; // Ascending
+		if (score - o.score < 0)
+			return -1;
+		else if (score - o.score == 0)
+			return 0;
+		else
+			return 1;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Student [name=").append(name).append(", score=").append(score).append("]");
+		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + score;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (score != other.score)
+			return false;
+		return true;
+	}
+
+}
+//16장 스트림
+package com.kosta.day15;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+
+public class StreamTest1 {
+
+	public static void main(String[] args) {
+		//
+		// method1();
+		// method2();
+		//method3();
+		//method4();
+		//method5();
+		//method6();
+		method7();
+	}
+	private static void method7() {
+		//중간처리와 최종정리
+		Student[] arr= {new Student("홍길동",100)
+				,new Student("신용권",80),
+				new Student("김자바",90)};
+		List<Student> alist= Arrays.asList(arr);
+//		double avg=alist.stream().
+//				mapToInt(Student::getScore).
+//				average().
+//				getAsDouble();
+		double avg=alist.stream().
+				mapToInt(Student::getScore).
+				average().
+				getAsDouble();
+		System.out.println("평균:"+avg);
+		
+		
+		int sum =0; //평균
+		for(Student s:alist) {
+			sum+=s.getScore();
+			
+		}
+		System.out.println(1.0*sum/alist.size());
+	}
+	private static void myPrint(Student s) {
+		System.out.println(s+" : "+Thread.currentThread().getName());
+
+	
+	
+	}
+	private static void method6() {
+		//병렬처리
+		Student[] arr= {new Student("홍길동",100)
+				,new Student("신용권",80),
+				new Student("김자바",90)};
+		List<Student> alist= Arrays.asList(arr);
+		Stream<Student> st= alist.stream();
+//		Math.random()==>Math::random
+//		Consumer<Student>consumer =aa->myPrint(aa);;
+		Consumer<Student>consumer =StreamTest1::myPrint;;
+		st.forEach(consumer);
+		
+//병렬처리		
+		System.out.println("==============병렬처리========");
+		Stream<Student> st2= alist.parallelStream();
+//		Math.random()==>Math::random
+//		Consumer<Student>consumer =aa->myPrint(aa);;
+//		Consumer<Student>consumer =StreamTest1::myPrint;;
+		st2.forEach(consumer);
+		
+	}
+
+	private static void method5() {
+		Student[] arr= {new Student("홍길동",100)
+				,new Student("신용권",80),
+				new Student("김자바",90)};
+		List<Student> alist= Arrays.asList(arr);
+		Stream<Student> st= alist.stream();
+		Consumer<Student>consumer =aa->System.out.println(aa);
+		st.forEach(consumer);
+		
+	}
+
+	private static void method4() {
+		Integer[] arr = {100,50,20,100,70};
+		List<Integer> alist=Arrays.asList(arr);
+		Stream<Integer> st= alist.stream();
+		Consumer<Integer> consumer=aa->{System.out.println("점수는 "+aa);};
+		st.forEach(consumer);
+	}
+
+	private static void method3() {
+		// Stream 방식
+		String[] arr = new String[] { "홍길동", "신용권", "김자바" };
+		List<String> alist = Arrays.asList(arr);
+//		 Stream<String> st=alist.stream();
+//		st.forEach(s->System.out.println(s));
+		//consumer 방식
+		Consumer<String>consumer= s->{System.out.println(s);
+		System.out.println("==========================");};
+		for(String ss:alist) {
+			consumer.accept(ss);
+		}
+		
+		System.out.println("*******************");
+		 Stream<String> st=alist.stream();
+		st.forEach(consumer);
+//		// 반복자를 향상For 이용
+//		for(String s:alist) {
+//			System.out.println(s);
+//		}
+//		Iterator<String> it = alist.iterator();
+//		while (it.hasNext()) {
+//			String s = it.next();
+//			System.out.println(s);
+//		}
+
+	}
+
+	private static void method2() {
+
+		String[] arr = new String[] { "홍길동", "신용권", "김자바" };
+		List<String> alist = Arrays.asList(arr);
+
+		// 반복자를 향상For 이용
+		for (String s : alist) {
+			System.out.println(s);
+		}
+//		Iterator<String> it = alist.iterator();
+//		while (it.hasNext()) {
+//			String s = it.next();
+//			System.out.println(s);
+//		}
+
+	}
+
+	private static void method1() {
+
+		String[] arr = new String[] { "홍길동", "신용권", "김자바" };
+		List<String> alist = Arrays.asList(arr);
+		List<String> alist2 = Arrays.asList(new String[] { "홍길동", "신용권", "김자바" });
+		List<String> alist3 = Arrays.asList("홍길동", "신용권", "김자바");
+
+		// 반복자를 직접사용
+		Iterator<String> it = alist.iterator();
+		while (it.hasNext()) {
+			String s = it.next();
+			System.out.println(s);
+		}
+
+	}
+
+}
+////
+package com.kosta.day15;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamTest2 {
+	// 클래스 필드에 넣어보자
+	static Student[] arr= {new Student("홍길동",100)
+			,new Student("신용권",80),
+			new Student("김자바",90)};
+	static List<Student> alist= Arrays.asList(arr);
+	public static void main(String[] args) {
+	
+		method1();
+	}
+
+	private static void method1() {
+		Stream<Student> stream = alist.stream();
+		//Function<Student, Integer> f1= aa->aa.getScore();
+		ToIntFunction<Student> f2= aa->aa.getScore();
+		IntStream is= stream.mapToInt(f2);
+		OptionalDouble od=  is.average();
+		double avg=od.getAsDouble();
+		System.out.println(avg);
+		
+	//	avg=stream.mapToInt(aa->aa.getScore()).average().getAsDouble();
+		avg= alist.stream().mapToInt(Student::getScore).average().getAsDouble();
+		System.out.println(avg);
+		
+	}
+
+}
+///
+package sec02.stream_kind;
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class FromArrayExample {
+	public static void main(String[] args) {
+		String[] strArray = { "홍길동", "신용권", "김미나"};
+		Stream<String> strStream = Arrays.stream(strArray);
+		strStream.forEach(a -> System.out.print(a + ","));
+		System.out.println("\n"+Arrays.toString(strArray));
+		System.out.println();
+		
+		int[] intArray = { 1, 2, 3, 4, 5 };
+		IntStream intStream = Arrays.stream(intArray);
+		intStream.forEach(a -> System.out.print(a + ","));
+		System.out.println();
+	}
+}
+package sec02.stream_kind;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class FromCollectionExample {
+	public static void main(String[] args) {
+		List<Student> studentList = Arrays.asList(
+			new Student("홍길동", 10),
+			new Student("신용권", 20),
+			new Student("유미선", 30)
+		);
+		
+		Stream<Student> stream = studentList.stream();
+		stream.forEach(s -> System.out.println(s.getName()));
+	}
+}
+package sec02.stream_kind;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+public class FromDirectoryExample {
+	public static void main(String[] args) throws IOException {
+		Path path = Paths.get("./src/com/kosta/day15");
+		Stream<Path> stream = Files.list(path);
+		stream.forEach( p -> {System.out.println("파일이름 : "+p.getFileName());
+		System.out.println("파일 경로포함 : "+p.toString());
+		});
+	}
+}
+
+
+////
+package sec02.stream_kind;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+public class FromFileContentExample {
+	public static void main(String[] args) throws IOException {
+		Path path = Paths.get("./src/sec02/stream_kind/linedata.txt");
+		Stream<String> stream;
+		
+		//Files.lines() 메소드 이용
+		stream = Files.lines(path, Charset.defaultCharset());
+		stream.forEach( System.out :: println );
+		stream.close();
+		System.out.println();
+		System.out.println("**********************");
+		//BufferedReader의 lines() 메소드 이용
+		File file = path.toFile();
+		FileReader fileReader = new FileReader(file);
+		BufferedReader br = new BufferedReader(fileReader);
+		stream = br.lines();
+		stream.forEach( System.out :: println );
+		stream.close();
+	}
+}
+//lindedata.txt
+Java8에서 추가된 새로운 기능
+1. 람다식
+2. 메소드 참조
+3. 디폴트 메소드와 정적 메소드
+4. 새로운 API 패키지
+//
+package sec02.stream_kind;
+
+import java.util.stream.IntStream;
+
+public class FromIntRangeExample {
+	public static int sum;
+	
+	public static void main(String[] args) {
+	//	IntStream stream = IntStream.rangeClosed(1,  100);//마지막값 포함
+		IntStream stream = IntStream.range(1,  10);//마지막값 제외
+		stream.forEach(a -> sum += a);
+		System.out.println("총합: " + sum);
+	}
+}
+package sec03.stream_pipelines;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamPipelinesExample {
+	public static void main(String[] args) {
+		List<Member> list = Arrays.asList(
+				new Member("홍길동", Member.MALE, 30),
+				new Member("김나리", Member.FEMALE, 20),
+				new Member("신용권", Member.MALE, 45),
+				new Member("박수미", Member.FEMALE, 27)
+		);
+		
+		double ageAvg =   list.stream()
+			.filter(m -> m.getSex()==Member.FEMALE)
+			.mapToInt(Member :: getAge) //중간단계
+			.average() //최종단계
+			.getAsDouble();
+		
+		System.out.println("남자 평균 나이: " + ageAvg);
+	}
+}
+package sec03.stream_pipelines;
+
+public class Member { //상수
+	public static int MALE = 0;
+	public static int FEMALE = 1;
+	
+	private String name;
+	private int sex;
+	private int age;
+	
+	public Member(String name, int sex, int age) {
+		this.name = name;
+		this.sex = sex;
+		this.age = age;
+	}
+
+	public int getSex() { return sex; }
+	public int getAge() { return age; }
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Member [name=").append(name).append(", sex=").append(sex).append(", age=").append(age)
+				.append("]");
+		return builder.toString();
+	}
+	
+	
+	
+	
+}
+package sec04.stream_filtering;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FilteringExample {
+	public static void main(String[] args) {
+		List<String> names = Arrays.asList("홍길동", "신용권", "감자바", "신용권", "신민철");
+		
+		names.stream()
+			.distinct()   //중간
+			.forEach(n -> System.out.println(n));
+		System.out.println();
+		
+		names.stream()
+			.filter(n -> n.startsWith("신")) //중간
+			.forEach(n -> System.out.println(n));
+		System.out.println();
+		
+		names.stream()
+			.distinct() //중간
+			.filter(n -> n.startsWith("신"))//중간
+			.forEach(n -> System.out.println(n));		
+	}
+}
+package sec05.stream_mapping;
+
+public class Student {
+	private String name;
+	private int score;
+	
+	public Student(String name, int score) {
+		this.name = name;
+		this.score = score;
+	}
+
+	public String getName() { return name; }
+	public int getScore() { return score; }
+}
+package sec05.stream_mapping;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class MapExample {
+	public static void main(String[] args) {
+		List<Student> studentList = Arrays.asList(
+				new Student("홍길동", 10),
+				new Student("신용권", 20),
+				new Student("유미선", 30)
+		);
+			
+		studentList.stream()
+			.mapToInt(Student :: getScore)
+			.forEach(score -> System.out.println(score));
+		System.out.println("===========================");
+		
+		studentList.stream()
+		.map(Student :: getName)
+		.forEach(aa -> System.out.println(aa));
+		
+		System.out.println("위랑 같음");
+		System.out.println("===========================");
+		studentList.stream()
+		.map(Student :: getName)
+		.forEach(System.out::println);
+	}
+}
+package sec05.stream_mapping;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class FlatMapExample {  // 공백을 잘라준다!!
+	public static void main(String[] args) {
+		List<String> inputList1 = Arrays.asList("java8 lambda", "stream mapping");
+		for(String s:inputList1) {
+			String[] arr=s.split(" ");
+			for(String s2:arr) {
+				System.out.println(s2);
+			}
+	
+		}
+		System.out.println("======================");
+		
+		
+		inputList1.stream()
+			.flatMap(data -> Arrays.stream(data.split(" ")))
+			.forEach(word -> System.out.println(word));
+		
+		System.out.println();
+		
+		List<String> inputList2 = Arrays.asList("10, 20, 30", "40, 50, 60");
+		
+		
+		inputList2.stream()
+			.flatMapToInt(data -> {
+				String[] strArr = data.split(",");
+				int[] intArr = new int[strArr.length];
+				for(int i=0; i<strArr.length; i++) {
+					intArr[i] = Integer.parseInt(strArr[i].trim());
+				}
+				return Arrays.stream(intArr);
+			})
+			.forEach(number -> System.out.println(number));
+	}
+}
+
+package sec06.stream_sorting;
+
+public class Student implements Comparable<Student> {
+	private String name;
+	private int score;
+	
+	public Student(String name, int score) {
+		this.name = name;
+		this.score = score;
+	}
+
+	public String getName() { return name; }
+	public int getScore() { return score; }
+
+	@Override
+	public int compareTo(Student o) {
+		return Integer.compare(score, o.score);
+	}
+}
+package sec06.stream_sorting;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class SortingExample {
+	public static void main(String[] args) {
+		
+		
+		int[]arr=new int[] {5,3,2,1,4};
+		Arrays.sort(arr);
+		System.out.println("방법1:"+ Arrays.toString(arr));
+		System.out.println("=====================");
+		//숫자 요소일 경우
+		System.out.print("방법2 : ");
+		IntStream intStream = Arrays.stream(new int[] {5, 3, 2, 1, 4});
+		intStream
+			.sorted()
+			.forEach(n -> System.out.print(n + ","));
+		System.out.println();
+		
+		
+		
+		
+		
+		
+		//객체 요소일 경우
+		
+		List<Student> studentList = Arrays.asList(
+			new Student("홍길동", 30),
+			new Student("신용권", 10),
+			new Student("유미선", 20)
+		);
+		//Collections.sort(studentList);
+		
+		
+		studentList.stream()
+			.sorted( )
+			.forEach(s -> System.out.print(s.getScore() + ","));
+		System.out.println();
+		
+		studentList.stream()
+		.sorted( Comparator.reverseOrder() )
+		.forEach(s -> System.out.print(s.getScore() + ","));	
+	}
+}
+//////
+
+
