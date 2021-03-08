@@ -782,6 +782,370 @@ public class SortingExample {
 		.forEach(s -> System.out.print(s.getScore() + ","));	
 	}
 }
-//////
+////// 오후
+//18장 IO기반 입출력
+package com.kosta.day15;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.util.Date;
+import java.util.Scanner;
+
+public class IOTest {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		// method1();
+		// method2();
+		// method3();
+		// method4();
+    	//  method5();
+		// method6();
+        // method7();
+		//  method8();
+		//   method9();
+		   method10();
+	}
+	private static void method10() {
+		// 파일을 쓰기
+		FileWriter fw = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+		int data;
+		String s=null;
+		String fname = "src/com/kosta/day15/Review.java";
+		String fname2 = "Review_backup.txt";
+		try {
+			fr = new FileReader(fname);
+			br= new BufferedReader(fr);
+			try {
+				fw = new FileWriter(fname2);
+				bw= new BufferedWriter(fw);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				while ((s=br.readLine())!=null) {
+					System.out.println(s); // 모니터에 출력
+					fw.write(s);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("filenotfound err");
+		} finally {
+
+			try {
+				if (br != null)
+					br.close();
+				if (bw != null)
+					bw.close();
+				if (fr != null)
+					fr.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		}
+
+	}
+	private static void method9() {
+		// File정보 얻기
+		String name="src/com/kosta/day15/Student.java";
+		File f = new File(name);
+		System.out.println(f.exists());
+		System.out.println(f.length());
+		System.out.println(f.getAbsolutePath());
+		System.out.println(f.lastModified());
+		Date date= new Date(f.lastModified());
+		System.out.println(date);
+		
+		//디렉토리만들기 (폴더)
+		String fname="src/aa";
+		File f2 = new File(fname);
+		boolean b =f2.mkdir();
+		System.out.println(b);
+		fname="src/aa/test.txt";
+		f2= new File(fname);
+		try {
+			b=f2.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(b);
+	}
+
+	private static void method8() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("문자입력 >>"+sc.next()+"\n");
+		System.out.print("숫자입력 >>"+sc.nextInt()+"\n");
+		System.out.print("실수입력 >>"+sc.nextDouble()+"\n");
+		
+		System.out.print("한줄 모두 읽기 >>>");
+		sc.nextLine();  //엔터키가 먹어서 한줄을 뛰우고 다시 해야한다!!
+		String a = sc.nextLine();
+		System.out.println(a);
+		
+		sc.close();
+
+	}
+
+	private static void method7() throws IOException {
+		System.setIn(new FileInputStream("src/com/kosta/day15/Student.java"));
+		InputStream is = System.in; // 표준입력(기본:키보드)
+		int i;
+		while ((i = is.read()) != -1) {
+			System.out.print((char) i);
+		}
+
+	}
+
+	private static void method6() throws FileNotFoundException {
+		System.setOut(new PrintStream("output.txt"));
+		PrintStream out = System.out; // 표준출력
+//		PrintStream	out=System.err;
+		out.print("자바");
+
+	}
+
+	private static void method5() {
+		// 콘솔
+		InputStream is = System.in;
+		InputStreamReader ir = new InputStreamReader(is);
+
+		try {
+			// int i =is.read();
+			int i2 = ir.read();
+			// System.out.println((char)i);
+			System.out.println(i2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("IOException");
+		}
+
+	}
+
+	private static void method4() {
+		// 파일을 쓰기
+		FileWriter fw = null;
+		FileReader fr = null;
+		int data;
+		String fname = "src/com/kosta/day15/Review.java";
+		String fname2 = "Review_backup.txt";
+		try {
+			fr = new FileReader(fname);
+			try {
+				fw = new FileWriter(fname2);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				while ((data = fr.read()) != -1) {
+					System.out.print((char) data); // 모니터에 출력
+					fw.write(data);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("filenotfound err");
+		} finally {
+
+			try {
+
+				if (fr != null)
+					fr.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		}
+
+	}
+
+	private static void method3() {
+		// 처음부터 2바이트로 읽기
+
+		FileReader fr = null;
+		;
+		int data;
+		String fname = "src/com/kosta/day15/Review.java";
+		try {
+			fr = new FileReader(fname);
+			try {
+				while ((data = fr.read()) != -1) {
+					System.out.print((char) data);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("filenotfound err");
+		} finally {
+
+			try {
+				if (fr != null)
+					fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException err");
+			}
+		}
+
+	}
+
+	private static void method2() {
+		// 2바이트로 바꾸기 한글이 꺠지지 않는다.!!
+		FileInputStream fi = null;
+		InputStreamReader ir = null;
+		int data;
+		try {
+
+			fi = new FileInputStream("src/com/kosta/day15/Review.java");
+			ir = new InputStreamReader(fi);
+
+			try {
+				while ((data = ir.read()) != -1) { // ASCI code로 읽는다
+					System.out.print((char) data);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException");
+			}
+			System.out.println("========================");
+			System.out.print((int) '1');
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("파일이 존재하지 않습니다");
+		} finally {
+			try {
+				if (ir != null)
+					ir.close();
+				if (fi != null)
+					fi.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void method1() {
+		// 1바이트로 파일 읽기 한글은 깨진다.
+		FileInputStream fi = null;
+		int data;
+		try {
+
+			fi = new FileInputStream("src/com/kosta/day15/Review.java");
+			try {
+				while ((data = fi.read()) != -1) { // ASCI code로 읽는다
+					System.out.print((char) data);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("IOException");
+			}
+			System.out.println("========================");
+			System.out.print((int) '1');
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("파일이 존재하지 않습니다");
+		} finally {
+			try {
+				if (fi != null)
+					fi.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+//// 많이 
+package com.kosta.day15;
+
+import java.io.BufferedReader;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class ScoreTest {
+	public  void printScore(String filename) throws IOException {
+		FileReader fr= null;
+		BufferedReader br= null;
+		
+		fr= new FileReader(filename);
+		br = new BufferedReader(fr);
+		
+		String line=br.readLine();
+		System.out.println(line.replace("/", "\t")+ "\t총점");
+		while(true) {
+			line = br.readLine();
+			if(line==null) break;
+			//System.out.println(line.replace("/", "\t"));
+			String[] arr= line.split("/");
+		Stream<String> stream=Arrays.stream(arr,1,arr.length);
+			ToIntFunction<String> f= aa->Integer.parseInt(aa);
+			IntStream is= stream.mapToInt(f);
+			int avg = is.sum();
+			System.out.print(line.replace("/", "\t"));
+			System.out.println("\t"+avg);
+			
+				
+			
+			
+			//2개 다가능!!
+//				for(int i =1;i<arr.length;i++) {
+//			sum+=Integer.parseInt(arr[i]);
+//		}
+//		System.out.println("\t"+sum);
+			
+		}
+		br.close();
+		fr.close();
+	
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		String fname = "src/com/kosta/day15/data.txt";
+		new ScoreTest().printScore(fname);
+	}
+}
+
+
+
+
 
 
