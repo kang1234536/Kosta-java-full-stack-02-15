@@ -1,2 +1,522 @@
 ////18장 네트워크  자바 끝
+//복습먼저!
+package com.kosta.day16;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Review {
+
+	public static void main(String[] args) {
+		// 3월9일차 어제꺼 복습
+		filecopy();
+
+	}
+
+	private static void filecopy() {
+		// \t : tab \n: new Line \\ : \문자
+		// 폴더이름구분시 /,\\ 모두 가능
+		String originalFile = "src/com/kosta/day15/IOTest.java";
+		String targetFile = "IOTest.txt";
+
+		FileReader fr = null;
+		BufferedReader br = null;
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+
+		String line=null;
+		
+		try {
+			fr = new FileReader(originalFile);
+			br = new BufferedReader(fr);
+			fw = new FileWriter(targetFile);
+			bw = new BufferedWriter(fw);
+			//파일의 끝은 EOF(End Of File)
+			while((line=br.readLine())!=null) {
+				bw.write(line);
+				bw.newLine();//라인 바꾸기
+				System.out.println(line); //console출력하고 줄바꾸기
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(br!=null)br.close();
+				if(fr!=null)fr.close();
+				if(bw!=null)bw.close();
+				if(fw!=null)fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
+
+}
+//네트워크
+package sec06.exam01_inetaddress;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class InetAddressExample {
+	public static void main(String[] args) {
+		try {
+			InetAddress local = InetAddress.getLocalHost();
+			System.out.println("내컴퓨터 IP주소: " + local.getHostAddress());
+			
+			InetAddress[] iaArr = InetAddress.getAllByName("www.naver.com");
+			for(InetAddress remote : iaArr) {
+				System.out.println("www.naver.com IP주소: " + remote.getHostAddress());
+			}
+		} catch(UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+}
+package sec07.exam01_serversocket_socket;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
+public class ClientExample {
+	public static void main(String[] args) {
+		Socket socket = null;
+		try {
+			socket = new Socket();
+			System.out.println( "[연결 요청]");
+			socket.connect(new InetSocketAddress("localhost", 5001));
+			System.out.println( "[연결 성공]");
+			
+			byte[] bytes = null;
+			String message = null;
+			
+			OutputStream os = socket.getOutputStream();
+			message = "Hello Server";
+			bytes = message.getBytes("UTF-8");
+			os.write(bytes);
+			os.flush();
+			System.out.println( "[데이터 보내기 성공]");
+			
+			InputStream is = socket.getInputStream();
+			bytes = new byte[100];
+			int readByteCount = is.read(bytes);
+			message = new String(bytes, 0, readByteCount, "UTF-8");
+			System.out.println("[데이터 받기 성공]: " + message);
+			
+			os.close();
+			is.close();
+		} catch(Exception e) {}
+		
+		if(!socket.isClosed()) {
+			try {
+				socket.close();
+			} catch (IOException e1) {}
+		}
+	}
+}
+package sec07.exam01_serversocket_socket;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerExample {
+	public static void main(String[] args) {
+		ServerSocket serverSocket = null;
+		try {
+			serverSocket = new ServerSocket();
+			//localhost: 127.0.0.1
+			serverSocket.bind(new InetSocketAddress("localhost", 5001));
+			while(true) {
+				System.out.println( "[연결 기다림]");
+				Socket socket = serverSocket.accept();
+				InetSocketAddress isa = (InetSocketAddress) socket.getRemoteSocketAddress();
+				System.out.println("[연결 수락함] " + isa.getHostName());
+			}
+		} catch(Exception e) {}
+		
+		if(!serverSocket.isClosed()) {
+			try {
+				serverSocket.close();
+			} catch (IOException e1) {}
+		}
+	}
+}
+package sec07.exam02_data_read_write;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
+public class ClientExample {
+	public static void main(String[] args) {
+		Socket socket = null;
+		try {
+			socket = new Socket();
+			System.out.println( "[서버에 접속]");
+			socket.connect(new InetSocketAddress("localhost", 5001));
+			System.out.println( "[서버에 접속 성공]");
+			
+			byte[] bytes = null;
+			String message = null;
+			
+			OutputStream os = socket.getOutputStream();
+			message = "Hello Server~~~~(client->server)";
+			bytes = message.getBytes("UTF-8");
+			os.write(bytes);
+			os.flush();
+			System.out.println( "[데이터 보내기 성공]");
+			
+			InputStream is = socket.getInputStream();
+			bytes = new byte[100];
+			int readByteCount = is.read(bytes);
+			message = new String(bytes, 0, readByteCount, "UTF-8");
+			System.out.println("[데이터 받기 성공]: " + message);
+			
+			os.close();
+			is.close();
+		} catch(Exception e) {}
+		
+		if(!socket.isClosed()) {
+			try {
+				socket.close();
+			} catch (IOException e1) {}
+		}
+	}
+}
+package sec07.exam02_data_read_write;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerExample {
+	public static void main(String[] args) {
+		ServerSocket serverSocket = null;
+		try {
+			serverSocket = new ServerSocket();		
+			serverSocket.bind(new InetSocketAddress("localhost", 5001));
+			while(true) {
+				System.out.println( "[서버가 대기중 ......]");
+				Socket socket = serverSocket.accept();
+				InetSocketAddress isa = (InetSocketAddress) socket.getRemoteSocketAddress();
+				System.out.println("[클라이언트들어옴] " + isa.getHostName());
+				
+				byte[] bytes = null;
+				String message = null;
+				
+				InputStream is = socket.getInputStream();
+				bytes = new byte[100];
+				int readByteCount = is.read(bytes);
+				message = new String(bytes, 0, readByteCount, "UTF-8");
+				System.out.println("[데이터 받기 성공]: " + message);
+				
+				OutputStream os = socket.getOutputStream();
+				message = "Hello Client";
+				bytes = message.getBytes("UTF-8");
+				os.write(bytes);
+				os.flush();
+				System.out.println( "[데이터 보내기 성공]");
+				
+				is.close();
+				os.close();
+				socket.close();
+			}
+		} catch(Exception e) {}
+		
+		if(!serverSocket.isClosed()) {
+			try {
+				serverSocket.close();
+			} catch (IOException e1) {}
+		}
+	}
+}
+//채팅 스레드
+package com.kosta.day16.chatting;
+
+import java.net.*;
+class ServerExample3 {
+    public static void main(String[] args) {
+        ServerSocket serverSocket = null;
+        Socket socket = null;
+        try {
+            serverSocket = new ServerSocket(9001);
+            System.out.println("서버가 기다림........");
+            socket = serverSocket.accept();
+            Thread thread1 = new SenderThread(socket);
+            Thread thread2 = new ReceiverThread(socket);
+            thread1.start();
+            thread2.start();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            try {
+                serverSocket.close();
+            }
+            catch (Exception ignored) {
+            }
+        }   
+    }
+}
+package com.kosta.day16.client;
+
+import java.net.*;
+class ClientExample3 {
+    public static void main(String[] args) {
+        Socket socket = null;
+        try {
+        	System.out.println("서버에 접속......");
+            socket = new Socket("127.0.0.1", 9001);
+            Thread thread1 = new SenderThread(socket);
+            Thread thread2 = new ReceiverThread(socket);
+            thread1.start();
+            thread2.start();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+package com.kosta.day16.chatting;
+
+import java.io.*;
+import java.net.*;
+class ReceiverThread extends Thread {
+    Socket socket;
+    ReceiverThread(Socket socket) {  
+        this.socket = socket;
+    }
+    public void run() {
+        try {
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+            while (true) {
+                String str = reader.readLine();
+                if (str == null)
+                    break;
+                System.out.println("입력>" + str);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+package com.kosta.day16.chatting;
+
+import java.io.*;
+import java.net.*;
+class SenderThread extends Thread {
+    Socket socket;
+    SenderThread(Socket socket) {   
+        this.socket = socket;
+    }
+    public void run() {
+        try {
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+            PrintWriter writer = 
+                new PrintWriter(socket.getOutputStream());
+            while (true) {
+                String str = reader.readLine();
+                if (str.equals("bye"))
+                    break;
+                writer.println(str);
+                writer.flush();
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }   
+        finally {
+            try {
+                socket.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
+    }
+}
+
+//run -> run configuation args 정해야 가능!!  멀티스레드 
+package com.kosta.day16.multichatting.multichatting.server;
+
+import java.net.*;
+class ServerExample4 {
+    public static void main(String[] args) {
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(9002);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                Thread thread = new PerClinetThread(socket);
+                thread.start();
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+package com.kosta.day16.multichatting.multichatting.server;
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class PerClinetThread extends Thread {
+    static List<PrintWriter> list = Collections.synchronizedList(new ArrayList<PrintWriter>());
+    Socket socket;
+    PrintWriter writer;
+    PerClinetThread(Socket socket) {
+        this.socket= socket;
+        try {
+            writer = new PrintWriter(socket.getOutputStream());
+            list.add(writer);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void run() {
+        String name = null;
+        try {
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+            name = reader.readLine();           
+            sendAll("#" + name + "님이 들어오셨습니다");
+            while (true) {
+                String str = reader.readLine();
+                if (str == null)
+                    break;
+                sendAll(name + ">" + str);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            list.remove(writer);
+            sendAll("#" + name + "님이 나가셨습니다");
+            try {
+                socket.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
+    }
+    private void sendAll(String str) {  
+        for (PrintWriter writer : list) {
+            writer.println(str);
+            writer.flush();
+        }
+    }
+}
+package com.kosta.day16.multichatting.multichatting.client;
+
+import java.net.*;
+class ClientExample4 {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println(
+                "Usage: java ClientExample4 <user-name>");
+            return;
+        }
+        try {
+            Socket socket = new Socket("192.168.0.172", 9002);
+            Thread thread1 = new SenderThread(socket, "^@^@^@");
+            Thread thread2 = new ReceiverThread(socket);
+            thread1.start();
+            thread2.start();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+package com.kosta.day16.multichatting.multichatting.client;
+
+import java.io.*;
+import java.net.*;
+class ReceiverThread extends Thread {
+    Socket socket;
+    ReceiverThread(Socket socket) {
+        this.socket = socket;
+    }
+    public void run() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            while (true) {
+                String str = reader.readLine();
+                if (str == null)
+                    break;
+                System.out.println(str);
+            }
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+package com.kosta.day16.multichatting.multichatting.client;
+
+import java.net.*;
+import java.io.*;
+class SenderThread extends Thread {
+    Socket socket;
+    String name;
+    SenderThread(Socket socket, String name) { 
+        this.socket = socket;
+        this.name = name;
+    }
+    public void run() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            PrintWriter writer = new PrintWriter(socket.getOutputStream());
+            writer.println(name);
+            writer.flush();
+            while (true) {
+                String str = reader.readLine();
+                if (str.equals("bye"))
+                    break;
+                writer.println(str);
+                writer.flush();
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            try { 
+                socket.close(); 
+            } 
+            catch (Exception ignored) {
+            }
+        }
+    }
+}
+
+
 
