@@ -930,8 +930,110 @@ public class EmpView {
 	}
 }
 ////
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!--  1.HTML -->
+<!-- HTML:구조적data  CSS:style,모양,디자인 -->
+<style>
+h1{background-color: orange;
+	color: blue;
+	border: 3px dotted red;
+}
+h2{background-color: blue;
+	color: white;
+	border: 3px dotted red;
+}
+button{background-color: black;
+color:red;
+}
+</style>
+</head>
+<body>
+<h1>처음으로 web문서를 만든다.(강희원)</h1>
+<h2>HTML:구조적data </h2>
+<h2>CSS:style,모양,디자인</h2>
+<button onclick="alert('하이~')">눌러주세요</button>
+<button onclick="call();">눌러주세요2</button>
+<script>
+function call(){
+	alert("두번째버튼입니다.");	
+
+}
+</script>
 
 
+
+
+
+</body>
+</html>
+
+
+package com.kosta.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class FirstServlet
+ */
+@WebServlet("/FirstServlet")
+public class FirstServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       //FirstServlet
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FirstServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Servlet = JAVA+HTML 가능
+		response.getWriter()
+		.append("<h1>Served at: ")
+		.append(request.getContextPath())
+		.append(" Kangheewon</h1>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <!-- 2.jsp -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>JSP = HTML+ JAVA도 가능하다.</h1>
+<!-- 자바코드 -->
+<%
+String myName="강희원";
+%>
+<h2>나의 이름은 <%=myName%>입니다</h2>
+</body>
+</html>
 
 
 
