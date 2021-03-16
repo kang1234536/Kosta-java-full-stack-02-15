@@ -673,3 +673,7 @@ where sal> any(select sal
 from emp
 where job='SALESMAN')
 and job <>'SALESMAN';
+
+
+
+
