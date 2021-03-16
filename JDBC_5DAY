@@ -676,4 +676,64 @@ and job <>'SALESMAN';
 
 
 
+package jdbcProject.homework;
 
+import java.util.Scanner;
+import java.sql.*;
+public class test1 {
+	static Connection conn;
+	static PreparedStatement st;
+	static ResultSet rs;
+	public static void main(String[] args) throws SQLException   {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		System.out.print("조회하고자 하는 직원의 이름 일부를 입력하세요>>");
+		String name = sc.next();
+		new test1().printEmployee(name);
+	}
+
+	private void printEmployee(String name) throws SQLException   {
+		String sql=
+				"select first_name, department_id, salary,hire_date"+
+				" From employees "+
+				" where first_name LIKE '%'||?||'%'";
+				
+			//1.DB연결
+			conn = DBUtil.getConnection();
+			//2.DB와 대화통로 만들기
+			st=conn.prepareStatement(sql);
+			st.setString(1, name);
+			//3.SQL문실행
+			rs=st.executeQuery();
+			//읽기위해 접근: rs.next()
+			//4.select결과를 사용하기
+			while(rs.next()) {
+				String dpt_id =rs.getString(2);
+				String first_name=rs.getString(1);
+				int sal=rs.getInt(3);
+				
+		
+				System.out.println("직원번호\t이름\t월급");
+				System.out.println("=============================================");
+				System.out.println(dpt_id+"\t"+first_name+"\t"+sal+"\t");
+				System.out.println("=============================================");
+
+				
+				
+			}
+			DBUtil.dbClose(rs, st, conn);
+	}
+}
+
+/*
+문제5. 키보드로부터 직원의 이름 일부를 입력 받아서 employees 테이블에서 해당 사원의 사번(employee_id), 이름(first_name), 급여(salary) 를 출력하는 메소드를 작성하시오.
+public void printEmployee(String name)
+Driver Name : oracle.jdbc.driver.OracleDriver
+URL  :  jdbc:oracle:thin:@localhost:1521:xe
+User: hr
+Password: hr
+1.	printEmployee(String name) 메소드를 구현합니다.
+2.	키보드로부터 입력 받아 읽어오는 부분은 main 메소드 내에 구현되어 있습니다.
+3.	main 메소드를 포함하여 주어진 메소드의 시그니처는 변경하지 않고 그대로 사용합니다.
+4.	아래의 예시는 직원이름에 “D”가 들어있는 경우의 결과를 출력한 것입니다.
+*/
