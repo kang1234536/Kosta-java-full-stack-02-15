@@ -1,2 +1,407 @@
 // 3월 15일
 //GROUP함수
+--단일행함수: 숫자관련, 문자관련, 날짜관련, 변환함수(to_char,to_date,to_number)
+select first_name, substr(first_name,1,3) --첫3자리
+from employees;
+--단일행 함수
+select commission_pct, salary,salary+salary*nvl(commission_pct,0) 급여
+from employees;
+
+
+--다중행 함수  .... null은 무시한다.
+select count(commission_pct) 건수1, count(department_id) 건수2, count(first_name) 건수,sum(salary) 급여총액, sum(COMMISSION_PCT) 커미션합계
+from employees;
+--sum,avg함수
+select sum(salary) 합계,avg(salary) 평균,sum(salary)/count(salary) 평균계산식
+from employees;
+--max,min 함수
+select max(salary) 최대금액,min(salary) 최소금액
+from employees;
+-- 내림차순 함수  order by desc, order by asc;
+select salary
+from employees
+order by salary desc;
+--가장 최근에 입사한 사원의 입사일, 오래된 사원의 입사일
+select max(hire_date) 가장최근,min(hire_date) 오래된
+from employees;
+-- count(*)
+select count(commission_pct) 특정칼럼건수_null제외,count(*) null포함
+from employees;
+
+--10번 부서 소속중 commission을 받는 사원의수는?
+select count(commission_pct)
+from employees
+where department_id=80;
+--위에문제 연동문제
+select *
+from employees
+where department_id is null and commission_pct is not null;
+
+--중복 제거
+select distinct department_id 업무수
+from employees;
+
+
+--직원들이 근무하는 부서들
+-- count() 건수
+
+select   count(distinct department_id) 업무수
+from employees;
+
+select count(job_id)
+from employees;
+
+select count(distinct job_id)
+from employees;
+
+<--select 칼럼명,그룹함수
+<--from 테이블명
+<--where 조건(연산자)
+<--group by 칼럼명;
+
+--그룹함수
+select department_id, sum(salary)
+from employees
+group by department_id
+order by 1;
+--그룹함수 ... 그룹함수를 사용하지않은 칼럼은 반드시 group by 절에 참여한다.
+select department_id,first_name, sum(salary)
+from employees
+group by department_id
+order by 1;
+
+select department_id,max(first_name), sum(salary)
+from employees
+group by department_id
+order by 1;
+
+select first_name, salary
+from employees
+where department_id = 20
+order  by 1 desc;
+
+
+select department_id
+from employees
+group by department_id;
+-- 그룹함수 사이에 일반이 나오면 오류 
+select department_id,max(first_name), sum(salary)
+from employees;
+-- 집계함수를 추가한다
+select count(department_id),max(first_name), sum(salary)
+from employees;
+-- 집계함수를 사용하지않으면  group by 절에 들어가야한다!!
+select department_id,max(first_name), sum(salary)
+from employees
+group by department_id;
+
+select department_id, count(*),count(commission_pct)
+from employees
+group by department_id;
+
+--부서별 평균을 구하여라
+
+select department_id, avg(salary)
+from employees
+group by department_id
+having avg(salary)>=10000
+order by avg(salary) desc;
+
+select department_id, max(salary) sal_max, min(salary) sal_min
+from employees
+group by department_id
+having max(salary)>=10000 and min(salary)>=10000;
+
+
+
+--Lab2
+--7.각 부서별 인원수를 조회하되 인원수가 5명 이상인 부서만 출력되도록 하시오.
+--오류
+select department_id,count(*)
+from employees
+where count(*)>=5
+group by department_id;
+
+select department_id,count(*)
+from employees
+group by department_id
+having count(*)>=5;
+
+select department_id,count(*)
+from employees
+where department_id<=100
+having count(*)>=5
+group by department_id
+order by 1;
+
+
+8. 각 부서별 최대급여와 최소급여를 조회하시오.
+   단, 최대급여와 최소급여가 같은 부서는 직원이 한명일 가능성이 높기때문에 
+   조회결과에서 제외시킨다.
+select department_id ,max(salary),min(salary)
+from employees
+group by department_id;
+
+select department_id, max(salary) sal_max, min(salary) sal_min
+from employees
+group by department_id
+having max(salary)<>min(salary);
+
+select *
+from employees
+where department_id in(10,40) or department_id is null;
+
+
+9. 부서가 50, 80, 110 번인 직원들 중에서 급여를 5000 이상 24000 이하를 받는
+   직원들을 대상으로 부서별 평균 급여를 조회하시오.
+   다, 평균급여가 8000 이상인 부서만 출력되어야 하며, 출력결과를 평균급여가 높은
+   부서면저 출력되도록 해야 한다.
+
+
+
+
+select department_id,avg(salary)
+from employees
+where department_id in (50,80,110) and salary between 5000 and 24000
+group by department_id  
+having avg(salary)>=8000
+order by avg(salary) desc;
+   
+   
+---- join 공부
+
+select department_id
+from employees
+where first_name ='Steven' and last_name ='King';
+   
+ select *
+ from departments
+ where department_id =90;
+   
+   
+  --subquery 
+ select *
+ from departments
+ where department_id =(select department_id
+from employees
+where first_name ='Steven' and last_name ='King');
+
+--join
+--1) 가장 일반적으로 많이사용,DB 벤더 문법
+
+select first_name,salary,department_name
+from employees,departments
+where employees.department_id=departments.department_id;
+
+select 107*27 from dual;
+
+--2) 표준문법
+select first_name, salary , department_name
+from employees join departments using(department_id);
+
+
+--employees:칼럼 11개,건수 107개
+--departments: 칼럼 4개 , 건수 27개
+desc departments;
+desc employees;
+
+
+select *
+from departments join employees using(department_id);
+
+select employees.*,departments.department_name
+from departments , employees
+where departments.department_id=employees.department_id;
+
+
+[customer 정보]
+id  --고객id
+name
+address
+
+[orderinfo 정보]
+id --주문 id
+title
+price
+cust_id --고객 id
+
+[틀림]  칼럼이름이 같은 경우만 사용 해야한다.
+select *
+from customer join orderinfo using(id);
+[맞는 표준문법]: 칼럼이 다른경우 using 대신 사용한다.
+select *
+from customer join orderinfo on( customer.id=orderinfo.cust_id);
+
+[벤더문법]
+select *
+from customer join orderinfo
+where customer.id=orderinfo.cust_id;
+
+[employees,departments]
+select employees.*,departments.department_name
+from employees,departments
+where employees.department_id = departments.department_id;
+
+select department_id,first_name,salary,department_name
+from employees join departments using(department_id);
+
+select employees.*,departments.department_name
+from employees join departments
+on (employees.department_id = departments.department_id)
+where salary >=15000;
+
+--별명 table 이름도 별명이 가능하다(Alias)
+select e.*,d.department_name
+from employees e join departments d
+on (e.department_id = d.department_id)
+where salary >=15000;
+
+select *
+from employees;
+select *
+from departments;
+select *
+from job_history;
+select *
+from locations;
+select *
+from jobs;
+select *
+from countries;
+select *
+from regions;
+--hr 계정으로
+1.직원들의 이름과 직급명(job_title)을 조회하시오.
+select e.last_name,j.job_title
+from employees e,jobs j
+where e.job_id=j.job_id;
+
+select e.first_name,j.job_title
+from employees e, jobs j
+where e.job_id=j.job_id;
+2.부서이름과 부서가 속한 도시명(city)을 조회하시오.
+select d.department_name,l.city
+from departments d, locations l
+where d.location_id=l.location_id;
+
+select department_name, city
+from departments join locations using(location_id);
+
+
+3. 직원의 이름과 근무국가명을 조회하시오. (employees, departments, locations,countries)
+select e.last_name,c.country_name
+from employees e, departments d, locations l , countries c
+where e.department_id=d.department_id and l.country_id = c.country_id;
+
+4. 직책(job_title)이 'manager' 인 사람의 이름, 직책, 부서명을 조회하시오.
+ select e.last_name,j.job_title,d.department_name
+ from employees e, departments d,jobs j
+ where lower(j.job_title) LIKE '%manager' and  e.department_id=d. department_id and e.job_id=j.job_id   ;
+ 
+ 
+
+
+5. 직원들의 이름, 입사일, 부서명을 조회하시오.
+ select e.last_name,e.hire_date,d.department_name
+ from employees e, departments d
+ where e.department_id=d.department_id
+ and e.hire_date>='2005/01/01'
+ order by e.hire_date;
+
+--outer join
+6. 직원들의 이름, 입사일, 부서명을 조회하시오.
+단, 부서가 없는 직원이 있다면 그 직원정보도 출력결과에 포함시킨다.
+--ORACLE 버전
+ select e.last_name,e.hire_date,d.department_name
+ from employees e, departments d
+ where e.department_id=d.department_id(+);
+--Sybase 여기서는 실행 안됨
+ select e.last_name,e.hire_date,d.department_name
+ from employees e, departments d
+ where e.department_id *=d.department_id;
+--표준문법 inner 생략가능
+ select last_name,hire_date,department_name
+ from employees inner join departments 
+ on employees.department_id=departments.department_id;
+--outer join
+ select last_name,hire_date,department_name
+ from employees left outer join departments 
+ on employees.department_id=departments.department_id;
+
+ select last_name,hire_date,department_name
+ from departments right  outer join  employees 
+ on employees.department_id=departments.department_id;
+
+ select last_name,hire_date,department_name
+ from departments full  outer join  employees 
+ on employees.department_id=departments.department_id;
+ 
+  select last_name,hire_date,department_name
+ from departments full  outer join  employees  using(department_id);
+
+ --부서가 직원을 참조한다. 건수는 부서건수와 같다.
+  select last_name,hire_date,department_name
+ from departments join  employees 
+ on employees.employee_id=departments.manager_id;
+ 
+ select *
+ from departments;
+ --부서가 직원을 참조한다. 하지만 employee_id에 +를 넣어서 맞춰준다
+  select last_name,hire_date,department_name
+ from departments join  employees 
+ on employees.employee_id(+)=departments.manager_id;
+
+--표준문법
+select first_name, hire_date,department_name
+from departments left outer join employees
+ on employees.employee_id=departments.manager_id;
+
+
+7. 직원의 이름과 직책(job_title)을 출력하시오.
+단, 사용되지 않는 직책이 있다면 그 직책정보도 출력결과에 포함시키시오.
+select e.last_name,j.job_title
+from employees e, jobs j
+where e.job_id(+)=j.job_id;
+
+select last_name,job_title
+from employees right outer join  jobs 
+on employees.job_id=jobs.job_id;
+
+
+select last_name,job_title
+from employees right outer join  jobs  using(job_id);
+
+insert into jobs values('play','매일 매일 놀아요',5000,10000);
+
+
+select first_name,salary
+from employees;
+--테이블만들기
+create table salgrade(grade char(1),
+                      minsal number,
+                      maxsal number); 
+
+desc salgrade;
+
+--테이블에 삽입하기
+insert into salgrade values('A',0,5000);
+insert into salgrade values('B',5001,8000);
+insert into salgrade values('C',8001,10000);
+insert into salgrade values('D',10001,15000);
+insert into salgrade values('E',15001,25000);
+
+--테이블 조회
+SELECT *
+FROM SALGRADE;
+
+
+--OUTER JOIN
+select first_name, salary, salgrade.grade
+from employees join salgrade
+on employees.salary between salgrade.minsal and salgrade.maxsal
+
+
+
+ select ename,salary,grade
+ from employees, salgrade
+ where employees.salary between minsal and maxsal;
