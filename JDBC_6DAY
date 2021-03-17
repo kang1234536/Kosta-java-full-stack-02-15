@@ -371,6 +371,212 @@ insert values(emp02.employee_id, emp02.first_name,emp02.salary,emp02.hire_date);
 select * from emp01; -- 그래서 총 107+1개가됨
 select * from emp02;
 
+
+--오후 트랜잭션
+select * from emp02;
+
+--DML(insert,update,delete)
+delete from emp02 where employee_id=103;
+delete from emp02 where employee_id=104;
+delete from emp02 where employee_id=105;
+--여기서는 지워져 보이지만
+select * from emp02;
+--sqlplus에서는 지워져 있지않다!!
+--지웟던일을 없앤다 rollback
+rollback;
+select * from emp02;
+
+
+--DML(insert,update,delete)
+delete from emp02 where employee_id=103;
+delete from emp02 where employee_id=104;
+delete from emp02 where employee_id=105;
+
+select * from emp02;
+--이번엔  commit
+commit;
+--이번엔 sqlplus 역시 삭제 !!
+
+rollback;
+
+
+select * from emp02;
+delete from emp02 where employee_id =106;
+rollback;
+
+select * from emp02;
+delete from emp02 where employee_id =107;
+rollback;
+----3시수업
+-- 제약조건 not null 이 2개여서 2개는 꼭넣어야한다!!
+desc department;
+insert into departments(department_id,department_name) values(11,'aa');
+select * from departments;
+--제약 조건 확인이 가능
+desc user_constraints;
+
+select *
+from user_constraints
+where table_name='EMPLOYEES';
+
+select *
+from user_cons_columns;
+
+select *
+from user_cons_columns
+where table_name='EMPLOYEES';
+
+select column_name, constraint_type, search_condition
+from user_constraints join user_cons_columns using(CONSTRAINT_NAME)
+where user_constraints.table_name='EMPLOYEES';
+
+--p(primary key): 유일값, null 불가 ( 필수칼럼), 하나의 테이블에 오직 하나
+--u(unique) : 유일값,null 가능
+--r(foreign key) :  참조키,외래키 , 다른 테이블의 PK를 참조한다. , 같은 테이블의 칼럼 참조 가능 PK가 아닌 칼럼도 참조 가능!
+--c(Check) : 조건에 맞는 데이터만 가능  
+
+--제약조건 을 포함한  테이블만들기
+drop table customer;
+
+
+create table customer(
+-- p, not,null,u,c,r
+cust_id number constraint customer_cust_id_pk primary key,
+cust_name varchar2(30) not null,
+email varchar2(20) unique,
+address varchar2(100),
+gender char(1) check(gender in('M','F')),
+dept_id number constraint customer_dept_id_fk references departments(department_id));
+
+
+--칼럼값 넣기
+
+insert into customer(cust_id,cust_name) values(1,'김길동');
+
+select * from customer;
+-- 4시 수업  무결성 
+insert into customer(cust_id,cust_name) values(2,'aa');
+insert into customer(cust_id,cust_name,email) values(4,'aa','kha0202kha@naver.com');
+
+drop table customer;
+create table customer(
+-- p, not,null,u,c,r
+cust_id number constraint customer_cust_id_pk primary key,
+cust_name varchar2(30) not null,
+email varchar2(20) constraint customer_email_unique unique,
+address varchar2(100),
+gender char(1) constraint customer_gender_check check(gender in('M','F')),
+dept_id number constraint customer_dept_id_fk references departments(department_id));
+
+
+insert into customer(cust_id,cust_name,email) values(5,'aa','kha0202kh@naver.com');
+select * from customer;
+
+insert into customer(cust_id,cust_name,email,gender) values(6,'aa','kha0202kha@naver.com','A');-- 안될수밖에없음 Check 에 m,f밖에못넘
+insert into customer(cust_id,cust_name,email,gender) values(6,'aa','kha0202@naver.com','M');
+insert into customer(cust_id,cust_name,email,gender,dept_id) values(8,'aa','kha00@naver.com','M',32);  -- 안될수밖에없음 dept_id가 존재하지않음
+insert into customer(cust_id,cust_name,email,gender,dept_id) values(8,'aa','kha00@naver.com','M',100);  
+
+select * from customer;
+
+--제약조건 변경 도 있음 인터넷에 나중 검색하고 풀어보장
+--modify
+
+
+----
+select column_name, constraint_type, search_condition
+from user_constraints join user_cons_columns using(CONSTRAINT_NAME)
+where user_constraints.table_name='JOB_HISTORY';
+
+--상품정보: 상품번호,이름,가격
+CREATE TABLE 상품정보(
+상품번호 number CONSTRAINT CONSTRAINT_GOODS_PK PRIMARY KEY,
+상품이름 varchar2(100),
+상품가격 number(9)
+);
+--고객정보: 고객번호, 이름,  .....
+
+--주문:  고객번호 , 상품번호 ,순서, 주문일자 , 수량 
+CREATE TABLE 주문(
+고객번호 NUMBER ,
+주문일자 DATE ,
+순서 NUMBER ,
+상품번호 NUMBER CONSTRAINT ORDER_GODDS_FK REFERENCES 상품정보(상품번호),
+수량 NUMBER,
+CONSTRAINT ORDER_PK PRIMARY KEY(고객번호,주문일자, 순서)
+);
+
+INSERT INTO 상품정보 VALUES(1,'노트북',100);
+INSERT INTO 상품정보 VALUES(2,'스마트폰',100);
+SELECT * FROM 상품정보;
+
+
+SELECT * FROM CUSTOMER;
+INSERT INTO 주문 VALUES(4,'2001-03-17',1,2,10);
+INSERT INTO 주문 VALUES(4,'2001-03-17',2,2,10);
+INSERT INTO 주문 VALUES(4,'2001-03-17',3,2,10);
+SELECT * FROM 주문;
+
+
+
+--DEFAULT 적용
+drop table customer;
+
+
+create table customer(
+-- p, not,null,u,c,r
+cust_id number constraint customer_cust_id_pk primary key,
+cust_name varchar2(30) not null,
+email varchar2(20) constraint customer_email_unique unique,
+address varchar2(100),
+gender char(1) constraint customer_gender_check check(gender in('M','F')),
+dept_id number constraint customer_dept_id_fk references departments(department_id),
+LOC VARCHAR2(20) DEFAULT 'SEOUL'
+);
+
+insert into customer(cust_id,cust_name,email,dept_id) values(7,'aa','kha0202kha@naver.com',100);
+insert into customer(cust_id,cust_name,email,dept_id,LOC) values(8,'aa','kha020@naver.com',100,'대전');
+insert into customer(cust_id,cust_name,email,dept_id,LOC) values(9,'aa','kha00@naver.com',10,'');
+select * from customer;
+
+
+
+select * from employees;
+
+select * from departments;
+
+--참조키 바로제거 불가능!!
+delete from departments
+where department_id =100;
+
+--바로지워보자
+
+alter table employees
+disable constraint emp_dept_fk;
+
+alter table customer
+disable constraint customer_dept_id_fk;
+--복구
+alter table employees
+enable constraint emp_dept_fk;
+
+
+insert into departments values(100,'Finance',	108,	1700);
+
+
+
+--------------------5시 LAB
+
+
+
+
+
+
+
+
+
+
+
 --- eclipse 수업 내용
 desc employees;
 
@@ -379,6 +585,41 @@ insert into employees values(?,?,?,?,?,?,?,?,?,?,?);
 
 SELECT * FROM EMPLOYEES;
 
+--오후 트랜잭션
+select * from emp02;
+
+--DML(insert,update,delete)
+delete from emp02 where employee_id=103;
+delete from emp02 where employee_id=104;
+delete from emp02 where employee_id=105;
+--여기서는 지워져 보이지만
+select * from emp02;
+--sqlplus에서는 지워져 있지않다!!
+--지웟던일을 없앤다 rollback
+rollback;
+select * from emp02;
+
+
+--DML(insert,update,delete)
+delete from emp02 where employee_id=103;
+delete from emp02 where employee_id=104;
+delete from emp02 where employee_id=105;
+
+select * from emp02;
+--이번엔  commit
+commit;
+--이번엔 sqlplus 역시 삭제 !!
+
+rollback;
+
+
+select * from emp02;
+delete from emp02 where employee_id =106;
+rollback;
+
+select * from emp02;
+delete from emp02 where employee_id =107;
+rollback;
 
 
 
@@ -386,6 +627,17 @@ SELECT * FROM EMPLOYEES;
 
 
 
+
+
+
+
+
+
+
+
+
+
+//eclipse
 EmpDAO EmpConTroller  예제!!
 	//3월 17일 
 	//CRUD(Create: insert, Read:select,U:update,D:delete)
@@ -444,3 +696,41 @@ EmpDAO EmpConTroller  예제!!
 		emp.setSalary(4300);
 		return emp;
 	}
+public int insertEmp(EmpVO emp) {
+		String sql ="insert into employees values(?,?,?,?,?,?,?,?,?,?,?)";
+		Connection conn;
+		PreparedStatement st=null;
+		int result=0;
+		
+		conn = DBUtil.getConnection();
+		try {
+			conn.setAutoCommit(false);  //한번에 여러 sql문을 실행하고자 하는경우 사용
+			st=conn.prepareStatement(sql);
+			st.setInt(1, emp.getEmployee_id());
+			st.setString(2, emp.getFirst_name());
+			st.setString(3, emp.getLast_name());
+			st.setString(4, emp.getEmail());
+			st.setString(5, emp.getPhone_number());
+			st.setDate(6, emp.getHire_date());
+			st.setString(7, emp.getJob_id());
+			st.setInt(8, emp.getSalary());
+			st.setDouble(9,emp.getCommission_pct());
+			st.setInt(10, emp.getManager_id());
+			st.setInt(11, emp.getDepartment_id());
+			result =st.executeUpdate(); //insert/update/delete는 executeUpdate()를 써야한다.
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally {
+			DBUtil.dbClose(null, st, conn);
+		}
+		
+		return result;
+	}
+	
