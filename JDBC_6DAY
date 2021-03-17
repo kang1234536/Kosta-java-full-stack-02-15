@@ -1,1 +1,446 @@
 //3월 17일 DDL 공부
+--테이블 만들기
+create table 테이블이름(
+변수이름 변수타입,
+변수이름 변수타입);
+
+
+create table customer (
+ cust_id number,
+ cust_name varchar2(20),
+ gender char(1),
+ gender2 char(10),
+ birthday date,
+ year01 interval year(3) to month,
+ day01 interval day(3) to second
+);
+
+--테이블 삭제하기
+drop table 테이블이름;
+
+drop table customer;
+
+--테이블 조회하기
+desc customer;
+select * from customer;
+--테이블에 값넣기
+insert into 테이블이름 values( 값들넣기);
+
+insert into customer values(1,'홍길동','M','남자',sysdate,interval '36' month(3), interval '100' day(3));
+insert into customer values(2,'홍길동2','F','여자',sysdate,interval '36' month(3), interval '100' day(3));
+insert into customer values(3,'홍길동3','M','남자',sysdate,interval '36' month(3), interval '100' day(3));
+insert into customer values(4,'홍길동4   ','M','여자',sysdate,interval '36' month(3), interval '100' day(3));  -- 공백넣기
+insert into customer values(5,'홍길동5   ','M','남자  ',sysdate,interval '36' month(3), interval '100' day(3)); 
+insert into customer values(6,'홍길동6','M','남자  ',sysdate,interval '36' month(3), interval '100' day(3)); 
+--데이터 조회
+select *
+from customer
+where cust_id=1;
+--char:고정길이 varchar2: 가변길이
+select *
+from customer
+where cust_name='홍길동';
+
+select *
+from customer
+where trim(cust_name)='홍길동4';  --공백 없애기 trim()
+
+
+select *
+from customer
+where gender='M';
+
+select *
+from customer
+where gender2='남자 ';
+
+
+select cust_name,birthday,birthday+year01 "36개월후",birthday+day01 "100일후"
+from customer;
+
+-- 2번쨰 테이블
+create table emp2(
+empid number(3),
+empname varchar2(20),
+salary number(9,2));
+
+insert into emp2 values(1,'김길동',1000000.12);
+insert into emp2 values(2,'김길동12345678',1000000.12);
+
+--insert into emp2 values(3,'김길동33',100000000.12);--value larger than specified precision allowed for this column 너무크다 범위를 넘어섬!!
+
+
+select *
+from emp2;
+
+
+--백업하기
+create table emp3
+as 
+select *
+from employees;
+
+
+create table emp4
+as 
+select *
+from employees
+where department_id=80;
+
+-- 구조는 복사하고 데이터는 가져오지 않음
+create table emp5
+as 
+select *
+from employees
+where 1=0;
+
+create table emp6
+as 
+select employee_id,first_name,salary,hire_date
+from employees
+where 1=0;
+
+
+
+--백업 조회하기
+select  *
+from emp3;
+
+select  *
+from emp4;
+
+select *
+from emp5;
+
+select *
+from emp6;
+
+
+--테이블 구조 변경
+--alter table 테이블이름 add() ,modify(),drop()
+alter table emp6
+add (deptid number, address varchar2(100));
+
+desc emp6;
+
+alter table emp6
+modify(deptid number(3), address varchar2(50));
+
+desc emp6;
+
+alter table emp6
+drop(deptid,address);
+
+desc emp6;
+
+alter table emp6
+add (deptid number, address varchar2(100));
+
+desc emp6;
+
+--truncate 사용 : 데이터만삭제 구조는 그대로
+select *
+from emp4;
+
+truncate table emp4;
+
+select *
+from emp4;
+ -- rename  테이블 명 변경
+ --rename 이전이름 to 새로운이름
+rename emp4 to empp;
+
+select * from empp;
+
+rename empp to emp4;
+
+select *
+from user_tables;
+
+
+select *
+from all_tables;
+
+
+select *
+from dba_tables;
+
+
+--DML!!
+create table customer2 (
+ cust_id number,
+ cust_name varchar2(20),
+ gender char(1),
+ gender2 char(10),
+ birthday date
+ );
+desc customer2;
+
+insert into customer2 values(1,'aa','M','남자',sysdate);
+insert into customer2(cust_id,cust_name,gender,gender2) values(2,'aa','M','남자');
+insert into customer2(cust_id,cust_name) values(3,'aa');
+--insert into customer2(cust_name,cust_id) values(3,'aa'); 타입하고 값이 다르다 ->오류
+insert into customer2(cust_name,cust_id) values('aa',4);
+insert into customer2 values(5,'aa',null,null,null); --명시적으로 null값을 준다.
+insert into customer2 values(6,'aa','','',null); --명시적으로 null값을 준다. '' 값도 null값으로 들어간다
+insert into customer2 values(7,'aa','','',''); --명시적으로 null값을 준다.
+insert into customer2 values('','aa','','',''); --명시적으로 null값을 준다.
+--입력되지않은 칼럼은 암시적으로 null 값이다.
+select * from customer2;
+
+select * from customer2
+where gender is null;
+
+delete from customer2
+where  cust_id is null;
+
+
+
+create table emp_backup
+as
+select employee_id,first_name,salary,hire_date
+from employees
+where department_id=10;
+
+desc emp_backup;
+
+select*
+from emp_backup;
+--데이터 훔쳐오기
+insert into emp_backup
+select  employee_id,first_name,salary,hire_date
+from employees
+where department_id=100;
+
+insert into emp_backup
+select  employee_id,first_name,salary,hire_date
+from employees
+where department_id=10;
+
+
+
+insert into emp_backup
+select  location_id,department_name,0,sysdate
+from departments
+where department_id=100;
+
+select*
+from emp_backup;
+select * from departments;
+
+-----------------------------
+
+create table emp_basic
+as
+select employee_id,first_name,salary
+from employees
+where 1=0;
+
+create table emp_addinfo
+as
+select employee_id,first_name,hire_date
+from employees
+where 1=0;
+
+insert all
+into emp_basic values(employee_id,first_name,salary)
+into emp_addinfo values(employee_id,first_name,hire_date)
+select employee_id,first_name,salary,hire_date
+from employees;
+
+select *
+from emp_basic;
+
+select *
+from emp_addinfo;
+
+
+truncate table emp_basic;
+truncate table emp_addinfo;
+
+
+insert all
+when employee_id<110 then
+into emp_basic values(employee_id,first_name,salary)
+when salary>10000  then
+into emp_addinfo values(employee_id,first_name,hire_date)
+select employee_id,first_name,salary,hire_date
+from employees;
+
+
+select *
+from emp_basic;
+
+select *
+from emp_addinfo;
+
+
+
+--update
+update emp_basic
+set salary =salary*1.1 , first_name='수정'
+where employee_id<=102;
+
+
+
+select *
+from emp_backup;
+
+update emp_backup
+set hire_date = sysdate
+where salary>0;
+
+update emp_backup
+set hire_date = '2022-12-31'
+where salary=0;
+--update subquery
+update emp_backup
+set salary =(select salary
+from emp_backup
+where first_name= 'Nancy' )
+where first_name= 'Luis' ;
+
+update emp_backup
+set (salary,hire_date) =(select salary,hire_date
+from emp_backup
+where first_name= 'Nancy' )
+where first_name= 'Luis' ;
+
+--delete  데이터가 날라감
+--delete from 테이블이름 where 조건
+
+
+--commit
+
+commit;
+
+delete from emp_backup;
+select * from emp_backup;
+
+drop table emp_backup;
+
+desc emp_backup;
+
+insert into emp_backup
+select employee_id,first_name,salary,hire_date
+from employees;
+
+
+create table emp_backup
+as
+select employee_id,first_name,salary,hire_date,department_id
+from employees;
+
+select * from departments;
+
+delete
+from emp_backup
+where  department_id=(select  department_id
+from departments
+where department_name='IT');
+
+
+--merge
+create table emp01
+as
+select employee_id,first_name,salary,hire_date from employees;
+
+create table emp02
+as
+select employee_id,first_name,salary,hire_date from employees
+where department_id =60;
+
+update emp02
+set first_name='수정';
+
+insert into emp02
+values(99,'강희원',4300,sysdate);
+
+--emp01 107건 emp02에는 5+1건이있다.
+-- 두테이블중  emp02에 5건은 포함되있고 1건은 미포함 이유 내가 넣엇기때문
+merge into emp01 using emp02
+on(emp01.employee_id = emp02.employee_id)
+when matched then
+update set
+emp01.first_name=emp02.first_name
+when not matched then
+insert values(emp02.employee_id, emp02.first_name,emp02.salary,emp02.hire_date);
+
+
+
+select * from emp01; -- 그래서 총 107+1개가됨
+select * from emp02;
+
+--- eclipse 수업 내용
+desc employees;
+
+insert into employees values(?,?,?,?,?,?,?,?,?,?,?);
+
+
+SELECT * FROM EMPLOYEES;
+
+
+
+
+
+
+
+
+EmpDAO EmpConTroller  예제!!
+	//3월 17일 
+	//CRUD(Create: insert, Read:select,U:update,D:delete)
+	///사용자가 웹을 통해서 회원가입 ->Controller->DAO
+	public int insertEmp(EmpVO emp) {
+		String sql ="insert into employees values(?,?,?,?,?,?,?,?,?,?,?)";
+		Connection conn;
+		PreparedStatement st;
+		int result=0;
+		
+		conn = DBUtil.getConnection();
+		try {
+			st=conn.prepareStatement(sql);
+			st.setInt(1, emp.getEmployee_id());
+			st.setString(2, emp.getFirst_name());
+			st.setString(3, emp.getLast_name());
+			st.setString(4, emp.getEmail());
+			st.setString(5, emp.getPhone_number());
+			st.setDate(6, emp.getHire_date());
+			st.setString(7, emp.getJob_id());
+			st.setInt(8, emp.getSalary());
+			st.setDouble(9,emp.getCommission_pct());
+			st.setInt(10, emp.getManager_id());
+			st.setInt(11, emp.getDepartment_id());
+			result =st.executeUpdate(); //insert/update/delete는 executeUpdate()를 써야한다.
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+  
+  //controller
+  	private static void method9() {
+		//3월 17일 입력 메서드
+		EmpDAO dao= new EmpDAO();
+		EmpVO emp = makeEmp();
+		int result=dao.insertEmp(emp);
+		EmpView.display(result>0?"입력성공":"입력실패");
+	}
+	//3월 17일 입력 메서드
+	private static EmpVO makeEmp(){
+		EmpVO emp = new EmpVO(); // 너무많으므로 default를 만든다
+		// new EmpVo("11개")넣는것보다 ->이렇게 하나하나 직접넣는게 best
+		emp.setCommission_pct(0.5);
+		emp.setDepartment_id(10);
+		emp.setEmail("kha0202kha@naver.com");
+		emp.setEmployee_id(9);
+		emp.setFirst_name("강");
+		emp.setHire_date(new Date(200,01,01));
+		emp.setJob_id("IT_PROG");
+		emp.setLast_name("희원");
+		emp.setManager_id(100);
+		emp.setPhone_number("010-1111-2222");
+		emp.setSalary(4300);
+		return emp;
+	}
