@@ -224,8 +224,163 @@ update employees
 
 	}
 --- view 공부
- 
- 
+ --view : sql문을 간단히 하고자 하는경우 사용, 보안때문에 사용
+ create table emp_backup
+as
+select *
+from employees;
+
+select * from emp_backup;
+
+create view emp_backup_view
+as
+select * from emp_backup
+where department_id=60;
+
+create or replace view emp_backup_view
+as
+select * from emp_backup
+where department_id=60;
+
+select * from emp_backup_view;
+
+--11시 수업
+--user가 만든 뷰 목록들
+select * from user_views;
+
+
+--11시수업 --뷰: 테이블을 보기위한 창의 역할
+create or replace view emp_backup_view2
+as
+select employee_id, first_name, salary from emp_backup
+where department_id=60;
+
+select * from emp_backup_view2;
+
+select *
+from emp_backup_view2
+where salary >5000;
+
+update emp_backup_view2
+set salary =10000
+where salary>5000;
+
+select * from emp_backup_view2;
+--view를 통해서 테이블값도 변경가능
+select * from emp_backup;
+
+
+
+create or replace view emp_backup_view3 (직원번호,직원이름,급여)
+as
+select employee_id, first_name,salary
+from emp_backup
+where department_id =60;
+
+
+select * from emp_backup_view3;
+
+select * from emp_backup_view3
+where 급여>=5000;
+
+update emp_backup_view3
+set 급여 =20000
+where 급여>=5000;
+
+select *
+from emp_backup;
+
+select department_id, avg(salary)
+from emp_backup
+group by department_id
+
+create or replace view emp_backup_view_groupby
+as
+select department_id, avg(salary) sal_avg
+from emp_backup
+group by department_id;
+
+
+select * from emp_backup_view_groupby;
+
+select *
+from emp_backup_view_groupby join departments using(department_id);
+
+--group by 사용한 view는 DML불가
+update emp_backup_view_groupby
+set sal_avg=sal_avg*1.1;
+
+
+--FORCE? --> 테이블이 있던지 없던지 만들어라!!  컴파일오류와 함께 만들어짐
+create or replace FORCE view  emp_backup_view_groupby2
+as
+select department_id, avg(salary) sal_avg
+from emp_backup2
+group by department_id;
+
+
+--테이블이 없는 뷰를 만들어서 오류
+SELECT * FROM emp_backup_view_groupby2;
+
+
+
+CREATE  TABLE emp_backup2
+as
+select *
+from employees;
+--테이블이 존재할떄
+create or replace FORCE view  emp_backup_view_groupby2
+as
+select department_id, avg(salary) sal_avg
+from emp_backup2
+group by department_id;
+
+SELECT * FROM emp_backup_view_groupby2;
+
+
+--with check option  테이블에 영향x
+create or replace view emp_backup_60
+as
+select *
+from emp_backup
+where department_id=60;
+
+select *
+from emp_backup_60;
+
+
+update emp_backup_60
+set department_id=30;
+--목적이 부서가 60인데 30으로 바껴서 나오질 않는다!!
+select *
+from emp_backup_60;
+
+select *
+from emp_backup
+where department_id=30;
+
+
+create or replace view emp_backup_30
+as
+select *
+from emp_backup
+where department_id=30 with check option;
+
+-- 바꾸는거 방지!!
+update emp_backup_30
+set department_id=60;
+
+-- 다른부분은 바꾸기 가능
+update emp_backup_30
+set salary=10000;
+
+select * from emp_backup_30;
+
+
+---12시 수업
+
+
+
  
  
  
