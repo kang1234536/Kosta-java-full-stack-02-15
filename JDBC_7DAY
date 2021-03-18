@@ -377,7 +377,275 @@ set salary=10000;
 select * from emp_backup_30;
 
 
----12시 수업
+--12시 수업 with read only
+create or replace view emp_backup_30
+as
+select *
+from emp_backup
+where department_id=30 with read only ;
+
+--수정불가
+update emp_backup_30
+set department_id=30;
+
+
+--자신의 부서의 평균보다 더 적은 급여를 받고 있는 직원을 조회
+Create or replace view emp_dept_avg
+as
+select department_id, avg(salary) sal_avg
+from employees
+group by department_id;
+
+select first_name,salary,round(sal_avg)
+from employees join emp_dept_avg using(department_id)
+where salary<sal_avg;
+
+
+--inline view 이용
+
+select first_name,salary,round(aa.sal_avg)
+from employees join (select department_id, avg(salary) sal_avg
+from employees
+group by department_id) aa
+using(department_id)
+where salary<aa.sal_avg;
+
+--LABS 해설
+1. 
+2007년 입사한(hire_date) 직원들의 사번(employee_id), 이름(first_name), 
+성(last_name), 부서명(department_name)을 조회하려 합니다.
+임시 테이블 용도로 사용하는 Object를 생성합니다.
+==>emp_2007_details
+
+이때, 부서에 배치되지 않은 직원의 경우, '<NOT ASSIGNED>'로 보여줍니다.
+
+
+
+
+
+create or replace view emp_2007_details
+as
+select employee_id,first_name,last_name,nvl(department_name,'<NOT ASSIGNED>') 부서
+from employees join departments using(department_id)
+where to_char(hire_date,'yyyy')='2007';
+
+select *
+from emp_2007_details;
+
+
+2.
+기존 EMPLOYEES 테이블에 있는 레코드들 중, 'Marketing'부서에 근무하는 직원 레코드를
+  이용하여 EMPLOYEES_MARKETING 테이블을   만들기 위한 DDL을 작성하십시오. 
+  단, EMPLOYEES_MARKETING 테이블의 키는   없어도 관계없습니다.
+
+
+create table EMPLOYEES_MARKETING
+as
+select *
+from employees
+where department_id =(select department_id 
+from departments
+where department_name='Marketing');
+
+desc EMPLOYEES_MARKETING;
+-- not null 을 제외한 제약조건은 복사되지 않는다
+insert into EMPLOYEES_MARKETING(EMPLOYEE_ID,LAST_NAME,EMAIL,HIRE_DATE,JOB_ID) values(201,'aa','PFAY',sysdate,'aa');
+
+
+select * from EMPLOYEES_MARKETING;
+
+
+select * from user_constraints
+where table_name ='EMPLOYEES_MARKETING';
+
+
+
+3.
+인사관리를 위하여 현재 직원정보에 대한 백업테이블을 생성하여 보관하기로 합니다. 
+새로 생성하는 백업테이블명은 "EMPLOYEES_BACKUP" 이며 기존테이블(EMPLOYEES)의 Index, 
+Constraint는 필요로 하지 않습니다. 단 급여(Salary)가 5000을 초과하는 직원만 백업테이블 내에 존재해야 합니다.
+위 설명에 해당하는 테이블을 생성하기 위한 sql 스크립트를 작성하시오.
+
+create table EMPLOYEES_BACKUP
+as
+select *
+from employees
+where salary>5000;
+
+select *
+from EMPLOYEES_BACKUP;
+
+
+create or replace view EMPLOYEES_BACKUP1
+as
+select *
+from employees
+where salary>5000;
+
+
+4.
+인사관리를 위한 시스템 구축중 지역(Regions), 국가(Countries), 
+위치(Locations)에 대한 전체 리스트 정보를 빈번하게 사용할 경우가 생겼다. 
+여러 프로그램에서 매번 반복적으로 사용되며 일부 개발자의 경우 잘못된 
+조인으로 올바른 결과를 가져오지 못하는 경우가 발생하였다. 
+이를 해결하기 위해 복잡한 질의를 숨기기 위한 논리적 테이블의 용도로 
+쓰이는 DB Object 를 생성하기로 하였다. 
+DB Object 이름은 LOC_DETAILS_{DB OBJECT명} 을 사용한다.
+위 설명에 해당하는 DB Object를 생성하기 위한 sql 스크립트를 작성하라.
+
+
+
+create or replace view LOC_DETAILS_view
+as
+select city,country_name,region_name
+from regions join countries using(region_id) join locations using(country_id)
+
+select * from LOC_DETAILS_view;
+
+
+
+
+5.
+사원이 한 명 이상인 부서들에 대해 부서 번호, 부서 이름, 사원 수, 
+최고 급여, 최저 급여, 평균 급여, 급여 총액을 빈번하게 조회하여야 
+할 필요가 있어, VIEW를 생성하여 사용하고자 합니다. 
+생성된 DB Object(VIEW)의 전체 레코드에 대한 조회 결과가 아래와 같이 출력되도록 
+"DEPT_SAL_INFO"라는 VIEW 를 생성하는 sql 스크립트를 작성하십시오. 
+단, 평균 급여의 소수점 이하는 절사합니다.
+
+출력 : DEPT_ID | DEPT_NAME | NUM_EMP | MAX_SAL | MIN_SAL | AVG_SAL | SUM _SAL
+
+
+create or replace view DEPT_SAL_INFO
+as
+select department_id DEPT_ID,departments.department_name DEPT_NAME,count(*) NUM_EMP, max(salary) MAX_SAL,min(salary) MIN_SAL, trunc(avg(salary)) AVG_SAL,sum(salary) SUM_SAL
+from employees join departments using(department_id)
+group by department_id,departments.department_name
+having count(*)>1;
+
+
+select * from DEPT_SAL_INFO;
+
+
+6.
+Sales 부서에서 Gerald Cambrault 라는 관리자(Manager_id)를 가지는 
+직원의 정보를 조회하여 employee_sales_Gerald 라는 view를 생성하십시오.
+
+사원번호  |  사원명  |  부서명  |  관리자명
+
+create view  employee_sales_Gerald
+as
+select 사원.employee_id 사원번호, 사원.first_name||' '||사원.last_name 사원명, 부서.department_name 부서명, 관리자.first_name||' '||관리자.last_name 관리자명
+from employees 사원, employees 관리자, departments 부서
+where 사원.manager_id=관리자.employee_id
+and 부서.department_id= 사원.department_id
+and 부서.department_name='Sales'
+and 사원.manager_id= (select employee_id from employees where first_name||' '||last_name= 'Gerald Cambrault');
+
+
+//2시수업
+====================================
+
+8.locations 테이블에서 2000번 이상의 도시코드, 도시명, 국가명, 그 도시에 있는
+ 부서명을 조회하여 citycode_gt_2000 라는 이름의 view를  생성하는 SQL 문장을 작성하시오.
+단, citycode_gt_2000 view는 변경 가능하도록 생성합니다.
+
+LOCATION_ID	  CITY	  COUNTRY_NAME	  DEPARTMENT_NAME
+
+create or replace view citycode_gt_2000 (LOCATION_ID, CITY, COUNTRY_NAME, DEPARTMENT_NAME)
+as
+select location_id, city, country_name, department_name
+from locations join departments using(location_id)
+                join countries using(country_id)
+where location_id >= 2000;
+
+select * from citycode_gt_2000;
+
+
+
+--- 시퀀스 SEQUENCE: 자동 번호 발생기,table과 무관하다. 즉, 여러 테이블이 공유 가능
+
+select * from board;
+
+create sequence board_no_sequence
+start with 100
+cache 10
+;
+
+
+select board_no_sequence.nextval
+from dual;
+
+drop sequence board_no_sequence;
+
+
+select board_no_sequence.currval
+from dual;
+
+desc board;
+
+insert into board(BOARD_SEQ,BOARD_TITLE)
+values(board_no_sequence.nextval,'게시타이틀');
+
+select *
+from board;
+
+--MySQL: auto increment 자동으로 증가한다.
+--create table board2(board_seq number auto increment,
+--oracle은 sequence를 사용한다.
+
+--인덱스
+--index: oracle이 primary key, unique로 설정된 칼럼인 경우 자동으로 index생성해준다.
+--index 추가 가능하다
+-- 성능향상을 위해서, 조회속도 높이기 위해, DML 작업이 많은경우 성능 저하 초래... 적절하게 만들어야한다.
+select *
+from user_ind_columns
+where table_name in ('EMPLOYEES','DEPARTMENTS','BOARD');
+
+select *
+from employees
+where employee_id/10 =10;
+
+
+select *
+from employees
+where substr(email,1,5) = 'SKING';
+
+select *
+from employees
+where substr(email,1,5) = 'SKING';
+
+
+create index board_title_idx
+on board(board_title);
+
+select *
+from board
+where board_title='aa';
+
+
+
+select *
+from board
+where board_seq=8;
+
+
+----3시수업
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
