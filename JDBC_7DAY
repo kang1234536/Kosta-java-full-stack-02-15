@@ -139,6 +139,23 @@ update employees
 		int result = dao.updateEmp(emp);
 		EmpView.display(result > 0 ? "수정성공" : "수정실패");
 	}
+	private static EmpVO makeEmp() {
+		EmpVO emp = new EmpVO(); // 너무많으므로 default를 만든다
+		// new EmpVo("11개")넣는것보다 ->이렇게 하나하나 직접넣는게 best
+		emp.setCommission_pct(0.4);
+		emp.setDepartment_id(10);
+		emp.setEmail("kha02013322@naver.com");
+		emp.setEmployee_id(77);
+		emp.setFirst_name("강77_수정4");
+		emp.setHire_date(new Date(new java.util.Date().getTime()));
+		emp.setJob_id("IT_PROG");
+		emp.setLast_name("희원_수정4");
+		emp.setManager_id(120);
+		emp.setPhone_number("010-4111-3333");
+		emp.setSalary(4300);
+		return emp;
+	}
+
 
 // 3월 18일 DELETE 내용
 	// 사용자가 웹을 통해서 삭제 =>Controller->DAO=>DB
@@ -208,7 +225,6 @@ update employees
 	}
 --- view 공부
  
- ㅁ
  
  
  
