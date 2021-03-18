@@ -1,1 +1,119 @@
 //3월18일 jdbc 공부
+--3월 18일  -- 9시 수업
+--DDL(DATA Definition Language) : 데이터 정의어 : CREATE, ALTER,DROP,RENAME
+--DML(DATA Manipulation Language): 데이터조작어: INSERT,DELETE,UPDATE, MARGE
+--DQL(DATA Query Language):SELECT
+
+drop table member;
+-- table 제약조건 : not null, primary key, unique,check,foreign key
+
+drop table board;
+=====================================
+7.
+다음 조건을 만족하는 테이블 생성 DDL을 작성하십시오. 
+
+테이블 명 : board
+
+테이블에 대한 이해 : 게시판 정보를 가지는 테이블
+
+칼럼명: 
+board_seq	    (게시물 번호) 정수 최대 10자리,
+board_title	    (게시물 제목) 문자 가변 자릿수 255자리,
+board_contents   (게시물 내용) 문자 가변 자릿수 4000자리
+board_writer     (게시물 작성자) 문자 가변 자릿수 100자리,
+board_date       (게시물 작성시간) 날짜,	
+board_viewcount  (게시물 조회수) 정수 최대 6자리,
+board_password   (게시물 암호) 문자 가변 자릿수 20자리,	
+
+제약조건 :  board_seq : 기본 키(Primary Key)  제약 조건명은 BOARD_SEQ_PK
+ board_title :  값이 반드시 존재(NOT NULL) 
+ board_writer : Member 테이블의 member_id 컬럼 참조
+
+(Member  테이블
+member_id 문자 가변 자릿수 100자리
+           primary key 라고 가정합니다)
+        
+--문제와 상관없이 강사님이 교육용으로 만든 board, Member 테이블        
+           
+create table board(
+board_seq	    number(10) constraint board_BOARD_SEQ_PK  primary key,
+board_title	   varchar2(255) not null,
+board_contents  varchar2(4000),
+board_writer    varchar2(100) constraint board_board_writer_fk  references Member(member_id),
+board_date       date default sysdate,
+board_viewcount  number(6) constraint board_board_viewcount_check check (board_viewcount>0),
+board_password  varchar2(20),
+board_image varchar2(100) constraint board_board_image_unique unique
+);	
+
+create table Member(
+member_id varchar2(100)constraint Member_member_id_pk primary key,
+member_name varchar2(20) not null
+);
+
+
+
+desc Member;
+select * from board;
+desc board;
+
+insert into board(board_seq,board_title) values(1,'목요일');
+insert into board(board_seq,board_title,board_contents) values(2,'aa','날씨가 좋아요');
+insert into board(board_seq,board_title,board_contents,board_writer) values(3,'aa','날씨가 좋아요',100);  -- Member 테이블에 member_id값이 없어서 절대만들수없다
+insert into Member values(100,'강성빈'); -- member_id 를 넣고나서
+insert into board(board_seq,board_title,board_contents,board_writer) values(3,'aa','날씨가 좋아요',100); -- 가능
+select * from board;
+select * from Member;
+insert into board(board_seq,board_title,board_contents,board_writer,board_date) values(4,'aa','날씨가 좋아요',100,'2020-12-31'); -- 
+insert into board(board_seq,board_title,board_contents,board_writer,board_date,board_viewcount) values(5,'aa','날씨가 좋아요',100,'2020-12-31',-1);   -- 제약조건 check 가 0 보다 커야되서 절대안된다
+insert into board(board_seq,board_title,board_contents,board_writer,board_date,board_viewcount) values(5,'aa','날씨가 좋아요',100,'2020-12-31',1);  -- 가능
+insert into board(board_seq,board_title,board_contents,board_writer,board_date,board_viewcount,board_password) values(6,'aa','날씨가 좋아요',100,'2020-12-31',1,'1234'); 
+insert into board values(7,'aa','날씨가 좋아요',100,'2020-12-31',1,'1234','images/logo.png');
+insert into board values(8,'aa','날씨가 좋아요',100,'2020-12-31',1,'1234','images/logo.png');  --  unique 제약조건에 걸려서 불가능
+insert into board values(8,'aa','날씨가 좋아요',100,'2020-12-31',1,'1234','images/logo2.png');  
+select * from board;
+select * from Member;
+
+select * from user_constraints;  -- hr에서 사용되는 모든 테이블의 칼럼 확인가능
+
+select * 
+from user_constraints
+where table_name ='BOARD'; 
+
+select * 
+from user_cons_columns
+where table_name ='BOARD'; 
+
+select *
+from user_constraints join user_cons_columns using(constraint_name)
+where user_constraints.table_name ='BOARD'; 
+
+--DML
+INSERT INTO 테이블(칼럼리스트) VALUES(값리스트);
+
+UPDATE 테이블이름
+SET 칼럼 = 값,칼럼 = 값,칼럼 = 값,칼럼 = 값 
+WHERE 조건문;
+
+DELETE FROM 테이블이름
+WHERE 조건문;
+
+
+--eclipse 버전 update 만들기
+desc employees;
+
+update employees
+ set
+ EMPLOYEE_ID=?,
+ FIRST_NAME=?,             
+ LAST_NAME=?,     
+ EMAIL=?,          
+ PHONE_NUMBER=?,          
+ HIRE_DATE=?,     
+ JOB_ID=?,         
+ SALARY=?,                  
+ COMMISSION_PCT=?,       
+ MANAGER_ID=?,            
+ DEPARTMENT_ID=?          
+ where employee_id=?
+ //10
