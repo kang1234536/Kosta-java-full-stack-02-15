@@ -104,7 +104,6 @@ desc employees;
 
 update employees
  set
- EMPLOYEE_ID=?,
  FIRST_NAME=?,             
  LAST_NAME=?,     
  EMAIL=?,          
@@ -117,13 +116,100 @@ update employees
  DEPARTMENT_ID=?          
  where employee_id=?
  //10시 수업 
+ // 3월18일
+		// 수정테스트
+		method10();
+		// 3월18일
+		// 삭제테스트
+		//method11();
  
  
- 
- 
- 
- 
+ 	private static void method11() {
+		// 3월 18일 삭제 메서드
+		EmpDAO2 dao = new EmpDAO2();
+		
+		int result = dao.DeleteEmp(77);
+		EmpView.display(result > 0 ? "삭제성공" : "삭제실패");
+	}
+
+	private static void method10() {
+		// 3월 18일 수정 메서드
+		EmpDAO2 dao = new EmpDAO2();
+		EmpVO emp = makeEmp();
+		int result = dao.updateEmp(emp);
+		EmpView.display(result > 0 ? "수정성공" : "수정실패");
+	}
+
+// 3월 18일 DELETE 내용
+	// 사용자가 웹을 통해서 삭제 =>Controller->DAO=>DB
+	public int DeleteEmp(int empid) {
+		Connection conn;
+		PreparedStatement st = null;
+		int result = 0;
+		String sql ="delete from employees where employee_id=? ";
+		conn = DBUtil.getConnection();
+		try {
+			st = conn.prepareStatement(sql);
+			st.setInt(1, empid);
+			result = st.executeUpdate(); // insert/update/delete는 executeUpdate()를 써야한다.
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.dbClose(null, st, conn);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	// 3월 18일 UPDATE 내용
+	// 사용자가 웹을 통해서 개인정보수정 본래정보가 보인다. =>Controller->DAO=>DB
+	public int updateEmp(EmpVO emp) {
+		Connection conn;
+		PreparedStatement st = null;
+		int result = 0;
+		String sql = "update employees set "
+				+    " FIRST_NAME=?, "
+				+    " LAST_NAME=?, "
+				+    " EMAIL=?, "
+				+    " PHONE_NUMBER=?, "
+				+ 	 " HIRE_DATE=?, "
+				+    " JOB_ID=?, "
+				+    " SALARY=?, "
+				+    " COMMISSION_PCT=?, "
+				+    " MANAGER_ID=?, "
+				+    " DEPARTMENT_ID=? "
+				+    " where employee_id=? ";
+		conn = DBUtil.getConnection();
+		try {
+			st = conn.prepareStatement(sql);
+			st.setInt(11, emp.getEmployee_id());
+			st.setString(1, emp.getFirst_name());
+			st.setString(2, emp.getLast_name());
+			st.setString(3, emp.getEmail());
+			st.setString(4, emp.getPhone_number());
+			st.setDate(5, emp.getHire_date());
+			st.setString(6, emp.getJob_id());
+			st.setInt(7, emp.getSalary());
+			st.setDouble(8, emp.getCommission_pct());
+			st.setInt(9, emp.getManager_id());
+			st.setInt(10, emp.getDepartment_id());
+			result = st.executeUpdate(); // insert/update/delete는 executeUpdate()를 써야한다.
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtil.dbClose(null, st, conn);
+		}
+		return result;
+
+	}
+--- view 공부
  
  ㅁ
+ 
+ 
  
  
