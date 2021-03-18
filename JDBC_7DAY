@@ -631,16 +631,126 @@ where board_seq=8;
 
 
 ----3시수업
+----3시수업
+grant // revoke
 
 
 
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> create user user1
+  2  identified by 1234;
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> grant select on emp to user1;
+SQL> conn user1/1234
+Connected.
+SQL> select * from scott.emp;
+SQL> conn SCOTT/TIGER
+Connected.
+SQL> revoke select on emp from user1;
+SQL> conn user01/1234
+Connected.
+SQL> select * from SCOTT.emp;
+select * from SCOTT.emp
+                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+--connect resource 롤 총 13가지 왠만한 기능을 다 넣어준다
+
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> create user user04
+  2  identified by 1234;
+
+User created.
+
+SQL> grant CONNECT, RESOURCE TO user04;
+
+Grant succeeded.
+
+SQL> conn user04/1234;
+Connected.
+SQL> create table aa(id number);
+
+Table created.
+
+SQL> select * from aa;
+
+no rows selected
+
+SQL> insert into aa values(10);
+
+1 row created.
+
+SQL> select * from aa;
+
+        ID
+----------
+        10
+----4시수업 동의어  synonym
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> create user user05
+  2  identified by 1234;
+
+User created.
+
+SQL> grant connect,resource to user05;
+
+Grant succeeded.
+
+SQL> grant create synonym to user05;
+
+Grant succeeded.
+	
+SQL> conn SCOTT/TIGER
+Connected.
+SQL> GRANT SELECT ON EMP TO USER05;
+
+Grant succeeded.
+
+SQL> conn user05/1234
+Connected.
+SQL> select * from SCOTT.EMP;
 
 
+SQL> create synonym semp for SCOTT.emp;
+
+Synonym created.
+
+SQL> select * from semp;
+
+------
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> create table adminTBL(id number);
+
+Table created.
+
+SQL> grant select on adminTBL to SCOTT;
+
+Grant succeeded.
+
+SQL> conn SCOTT/TIGER
+Connected.
+SQL> select * from system.adminTBL;
+
+no rows selected
 
 
+--공개 동의어
+SQL> conn system/gmldnjsal12
+Connected.
+SQL> create public synonym pubTBL for system.adminTBL;
+Synonym created.
+SQL> conn SCOTT/TIGER
+Connected.
+SQL> select * from pubTBL;
 
-
-
+no rows selecte
+////eclipse  가기!!
 
 
 
