@@ -1,5 +1,259 @@
 //3월19일 공부
+//pl/sql
+--서버에 설정: 출력을 보여주겠다의 의미
+set SERVEROUT on;
+--서버에 설정: 출력을 보여주지 않겠다 의미
+set SERVEROUT off;
+DECLARE
+/*스칼라 변수*/
+v_empno number(4);
+v_empname varchar2(20);
+/*레퍼런스 변수*/
+v_empno2 employees.employee_id%TYPE;
+v_empname2 employees.first_name%type;
+v_emp employees%rowtype;
+BEGIN
+    v_empno := 100;
+    v_empname := '홍길동';
+    v_empno2 := 200;
+    v_empname2 := '홍길동2';
+    v_emp.salary := 10000;
+    v_emp.first_name :='홍길동3';
+    dbms_output.put_line('hello');
+    dbms_output.put_line('아이디는 '||v_empno);
+    dbms_output.put_line('이름은 '||v_empname);
+    dbms_output.put_line('아이디는 '||v_empno2);
+    dbms_output.put_line('이름은 '||v_empname2);
+    dbms_output.put_line('salary   ' || v_emp.salary);
+     dbms_output.put_line('salary   ' || v_emp.first_name);
+END;
+/
+
+declare
+v_empid number :=200;
+v_fname employees.first_name%type;
+v_salary employees.salary%type;
+begin
+    select first_name,salary
+    into v_fname,v_salary
+    from employees
+    where employee_id = v_empid;
+    
+    dbms_output.put_line('v_empid= ' || v_empid);
+    dbms_output.put_line('v_fname= ' || v_fname);
+    dbms_output.put_line('v_salary ' || v_salary);
+    
+
+    
+    
+end;
+/
+
+
+declare
+v_empid number :=200;
+v_fname employees.first_name%type;
+v_salary employees.salary%type;
+
+TYPE ENAME_TABLE_TYPE IS TABLE OF employees.first_name%TYPE
+    INDEX BY BINARY_INTEGER;
+TYPE JOB_TABLE_TYPE IS TABLE OF employees.JOB_ID%TYPE
+    INDEX BY BINARY_INTEGER;
+first_name_arr ENAME_TABLE_TYPE;
+job_id_arr JOB_TABLE_TYPE;
+idx BINARY_INTEGER:=0;
+
+TYPE emp_record_type IS RECORD(
+    v_empno    employees.employee_id%TYPE,
+    v_ename    employees.first_name%TYPE,
+    v_job    employees.job_id%TYPE,
+    v_deptno  employees.department_id%TYPE);
+
+emp_record emp_record_type;
+emp_record2 employees%rowtype;
+
+begin
+    select first_name,salary
+    into v_fname,v_salary
+    from employees
+    where employee_id = v_empid;
+    
+    dbms_output.put_line('v_empid= ' || v_empid);
+    dbms_output.put_line('v_fname= ' || v_fname);
+    dbms_output.put_line('v_salary ' || v_salary);
+    
+    FOR empRecord IN(SELECT first_name, job_id FROM employees) LOOP
+    idx:=idx+1;
+    first_name_arr(idx) :=empRecord.first_name;
+    job_id_arr(idx):=empRecord.job_id;
+    END LOOP;
+    FOR J IN 1..idx LOOP
+     dbms_output.put_line(RPAD(first_name_arr(J),12) || ' / ' || RPAD(job_id_arr(J),9));
+    
+    END LOOP;
+    dbms_output.put_line('*************************');
+    
+    SELECT employee_id,first_name, job_id,department_id 
+    into emp_record
+    FROM employees
+    where employees.employee_id=100;
+
+    dbms_output.put_line(emp_record.v_empno);
+    dbms_output.put_line(emp_record.v_ename);
+    dbms_output.put_line(emp_record.v_job);
+    dbms_output.put_line(emp_record.v_deptno);
+    
+  dbms_output.put_line('##################################');
+    
+    SELECT *
+    into emp_record2
+    FROM employees
+    where employees.employee_id=100;
+
+    dbms_output.put_line(emp_record2.employee_id);
+    dbms_output.put_line(emp_record2.last_name);
+    dbms_output.put_line(emp_record2.email);
+    dbms_output.put_line(emp_record2.salary);
+  
+
+    
+   
+end;
+/ 
 
 
 
-ㅁ
+
+DECLARE
+emp_record2 employees%rowtype;
+BEGIN
+    SELECT *
+    into emp_record2
+    FROM employees
+    where employees.employee_id=100;
+    if(emp_record2.commission_pct is null) then
+    dbms_output.put_line('null이다 '||emp_record2.salary*12);
+    else
+      dbms_output.put_line('null이 아니다'||emp_record2.salary*12+emp_record2.commission_pct);
+    end if;
+    dbms_output.put_line(emp_record2.employee_id);
+    dbms_output.put_line(emp_record2.last_name);
+    dbms_output.put_line(emp_record2.email);
+    dbms_output.put_line(emp_record2.salary);
+END;
+/
+
+
+
+DECLARE
+num number :=1;
+BEGIN
+    LOOP
+    
+    DBMS_OUTPUT.PUT_LINE('LOOP: '||num);
+    num:=num+1;
+    if(num>5) then
+        exit;
+    end if;
+    END LOOP;
+END;
+/
+
+DECLARE
+num number :=1;
+BEGIN
+    FOR i in 1..5 LOOP
+    
+    DBMS_OUTPUT.PUT_LINE('FOR: '||i);
+    num:=num+1;
+    if(num>5) then
+        exit;
+    end if;
+    END LOOP;
+END;
+/
+
+DECLARE
+num number :=1;
+BEGIN
+   
+    
+   
+   
+    while(num<=5) loop
+    
+      DBMS_OUTPUT.PUT_LINE('while loop: '||num);
+      num:=num+1;
+    end loop;
+END;
+/
+
+
+--저장 프로시저 , 함수 , 커서
+create or replace procedure sp_print5
+is
+num number :=1;
+BEGIN
+   
+    
+   
+   
+    while(num<=5) loop
+    
+      DBMS_OUTPUT.PUT_LINE('while loop: '||num);
+      num:=num+1;
+    end loop;
+END;
+/
+
+execute sp_print5
+
+
+desc sp_print5;
+
+desc user_source;
+
+select *
+from user_source
+where name='SP_PRINT5';
+
+
+--프로시저 만들기
+create or replace procedure sp_empinfo(v_empid in number,v_fname out varchar2,v_job out varchar2, v_sal out number)
+is
+aa varchar2(20);
+begin
+select first_name,job_id,salary
+into v_fname,v_job,aa
+from employees
+where employee_id=v_empid;
+
+v_sal:=aa;
+end;
+/
+variable a varchar2(20);
+variable b varchar2(20);
+variable c number;
+
+execute sp_empinfo(100,:a,:b,:c);
+
+print a;
+print b;
+print c;
+
+---전직원 보너스 50% 지급하기
+select first_name,salary,salary*1.5 보너스, func_bonus(salary) "보너스2"
+from employees;
+
+create or replace function func_bonus(sal in number) return number
+is
+result number(10,2);
+begin
+    result := sal*0.5;
+    return result;
+end;
+/
+
+
+
+
