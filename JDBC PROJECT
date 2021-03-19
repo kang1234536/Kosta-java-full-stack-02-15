@@ -279,7 +279,31 @@ public class BoardDAO {
 
 		return result;
 	}
+	//삭제 2번쨰방법
+	public int boardDelete1(int boardNo,String passwd) {
+		// delete
+		Connection conn=null;
+		PreparedStatement st = null;
+		int result = 0;
+		BoardVO board=selectByNo(boardNo);
+		
+		String sql = "delete from board where board_seq=? and board_password=? ";
+		conn = DBUtil.getConnection();
+		try {
+			
+			st = conn.prepareStatement(sql);
+			st.setLong(1, boardNo);
+			st.setString(2, passwd);
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbClose(null, st, conn);
+		}
 
+		return result;
+	}
 
 }
 package view;
@@ -426,6 +450,171 @@ public class DBUtil {
 	
 }
 
+프로젝트 할떄는 controller 를 이렇게 바꾼 crud를 한다
+package controller;
+
+import java.sql.Date;
+import java.util.List;
+import java.util.Scanner;
+
+import model.BoardDAO;
+import model.BoardVO;
+import view.BoardView;
+
+public class BoardController {
+
+	public static void main(String[] args) {
+		BoardDAO boardDAO = new BoardDAO();
+		BoardVO board = new BoardVO();
+		int boardNo = 0; // 2. 번호조회에 쓰일 번호
+		int user = 0; // id
+		String pass = null;// password
+		int result =0;
+		Scanner scan = new Scanner(System.in);
+		while (true) {
+			System.out.println("*********작업선택**********");
+			System.out.println("0.로그인 1.모두조회 2.번호조회 3.입력 4. 수정 5. 삭제 9. exit");
+			int work = scan.nextInt();
+			switch (work) {
+			case 0:
+				System.out.print("아이디|비밀번호 >>>");
+				user = scan.nextInt();
+				pass = scan.next();
+				break;
+			case 1:
+				board_selectALL();
+				break;
+			case 2:
+				System.out.print("조회할 boardNo >>>>");
+				boardNo = scan.nextInt();
+				board_detail(boardNo);
+				break;
+			case 3:
+				if (user == 0 || pass == null) {
+					System.out.println("로그인이 필수");
+					break;
+				}
+				board = new BoardVO();
+				System.out.print("title >>>");
+				board.setBoard_title(scan.next());
+				System.out.print("contents >>>");
+				board.setBoard_contents(scan.next());
+				board.setBoard_writer(user);
+				board.setBoard_password(pass);
+				System.out.println("images >>");
+				board.setBoard_image(scan.next());
+				result = boardDAO.boardInsert(board);
+				BoardView.boardPrint(result > 0 ? "입력성공" : "입력실패");
+
+				//board_insert();
+				break;
+			case 4:
+				//board_update(boardNo);
+				if (user == 0 || pass == null) {
+					System.out.println("로그인이 필수");
+					break;
+				}
+				board = new BoardVO();
+				System.out.println("수정할 boardNO>>");
+				board.setBoard_seq(scan.nextInt());
+				System.out.print("수정할 title >>>");
+				board.setBoard_title(scan.next());
+				System.out.print("수정할 contents >>>");
+				board.setBoard_contents(scan.next());
+				System.out.print("수정할 pass>>");
+				pass=scan.next();
+				board.setBoard_password(pass);
+				System.out.println("images >>");
+				board.setBoard_image(scan.next());
+				result = boardDAO.boardUpdate(board);
+				BoardView.boardPrint(result > 0 ? "Update성공" : "Update실패");
+				break;
+			case 5:
+			//	board_delete1();
+				if (user == 0 || pass == null) {
+					System.out.println("로그인이 필수");
+					break;
+				}
+				board = new BoardVO();
+				System.out.println("삭제할 boardNO, password>>");
+				BoardView.boardPrint(boardDAO.boardDelete1(scan.nextInt(), scan.next())+"건 삭제");
+				break;
+
+			case 9:
+				System.exit(0);
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		// 입력코드 insert
+		// board_insert();
+
+		// 전체출력
+//		 board_selectALL();
+
+		// update
+//		board_update();
+
+		// 상세보기
+//		board_detail();
+		// 삭제하기
+//		board_delete();
+		// 삭제하기 2번쨰
+//		board_delete1();
+
+	}
+
+	private static void board_delete1() {
+		//
+		BoardDAO boardDAO = new BoardDAO();
+		BoardView.boardPrint(boardDAO.boardDelete(45, "패스워드") + "건 삭제");
+	}
+
+	private static void board_delete() {
+		BoardDAO boardDAO = new BoardDAO();
+		BoardView.boardPrint(boardDAO.boardDelete(44, "pass수정") + "건 삭제");
+	}
+
+	private static void board_detail(int boardNo) {
+		BoardDAO boardDAO = new BoardDAO();
+		BoardView.boardPrint(boardDAO.selectByNo(boardNo));
+
+	}
+
+	private static void board_update(int boardNo) {
+		BoardDAO boardDAO = new BoardDAO();
+		BoardView.boardPrint(boardDAO.selectByNo(boardNo));
+		BoardVO board1 = new BoardVO(boardNo, "타이틀수정", "내용수정", 0, null, 0, "pass수정", "이미지경로수정");
+		BoardView.boardPrint(boardDAO.boardUpdate(board1) + "건수정");
+	}
+
+	private static void board_insert() {
+		BoardDAO boardDAO = new BoardDAO();
+		BoardVO board = new BoardVO();
+		int user = 100;
+		String pass = "패스워드";
+		for (int i = 11; i < 20; i++) {
+			board.setBoard_title("제목" + i);
+			board.setBoard_contents("게시내용" + i);
+			board.setBoard_writer(user);
+			board.setBoard_password(pass);
+			board.setBoard_image("images/logo.png" + i + ".png");
+			int result = boardDAO.boardInsert(board);
+			BoardView.boardPrint(result > 0 ? "입력성공" : "입력실패");
+		}
+	}
+
+	private static void board_selectALL() {
+		//
+		BoardDAO bao = new BoardDAO();
+		List<BoardVO> bList = bao.selectAll();
+		BoardView.boardPrint(bList);
+	}
+
+}
 
 
 
