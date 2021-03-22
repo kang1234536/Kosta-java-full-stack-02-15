@@ -92,5 +92,122 @@ BEGIN
 END;
 end;
 /
-
+EXECUTE pkg_sp2.sp_emplist1;
 EXECUTE pkg_sp2.sp_emplist2;
+
+--패키지는 procedure+funtion들, 묶음, 선언부와 실행부(BODY)를 만든다
+
+
+--10시 수업 트리거
+--트리거: 자동으로 실행되는 프로시저
+
+CREATE OR REPLACE TRIGGER trigger_jobs
+AFTER INSERT ON jobs
+BEGIN
+DBMS_OUTPUT.PUT_LINE('jobs table에 1건 입력됨');
+END;
+/
+
+desc jobs;
+insert into jobs values('TEST','TEST 내용',1000,2000);
+
+select * from jobs;
+
+
+CREATE TABLE jobs_ref(
+salno number(4) primary key,
+sal number(7,2),
+job_id varchar2(10) references jobs(job_id)
+);
+
+CREATE SEQUENCE jobs_ref_sequeence;
+
+CREATE OR REPLACE TRIGGER trigger_jobs1
+AFTER INSERT ON jobs
+for each row
+BEGIN
+INSERT INTO jobs_ref values(jobs_ref_sequeence.nextval,1000,:NEW.job_id); --NEW: insert한 데이터를 의미
+END;
+/
+CREATE OR REPLACE TRIGGER trigger_jobs2
+AFTER INSERT ON jobs
+for each row
+BEGIN
+INSERT INTO jobs_ref values(jobs_ref_sequeence.nextval,:NEW.max_salary,:NEW.job_id);
+END;
+/
+CREATE OR REPLACE TRIGGER trigger_jobs_del
+AFTER DELETE ON jobs
+for each row
+BEGIN
+DBMS_OUTPUT.PUT_LINE('jobs table에 1건 삭제됨');
+DELETE FROM jobs_ref where job_id=:OLD.job_id;
+END;
+/
+
+
+insert into jobs values('test4','test4 내용',2000,9000);
+
+select * from jobs_ref;
+
+delete from jobs where job_id='test2';
+
+
+CREATE TABLE 상품(
+상품코드 CHAR(6) PRIMARY KEY,
+상품명 VARCHAR2(12) NOT NULL,
+제조사 VARCHAR2(12),
+소비자가격 NUMBER(9),
+재고수량 NUMBER DEFAULT 0
+);
+SELECT * FROM 상품;
+INSERT INTO 상품(상품코드,상품명,제조사,소비자가격)
+VALUES('A00002','세탁기','LG',4000);
+INSERT INTO 상품(상품코드,상품명,제조사,소비자가격)
+VALUES('A00003','컴퓨터','LG',5000);
+--너무빨라서 못적음 ㅡㅡ....
+CREATE TABLE 입고(
+입고번호 VARCHAR2(10),
+상품코드   char(6) references 상품(상품코드),
+입고수량   NUMBER(10),
+입고단가    NUMBER(10),
+입고금액    NUMBER(10)
+);
+
+--입고 트리거
+CREATE OR REPLACE TRIGGER TRG_04
+AFTER INSERT ON 입고
+FOR EACH ROW
+BEGIN
+UPDATE 상품
+SET 재고수량 = 재고수량 + :NEW.입고수량
+WHERE 상품코드 = :NEW.상품코드;
+END;
+/
+
+INSERT INTO 입고(입고번호,상품코드,입고수량,입고단가,입고금액)
+VALUES(1,'A00001',5,320,1600);
+
+SELECT * FROM 입고;
+SELECT * FROM 상품;
+
+UPDATE 입고
+SET 입고수량 =100
+WHERE 상품코드 ='A00001';
+
+
+--갱신 트리거
+CREATE OR REPLACE TRIGGER TRG_04
+AFTER INSERT ON 입고
+FOR EACH ROW
+BEGIN
+UPDATE 상품
+SET 재고수량 = 재고수량 +(-:OLD.입고수량+ :NEW.입고수량)
+WHERE 상품코드 = :NEW.상품코드;
+END;
+/
+
+
+
+//11시 수업 데이터베이스 모델링
+
