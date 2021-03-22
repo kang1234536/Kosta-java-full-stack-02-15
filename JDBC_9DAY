@@ -1,1 +1,96 @@
 3월22일
+//9시 수업
+--3월 22일 커서
+--9시 수업
+CREATE OR REPLACE PROCEDURE sp_emplist
+IS
+    --선언부 : 변수선언
+    V_emp_record employees%rowtype;
+    --1.커서 선언
+    cursor cur_emp
+    IS
+    select employee_id,first_name,last_name from employees;
+BEGIN
+    --실행부
+    --2.커서 실행
+    OPEN cur_emp;
+    --3.한건씩 fetch
+    LOOP
+    FETCH cur_emp INTO V_emp_record.employee_id,V_emp_record.first_name,V_emp_record.last_name;
+    EXIT WHEN cur_emp%NOTFOUND;
+    dbms_output.put_line('직원번호: ' ||V_emp_record.employee_id);
+    dbms_output.put_line('직원번호: ' ||V_emp_record.first_name);
+    dbms_output.put_line('직원번호: ' ||V_emp_record.last_name);
+    END LOOP;
+    --4.커서 닫기
+    CLOSE cur_emp;
+END;
+/
+--프로시저 이름
+execute sp_emplist;
+-- 출력결과 안나올떄!!
+set serverout on;
+--for loop end loop 2번쨰 방법
+CREATE OR REPLACE PROCEDURE sp_emplist
+IS
+BEGIN
+
+   FOR emp_rec in (select employee_id,first_name,last_name from employees) LOOP
+    dbms_output.put_line('직원번호: ' ||emp_rec.employee_id);
+    dbms_output.put_line('직원번호: ' ||emp_rec.first_name);
+    dbms_output.put_line('직원번호: ' ||emp_rec.last_name);
+    END LOOP;
+ 
+END;
+/
+--패키지와 트리거
+
+
+--패키지 선언부
+CREATE OR REPLACE PACKAGE pkg_sp2
+IS
+    PROCEDURE sp_emplist1;
+    PROCEDURE sp_emplist2;
+end;
+/
+--패키지 실행부
+CREATE OR REPLACE PACKAGE BODY pkg_sp2
+IS
+    PROCEDURE sp_emplist1
+IS
+    --선언부 : 변수선언
+    V_emp_record employees%rowtype;
+    --1.커서 선언
+    cursor cur_emp
+    IS
+    select employee_id,first_name,last_name from employees;
+BEGIN
+    --실행부
+    --2.커서 실행
+    OPEN cur_emp;
+    --3.한건씩 fetch
+    LOOP
+    FETCH cur_emp INTO V_emp_record.employee_id,V_emp_record.first_name,V_emp_record.last_name;
+    EXIT WHEN cur_emp%NOTFOUND;
+    dbms_output.put_line('직원번호: ' ||V_emp_record.employee_id);
+    dbms_output.put_line('직원번호: ' ||V_emp_record.first_name);
+    dbms_output.put_line('직원번호: ' ||V_emp_record.last_name);
+    END LOOP;
+    --4.커서 닫기
+    CLOSE cur_emp;
+END;
+     PROCEDURE sp_emplist2
+IS
+BEGIN
+
+   FOR emp_rec in (select employee_id,first_name,last_name from employees) LOOP
+    dbms_output.put_line('직원번호: ' ||emp_rec.employee_id);
+    dbms_output.put_line('직원번호: ' ||emp_rec.first_name);
+    dbms_output.put_line('직원번호: ' ||emp_rec.last_name);
+    END LOOP;
+ 
+END;
+end;
+/
+
+EXECUTE pkg_sp2.sp_emplist2;
