@@ -157,6 +157,90 @@ width ="100px" height="100px">
 
 ---------------------------------------------------
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table, td{border-collapse:collapse;}
+</style>
+</head>
+<body>
+<h1>우리반 목록</h1>
+<table border="1">
+	<thead>
+		<tr>
+			<th>이름</th><th>전화번호</th><th>전공</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>강성빈1</td><td>010-1111-1111</td><td>융합소프트웨어</td>
+		</tr>
+		<tr>	
+			<td>강성빈2</td><td>010-1111-1112</td><td>독일어과</td>
+		</tr>
+		<tr>	
+			<td>강성빈3</td><td>010-1111-1113</td><td>건축공학</td>
+		</tr>
+		<tr>
+			<td colspan="2">AA</td><td rowspan="2">CC</td>
+		</tr>
+		<tr>
+			<td colspan="2">AA</td>
+		</tr>
+	</tbody>
+
+
+</table>
+<iframe src="/webProject/03/structure.html" width ="800px" heigth ="800px"></iframe>
+
+</body>
+</html>
+
+--------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Insert title here</title>
+  <style>
+   
+    td:last-child{
+      width:200px;
+    }
+  </style>
+</head>
+<body>
+<h1>우리반 목록</h1>
+<table border="1">
+	<tbody>
+		<tr>
+			<td rowspan="3">개인정보</td><td>이름</td><td></td>
+		</tr>
+		<tr>	
+			<td >학과/학번</td><td></td>
+		</tr>
+		<tr>	
+			<td >연락처</td><td></td>
+		</tr>
+		<tr>
+			<td>지원분야</td><td colspan="2"></td>
+		</tr>
+		
+	</tbody>
+
+
+</table>
+
+
+</body>
+</html>
+---------------------------------------------------------------------------
+
 
 
 
