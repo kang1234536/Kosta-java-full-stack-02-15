@@ -1,1 +1,163 @@
 //10시 이후 수업
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+/*css에서 주석*/
+	.aa{border:5px dotted blue;}
+	.bb{border:5px dotted red;}
+	.cc{background-color: beige;}
+	.dd{background-color: green;}
+	span{background-color: orange;}
+		/* span:inline요소이다.(contents만큼만 자리를 차지)
+		div,p:block요소, 한줄을 모두차지
+	
+	*/
+	p{color:gray; border:1px solid red;}
+	img{display: block;
+	border:1px solid red;}
+
+</style>
+</head>
+<body>
+<h1>공간분할:div,p,span</h1>
+<hr>
+<div class ="cc">
+<figure>
+	<figcaption>첫번쨰그림</figcaption>
+	<img src="C:/Users/user/Desktop/html/Do it! HTML+CSS+자바스크립트 웹 표준의 정석_최종프로젝트_예제소스/site/images/img-2.jpg" width="100px" height="100px"
+alt ="이미지가없습니다.">
+</figure>
+<figure>
+	
+	<img src="C:/Users/user/Desktop/html/Do it! HTML+CSS+자바스크립트 웹 표준의 정석_최종프로젝트_예제소스/site/images/img-2.jpg" width="100px" height="100px"
+alt ="이미지가없습니다.">
+<figcaption>두번쨰그림</figcaption>
+</figure>
+</div>
+<div class="dd">
+<!-- image불러오기 절대경로  /로 시작한다 -->
+<img src ="/webProject/03/images/healing.jpg"
+alt="이곳에 healing.jpg이미지가 있어요"
+width ="100px" height="100px">
+<!-- <img src ="http://localhost:9090//webProject/03/images/healing.jpg"
+alt="이곳에 healing.jpg이미지가 있어요"
+width ="100px" height="100px">   -->
+</div>
+<div>
+<!-- image불러오기 상대경로 -->
+<img src="C:/Users/user/Desktop/html/Do it! HTML+CSS+자바스크립트 웹 표준의 정석_최종프로젝트_예제소스/site/images/img-2.jpg" width="100px" height="100px"
+alt ="이미지가없습니다.">
+<img src="03/images/healing.jpg"
+alt="이곳에 healing.jpg이미지가 있어요"
+width ="100px" height="100px"> 
+<img src="03/images/activity.jpg"
+alt="이곳에 activity.jpg이미지가 있어요"
+width ="100px" height="100px">
+</div>
+<!-- 공간분할:div,p,span -->
+<div class="aa">
+	공간분할에는 div태그가 있다.
+	공간분할에는 div태그가 있다.
+	<p style="background-color: yellow">공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 p태그가 있다. 일반적으로<span>한줄에</span> 사용된다.</p>
+</div>
+
+<div class="bb">
+	<p>공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 div태그가 있다.</p>
+	<p>공간분할에는 p태그가 있다. 일반적으로<span>한줄에</span> 사용된다.</p>
+</div>
+</body>
+</html>
+
+----------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>un/ol 구분</title>
+<style>
+	ul{border:1px solid red;}
+	ul li{border:1px solid blue;}
+</style>
+
+
+</head>
+<body>
+<h1>Unordered List</h1>
+<hr>
+<ul>
+	<li>HTML5</li>
+	<li>CSS3</li>
+	<li>JavaScript</li>
+	<li>jQuery library</li>
+</ul>
+<h1>ordered List</h1>
+<hr>
+<ol start="5" type="1">
+	<li>HTML5</li>
+	<li>CSS3</li>
+	<li>JavaScript</li>
+	<li>jQuery library</li>
+</ol>
+
+<ol  type="a">
+	<li>HTML5</li>
+	<li>CSS3</li>
+	<li>JavaScript</li>
+	<li>jQuery library</li>
+</ol>
+
+<ol>
+	<li>HTML5</li>
+	<li>CSS3</li>
+	<li>JavaScript</li>
+	<li>jQuery library</li>
+</ol>
+<h1>definition List...자동으로 들여쓰기가된다.</h1>
+<hr>
+<dl>
+	<dt>HTML5</dt>
+	<dd>구조적문서</dd>
+	<dt>CSS3</dt>
+	<dd>디자인담당</dd>
+	<dt>JavaScript</dt>
+	<dd>동작담당</dd>
+</dl>
+
+
+</body>
+</html>
+
+-----------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>a태그는 link걸기 , inline 요소</h1>
+<p><a href="../공간분할.html">분할태그</a> <br></p>
+<p><a href="ulol.html">목록태그</a> <br></p>
+<!-- 상대경로 -->
+<p><a href="../03/structure.html">목록태그</a> <br></p>
+<!--  절대경로 -->
+<a href="/webProject/03/structure.html" target="_blank">
+<img src="C:/Users/user/Desktop/html/Do it! HTML+CSS+자바스크립트 웹 표준의 정석_최종프로젝트_예제소스/site/images/img-2.jpg">
+</a> 
+</body>
+</html>
+
+---------------------------------------------------
+
+
+
+
+
