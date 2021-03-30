@@ -1,1 +1,315 @@
+////////
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+label{background-color: orange;
+display:inline-block;
+width:200px;
+ }
+
+</style>
+</head>
+<body>
+<h1>입력양식 연습</h1>
+
+<form action="register.jsp" method="get" enctype="application/x-www-form-urlencoded">
+<label for="userid">사용자아이디(get):</label>
+<input type ="text" name="userid" id ="userid" value="kang" size="30" maxlength="100"><br>
+<label for="userpass">비밀번호:</label>
+<input type ="password" name="userpass" id="userpass"><br>
+<label for="nicname">별명:</label>
+<input type ="text" name="nickname" id="nicname" value="kangkang" readonly="readonly"><br>
+<!-- checkbox : 서로 독립적 
+	 radio: 서로 배타적
+	-->
+<fieldset>
+	  <legend>수강과목1</legend>
+	  <input type ="checkbox" name="subject" value="JAVA" checked="checked">자바
+	  <input type ="checkbox" name="subject" value="WEB" checked>WEB
+	  <input type ="checkbox" name="subject" value="FrameWork">FrameWork<br>
+</fieldset><br>
+
+
+<fieldset> 
+	  <legend>수강과목1</legend>
+      <input type ="checkbox" name="subject2" value="JAVA2" checked="checked">자바2
+	  <input type ="checkbox" name="subject2" value="WEB2" checked>WEB2
+	  <input type ="checkbox" name="subject2" value="FrameWork2">FrameWork2<br>
+</fieldset>
+
+<fieldset>
+	 	<legend>성별</legend>
+		<input type="radio" name="gender" value="M">남자
+		<input type="radio" name="gender" value="F">여자
+</fieldset>
+<label>한개선택:</label>
+<select name="week">
+	<option>월요일</option>		
+	<option>수요일</option>		
+	<option value="f">토요일</option>		
+	<option selected>일요일</option>		
+</select>
+<br><br>
+<label>여러개선택:</label>
+<select name="week2" multiple="multiple">
+	<option>Monday</option>		
+	<option>수요일</option>		
+	<option value="f">토요일</option>		
+	<option selected>일요일</option>		
+</select>
+댓글:
+<textarea rows="5" cols="50" name="memo">sample</textarea>
+<!--  <input type="image" src="04/images/link.png"> -->
+<!-- <input type="file"><br><br> -->
+<input type="hidden" name="phone" value="010-1234-1234">
+<input type="submit" value="서버전송">
+<input  type="reset" value="초기화">
+<input  type="button" value="JS코드" onclick="alert('입력버튼')">
+</form>
+
+<button onclick="alert('일반버튼')">일반버튼</button>
+<img src="04/images/link.png">
+
+<a href="register.jsp?userid=jj">등록창으로 가기</a>
+
+<!-- 
+get방식: 주소창에 입력정보가 서버로 전송되는 것이 보인다.
+form태그에 method="get" 또는 생략
+주소창에 직접입력하면 get방식
+a태그를 이용해서 href속성으로 link 거는 경우도 get방식
+
+post방식:주소창에 입력정보가 서버로 정손되는 것이 안보인다.(숨긴다)
+	요청문서의 body부분에 숨겨서 보낸다.
+	form태그에 method="post"
+ -->
+
+
+
+
+<form action="register.jsp" method="post">
+사용자아이디(post):<input type ="text" name="userid">
+비밀번호:<input type ="password" name="userpass">
+<input type="submit">
+</form>
+
+</body>
+</html>
+
+
+--------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<%
+//post방식 일때는 body부분에 전달된 parameter를 encoding한다.
+request.setCharacterEncoding("UTF-8");
+%>
+</head>
+<body>
+<h1>사용자가 입력데이터를 서버에서 받는다.</h1>
+<!-- EL(Expression Language) 표기법 -->
+<p>아이디 : ${param.userid} </p>
+<p>비밀번호 : ${param.userpass} </p>
+</body>
+</html>
+-----------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="register2.jsp">
+<!--  향상된form 1장html ppt 보면나옴 !! -->
+<input type ="date">
+<input type="time">
+<!-- 지원안됨 -->
+<input type="datetime">
+<!--  지원 -->
+<input type="datetime-Local">
+<input type="month">
+<input type="week"><br>
+<input type="email" name ="email" placeholder="kha0202kha@naver.com">
+<input type="tel" name ="telephone" pattern="[01]{3}-[0-9]{4}-[0-9]{4}" >
+<br>
+<input type="url" name="url">
+<br>
+<!-- 입력양식 숫자... 서버에서 읽으면 문자 -->
+<input type ="number" name="age">
+<input type ="range" list="steplist" min="0" max="100"  name="score">
+<datalist id="steplist">
+<option>0</option>
+<option>25</option>
+<option>50</option>
+<option>75</option>
+<option>100</option>
+</datalist>
+<input type="color">
+<input type="search" autofocus="autofocus">
+<br>
+<details>
+<summary>
+사용자정보 상세보기
+</summary>
+<ul>
+<li>파일이름:ㅁㅁ</li>
+<li>파일이름:ㅁㅁㅁ</li>
+<li>파일이름:ㅁㅁㅁㅁ</li>
+<li>파일이름:ㅁㅁㅁㅁㅁ</li>
+<li>파일이름:ㅁㅁㅁㅁㅁㅁ</li>
+</ul>
+
+</details>
+<input type="submit" value="서버전송">
+</form>
+
+</body>
+</html>
+---------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+<h1>당신의 나이는 ${param.age + 1 }</h1>
+
+<%
+//
+String age=request.getParameter("age");
+int iAge=Integer.parseInt(age)+2;
+
+%>
+<h1>당신의 나이는 <%=iAge%></h1>
+</body>
+</html>
+--------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>데이터베이스 연동해보자!</title>
+</head>
+<body>
+<main>
+<h1>부서등록</h1>
+	<form action ="insert.jsp" method="post">
+	부서아이디:
+	<input type="number" name ="dept_id" value=""><br>
+	부서이름:
+	<input type="text" name ="dept_name" value=""><br>	
+	매니저ID:
+	<input type="number" name ="manager_id" value="100"><br>
+	Location:
+	<input type="number" name ="location_id" value="1700"><br>
+	<input type="submit" value="DB전송">	
+	
+	</form>
+</main>
+</body>
+</html>
+-----------------------------------------------------
+<%@page import="model.DeptVO"%>
+<%@page import="model.DeptDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>부서DB등록</title>
+<%
+//1.사용자의 입력값을 일기
+int id=Integer.parseInt(request.getParameter("dept_id")) ;
+String name=request.getParameter("dept_name");
+int mid=Integer.parseInt(request.getParameter("manager_id"));
+int lid=Integer.parseInt(request.getParameter("location_id"));
+DeptVO dept=new DeptVO(id,name,mid,lid);
+//2.DAO호출
+DeptDAO dao = new DeptDAO();
+int result =dao.insertDept(dept);
+String message="입력성공";
+if(result<=0){
+	message="입력실패";
+}
+
+
+%>
+
+</head>
+<body>
+	<h1>알림:<%=message %></h1>
+	<hr>
+	<p>${param.dept_id }</p>
+	<p>${param.dept_name }</p>
+	<p>${param.manager_id }</p>
+	<p>${param.location_id }</p>
+</body>
+</html>
+-----------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>작업선택</h1>
+
+<ol>
+<li><a href="deptRetrieve.jsp">부서조회</a></li>
+<li><a href="deptinsert.html">부서입력</a></li>
+</ol>
+
+
+</body>
+</html>
+---------------------------------------------------
+<%@page import="model.DeptVO"%>
+<%@page import="java.util.List"%>
+<%@page import="model.DeptDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>select</title>
+</head>
+<body>
+<table border="1">
+	<tr>
+		<th>부서번호</th><th>부서이름</th><th>매니저번호</th><th>지역번호</th>
+	</tr>
+<%
+DeptDAO dao = new DeptDAO();
+List<DeptVO>deptlist=dao.selectAll();
+for(DeptVO dept:deptlist){
+	out.print("<tr>");
+	out.print("<td>"+dept.getDepartment_id()+"</td><td>"+dept.getDepartment_name()+"</td><td>"+dept.getManager_id()+"</td><td>"+dept.getLocation_id()+"</td>");
+	out.print("</tr>");
+	
+	
+	
+
+}
+%>	
+	
+
+</table>
+</body>
+</html>
+-------------------------------------------------------------------
 
