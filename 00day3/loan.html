@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+label{background-color: orange;
+display:inline-block;
+width:200px;
+ }
+
+</style>
+</head>
+<body>
+<h1>대출사이트 회원가입</h1>
+
+<form action="loan.jsp" method="post">
+<label for="userid">사용자아이디(post):</label>
+<input type ="text" id="userid" name="userid"><br>
+<label for="userpass">비밀번호:</label>
+<input type ="password" id="userpass" name="userpass"><br>
+<label for="username">이름:</label>
+<input type="text" name="Name" id="username"><br>
+<label for="userph">전화번호:</label>
+<input type="tel" name="telephone" id="userph"><br>
+<label for="userjob">직업:</label>
+<input type="text" name="JOB" id="userjob"><br>
+<fieldset>
+	  <legend>계좌은행</legend>
+	  <input type ="checkbox" name="bank" value="kb" checked="checked">국민은행
+	  <input type ="checkbox" name="bank" value="sinhan" >신한은행
+	  <input type ="checkbox" name="bank" value="nh">농협은행<br>
+</fieldset><br>
+<label for="useraccount">계좌번호:</label>
+<input type="text" name="Account" id="useraccount"><br>
+<label for="usermoney">잔액:</label>
+<input type="text" name="Money" id="usermoney"><br>
+
+<input type="submit" value="회원가입">
+
+
+
+
+
+</form>
+
+</body>
+
+</html>

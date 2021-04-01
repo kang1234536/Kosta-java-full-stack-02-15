@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Selector연습</title>
+<style>
+	* {font-size: 20px;} /* 전체선택자 */
+	p {border-style: solid;  /* 태그선택자 */
+	   border-width: 2px;} 
+    #p1 {background-color: green;} /* 아이디선택자 */   
+    .here {color:red;} /* class선택자 */
+    h1.here{color:orange; border: 5px dotted purple;} /* 특정class선택*/
+   /*우선순위 --> 태그<class<아이디<!important  */
+     #hh {border: 2px dotted red; text-align: right;} 
+    .h2class {border: 2px dotted green; text-align: left;}
+    h2 {border: 2px dotted blue !important ; text-align: center;}
+    /* !important 쓴거가 우선순위가 젤높음!! */
+    
+</style>
+
+</head>
+<body>
+<h1 class ="here">Selector연습</h1>
+<h2 id="hh" class="h2class" style="text-align: left;">선택자 우선순위에 대하여 ....</h2>
+<p>전체선택자: *</p>
+<p class ="here">태그선택자: 태그이름</p>
+<p id="p1">ID선택자: #</p>
+<p class ="here">class선택자: .</p>
+
+
+</body>
+</html>

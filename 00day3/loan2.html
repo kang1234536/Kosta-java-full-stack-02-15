@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>loan site</title>
+<style>
+*{background-color: skyblue;}
+label,input{
+border: 1px solid black;
+text-align: center;
+width:200px;
+margin:1px;
+
+
+ }
+h1{text-align: center;
+	border: 1px solid black;
+	background-color: red;}
+form.first{text-align: center;
+border: 1px solid black;
+background-color: green;}
+form.second{text-align: center;
+border: 1px solid black;
+background-color: yellow;}
+</style>
+</head>
+<body>
+<h1>대출사이트</h1>
+
+<form  class="first">
+<label for="userid" > 사용자아이디</label>
+<input type ="text" id="userid" name="userid" placeholder="아이디"><br>
+<label for="userpass"> 비밀번호 </label>
+<input type ="password" id="userpass" name="userpass" placeholder="비밀번호"><br>
+
+</form>
+<form action="loan.html" method="post" class="second">
+<input type="submit" value="회원가입">
+<input type="submit" value="로그인">
+<input type="submit" value="ID/PW찾기">
+</form>
+<form action="?">
+
+</form>
+</body>
+
+</html>

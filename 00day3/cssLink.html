@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>cssLink.html</title>
+<link rel="stylesheet" type="text/css" href="css/external.css">
+<style>
+	/*외부의 style 연결하기*/
+	@import url("css/external2.css");
+	h1{background-color: orange !important; }
+	/*external<internal<inline<!important  */
+</style>
+</head>
+<body>
+<h1 style="background-color: blue;">CSS연결방법3가지</h1>
+<p>1.내부(internal)CSS사용  -->html안에 사용됨 맨위 style 쪽</p>
+<p>2.외부CSS사용 - 2가지(Link,@import)</p>
+<p style ="color:red;">3.inline CSS사용</p>
+</body>
+</html>

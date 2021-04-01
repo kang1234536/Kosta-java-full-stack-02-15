@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>속성 선택자</title>
+<style>
+ 	a[target] {background-color: orange;  }  
+	a[target="_blank"] { color: hotpink; }  
+	/* ^,$,* 언더바도 가능!! */
+	[class^="first"] { color: red; } 
+	[class$="end"] { color: blue; } 
+	[class*="contain"] { color: purple; } 
+	/*~는 단어  */
+	[class~="contain"] { background-color: green; } 
+	
+	
+	
+	input[type=text] { width: 100px; margin-bottom: 30px; background-color: #D5D5D5; } 
+ 	input[type=button] { color:white; font-weight:bold; background-color: #000; padding: 10px }
+</style>
+</head>
+<body>
+	<div class="first_test">[로그인 화면]</div> 
+	<div class="aa_first_test">[로그인 화면]</div> 
+	<p class="first_test">[로그인 화면]</p> 
+	<p class="test_end">[로그인 화면]</p> 
+	<div class="test_end">[로그인 화면]</div> 
+	<p class="test_end_aa">[로그인 화면]</p> 
+	<p class="end">[로그인 화면]</p> 
+	
+	<p class="test contain aa">1.[로그인 화면]</p> 
+	<p class="test contain_aa">2.[로그인 화면]</p> 
+	<p class="test containAA aa">3.[로그인 화면]</p> 
+	<p class="test_BBcontainAA aa">4.[로그인 화면]</p> 
+
+	 
+	
+	
+	
+	<div class="second_test">아이디와 비밀번호를 입력하시오</div><br>
+	<form name="input" action="" method="get"> 
+		아이디<input type="text" name="id" size="20"> 
+		비밀번호<input type="text" name="pw" size="20"> 
+		<input type="button" value="로그인"> <br><br> 
+		<a href="register.html" target="_blank">회원가입</a><br><br> 
+		<a href="register.html" target="_top">회원가입2</a><br><br> 
+		<a href="register.html" >회원가입3</a><br><br> 
+	</form>
+</body>
+</html>

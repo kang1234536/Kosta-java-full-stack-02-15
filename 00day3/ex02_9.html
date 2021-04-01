@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.header h3{color: red;}
+	.footer > h3{color:blue;}
+	ul li{background-color: green;}
+/*  	ul li{background-color: green;} */
+	div >li{color: red; list-style: none;}
+	/* 모든형제 */
+	h3~div{border:1px solid blue; }
+	h3~p{border:1px solid purple; }
+	/* 바로다음형제 */
+	h3+div{background-color: pink; }
+</style>
+</head>
+<body>
+<div>
+	<ul>
+		<li>HTML5</li>
+		<li>CSS3</li>
+		<li>JavaScript</li>
+		<li>JavaScript-jQuery</li>
+		<li>JavaScript-node.js</li>
+	</ul>
+</div>
+<ol>
+	<li>HTML5</li>
+	<li>CSS3</li>
+	<li>JavaScript</li>
+	<li>JavaScript-jQuery</li>
+	<li>JavaScript-node.js</li>
+</ol>
+
+	<div class="header">
+	<h3>test1</h3>
+	<div class="hea">
+	<h3>test2</h3>
+	</div>
+	<div class="hea">
+	<h3>test2</h3>
+	</div>
+	<p>h3,div,p 형제관계이다</p>
+	</div>
+	<div class="footer">
+	<h3>test3...자식</h3>
+	<div class="foo">
+	<h3>test4...후손</h3>
+	</div>
+	<div class="foo">
+	<h3>test4...후손</h3>
+	</div>
+	<p>h3,div,p 형제관계이다</p>
+	</div>
+</body>
+</html>
