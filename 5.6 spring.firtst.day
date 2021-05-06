@@ -3,7 +3,7 @@
 org.apache.maven.archetypes
 maven.archetype-simple
 //URL이라고 생각 하면된다
-Group-id:com.kosta   //패키지이름? 쉽게 생각
+Group-id:com.kosta   //프로젝트 그룹아이디?
 Artifact-id:springMavenProject                   //프로젝트이름?
 버전:0.0.1  버전은 바꿀수있따 
 
