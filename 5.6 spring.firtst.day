@@ -2,3 +2,45 @@
 메이븐 프로젝트 생성시 필요한 조건들
 org.apache.maven.archetypes
 maven.archetype-simple
+//URL이라고 생각 하면된다
+Group-id:com.kosta   //패키지이름? 쉽게 생각
+Artifact-id:springMavenProject                   //프로젝트이름?
+버전:0.0.1  버전은 바꿀수있따 
+
+// pom.xml
+16번째줄
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  source,target 을 1.8로 변경
+  
+  ////https://mvnrepository.com/
+  여기가 메이븐 저장소
+  메이븐 저장소에서 받은것들 버전을
+   <properties>
+  	<org.springframework-version>버전이름</org.springframework-version>
+    </properties> 
+    이렇게 적는다
+    그리고 밑을
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+    이렇게 바꿔서 사용하면 properties에서 버전만 바꾸면 따라서 바뀐다.
+    
+    
+    
+    
+    
+    
